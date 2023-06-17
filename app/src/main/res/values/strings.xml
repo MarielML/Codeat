@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">DDI</string>
+    <string name="title_activity_registrar">RegistrarActivity</string>
+    <string name="title_activity_mis_cursos">MisCursos</string>
+    <string name="title_activity_descubrir">DescubrirActivity</string>
+    <string name="title_activity_crear_curso">CrearCursoActivity</string>
+    <string name="title_activity_perfil">PerfilActivity</string>
+</resources>
