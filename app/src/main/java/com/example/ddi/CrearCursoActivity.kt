@@ -1,4 +1,4 @@
-package com.example.ddi
+package com.example.ddi.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -31,6 +31,11 @@ import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.ddi.DescubrirActivity
+import com.example.ddi.MisCursos
+import com.example.ddi.PerfilActivity
+import com.example.ddi.R
+import com.example.ddi.TextCustom
 import com.example.ddi.ui.theme.DDITheme
 
 class CrearCursoActivity : ComponentActivity() {

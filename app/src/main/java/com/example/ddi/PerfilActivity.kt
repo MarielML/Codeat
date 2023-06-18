@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.ddi.ui.CrearCursoActivity
 import com.example.ddi.ui.theme.DDITheme
 
 class PerfilActivity : ComponentActivity() {
