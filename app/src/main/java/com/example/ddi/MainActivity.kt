@@ -15,9 +15,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.ddi.data.Usuario
+import com.example.ddi.data.UsuarioRepositorio
 import com.example.ddi.ui.theme.DDITheme
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var usuario: Usuario
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -39,11 +43,17 @@ class MainActivity : ComponentActivity() {
                 ) {
                     TextCustom(text = "Iniciar sesión")
                     Spacer(modifier = Modifier.height(20.dp))
-                    textFieldCustom(label = "Usuario", placeholder = "Usuario...")
+                    val nombre = textFieldCustom(label = "Usuario", placeholder = "Usuario...")
                     Spacer(modifier = Modifier.height(10.dp))
-                    textFieldCustom(label = "Contraseña", placeholder = "Contraseña...")
+                    val contrasenia = textFieldCustom(label = "Contraseña", placeholder = "Contraseña...")
                     Spacer(modifier = Modifier.height(10.dp))
-                    ButtonCustom(text = "ok", onClick = { misCursos() }, width = 80.dp)
+                    ButtonCustom(text = "ok", onClick = {
+                        if (UsuarioRepositorio.existe(nombre, contrasenia)) {
+                            usuario = UsuarioRepositorio.iniciar(nombre, contrasenia)
+                            misCursos(nombre, contrasenia)
+                            finish()
+                        }
+                    }, width = 80.dp)
                     Spacer(modifier = Modifier.height(20.dp))
                     TextCustom(text = "¿No tiene una cuenta?")
                     Spacer(modifier = Modifier.height(10.dp))
@@ -58,8 +68,11 @@ class MainActivity : ComponentActivity() {
         startActivity(intent)
     }
 
-    private fun misCursos() {
-        val intent = Intent(this, MisCursos::class.java)
+    private fun misCursos(username: String, password: String) {
+        val intent = Intent(this, MisCursos::class.java).apply {
+            putExtra("username", username)
+            putExtra("password", password)
+        }
         startActivity(intent)
     }
 }
