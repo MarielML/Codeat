@@ -37,7 +37,6 @@ import androidx.compose.ui.unit.dp
 import com.example.ddi.data.Curso
 import com.example.ddi.data.Usuario
 import com.example.ddi.data.UsuarioRepositorio
-import com.example.ddi.ui.CrearCursoActivity
 import com.example.ddi.ui.theme.DDITheme
 
 class MisCursos : ComponentActivity() {

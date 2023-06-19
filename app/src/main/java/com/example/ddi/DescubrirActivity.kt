@@ -8,7 +8,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -39,7 +38,6 @@ import com.example.ddi.data.Curso
 import com.example.ddi.data.CursoRepositorio
 import com.example.ddi.data.Usuario
 import com.example.ddi.data.UsuarioRepositorio
-import com.example.ddi.ui.CrearCursoActivity
 import com.example.ddi.ui.theme.DDITheme
 
 class DescubrirActivity : ComponentActivity() {

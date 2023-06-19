@@ -1,4 +1,4 @@
-package com.example.ddi.ui
+package com.example.ddi
 
 import android.content.Intent
 import android.os.Bundle
@@ -31,23 +31,26 @@ import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.ddi.DescubrirActivity
-import com.example.ddi.MisCursos
-import com.example.ddi.PerfilActivity
-import com.example.ddi.R
-import com.example.ddi.TextCustom
+import com.example.ddi.data.Usuario
+import com.example.ddi.data.UsuarioRepositorio
 import com.example.ddi.ui.theme.DDITheme
 
 class CrearCursoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val bundle = intent.extras
+        val username: String? = bundle?.getString("username")
+        val password: String? = bundle?.getString("password")
+        val usuario: Usuario = UsuarioRepositorio.iniciar(username!!, password!!)
+
         setContent {
-            Content()
+            Content(usuario)
         }
     }
 
     @Composable
-    private fun Content() {
+    private fun Content(usuario: Usuario) {
         DDITheme {
             Surface(
                 modifier = Modifier.fillMaxSize(),
@@ -67,7 +70,7 @@ class CrearCursoActivity : ComponentActivity() {
                 ) {
                     TextCustom(text = "Cursos Pulicados")
                 }
-                Menu()
+                Menu(usuario)
             }
         }
     }
@@ -97,7 +100,7 @@ class CrearCursoActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun Menu() {
+    private fun Menu(usuario: Usuario) {
         Row(modifier = Modifier
             .size(30.dp)
             .border(BorderStroke(1.dp, Color.Black)),
@@ -107,14 +110,14 @@ class CrearCursoActivity : ComponentActivity() {
             Button(
                 colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
                 shape = RoundedCornerShape(0),
-                onClick = { misCursos() }
+                onClick = { misCursos(usuario.nickname, usuario.password) }
             ) {
                 Image(painterResource(id = R.drawable.baseline_folder_24), contentDescription = "")
             }
             Button(
                 colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
                 shape = RoundedCornerShape(0),
-                onClick = { descubrir() }
+                onClick = { descubrir(usuario.nickname, usuario.password) }
             ) {
                 Image(painterResource(id = R.drawable.baseline_search_24), contentDescription = "")
             }
@@ -128,25 +131,34 @@ class CrearCursoActivity : ComponentActivity() {
             Button(
                 colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
                 shape = RoundedCornerShape(0),
-                onClick = { perfil() }
+                onClick = { perfil(usuario.nickname, usuario.password) }
             ) {
                 Image(painterResource(id = R.drawable.baseline_person_24), contentDescription = "")
             }
         }
     }
 
-    private fun misCursos() {
-        val intent = Intent(this, MisCursos::class.java)
+    private fun misCursos(username: String, password: String) {
+        val intent = Intent(this, MisCursos::class.java).apply {
+            putExtra("username", username)
+            putExtra("password", password)
+        }
         startActivity(intent)
     }
 
-    private fun descubrir() {
-        val intent = Intent(this, DescubrirActivity::class.java)
+    private fun descubrir(username: String, password: String) {
+        val intent = Intent(this, DescubrirActivity::class.java).apply {
+            putExtra("username", username)
+            putExtra("password", password)
+        }
         startActivity(intent)
     }
 
-    private fun perfil() {
-        val intent = Intent(this, PerfilActivity::class.java)
+    private fun perfil(username: String, password: String) {
+        val intent = Intent(this, PerfilActivity::class.java).apply {
+            putExtra("username", username)
+            putExtra("password", password)
+        }
         startActivity(intent)
     }
 }
