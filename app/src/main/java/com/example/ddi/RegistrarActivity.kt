@@ -1,6 +1,5 @@
 package com.example.ddi
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,9 +14,14 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.ddi.data.Usuario
+import com.example.ddi.data.UsuarioRepositorio
 import com.example.ddi.ui.theme.DDITheme
 
 class RegistrarActivity : ComponentActivity() {
+
+    private lateinit var nuevoUsuario: Usuario
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -39,22 +43,29 @@ class RegistrarActivity : ComponentActivity() {
                 ) {
                     TextCustom(text = "Crear cuenta")
                     Spacer(modifier = Modifier.height(20.dp))
-                    textFieldCustom(label = "Nombre de usuario", placeholder = "Nombre de usuario")
+                    val nombre = textFieldCustom(label = "Nombre de usuario", placeholder = "Nombre de usuario")
                     Spacer(modifier = Modifier.height(10.dp))
-                    textFieldCustom(label = "Contraseña", placeholder = "Contraseña")
+                    val contrasenia = textFieldCustom(label = "Contraseña", placeholder = "Contraseña")
                     Spacer(modifier = Modifier.height(10.dp))
-                    textFieldCustom(label = "Confirmar contraseña", placeholder = "Confirmar contraseña")
+                    val confirmar = textFieldCustom(label = "Confirmar contraseña", placeholder = "Confirmar contraseña")
                     Spacer(modifier = Modifier.height(10.dp))
-                    textFieldCustom(label = "Email", placeholder = "email@email.com")
+                    val email = textFieldCustom(label = "Email", placeholder = "email@email.com")
                     Spacer(modifier = Modifier.height(30.dp))
-                    ButtonCustom(text = "Registrarse", onClick = { registrarse() })
+                    ButtonCustom(text = "Registrarse", onClick = {
+                        if(validar(nombre, contrasenia, confirmar, email)) {
+                            if(contrasenia == confirmar) {
+                                nuevoUsuario = Usuario(nombre, contrasenia, email)
+                                UsuarioRepositorio.agregar(nuevoUsuario)
+                                finish()
+                            }
+                        }
+                    })
                 }
             }
         }
     }
 
-    private fun registrarse() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+    private fun validar(nombre: String, contrasenia: String, confirmar: String, email: String): Boolean {
+        return nombre != "" && contrasenia != "" && confirmar != "" && email != "" && email.contains("@")
     }
 }
