@@ -13,6 +13,16 @@
         android:theme="@style/Theme.DDI"
         tools:targetApi="31">
         <activity
+            android:name=".CrearActivity"
+            android:exported="false"
+            android:label="@string/title_activity_crear"
+            android:theme="@style/Theme.DDI" />
+        <activity
+            android:name=".CursoActivity"
+            android:exported="false"
+            android:label="@string/title_activity_curso"
+            android:theme="@style/Theme.DDI" />
+        <activity
             android:name=".PerfilActivity"
             android:exported="false"
             android:label="@string/title_activity_perfil"
