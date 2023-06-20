@@ -4,11 +4,13 @@ object UsuarioRepositorio {
     val usuarios = mutableListOf<Usuario>()
 
     init {
-        usuarios.add(Usuario("Mariel", "aaaa", "a@email", cursos =
+        usuarios.add(Usuario("Mariel", "A", "a@email",
+            cursos =
         mutableListOf(Curso("JavaScript I", "",4.8),
-                Curso("JavaScript II", "",4.9)),
-        cursosPublicados = mutableListOf(Curso("React I", "Mariel",3.0),
-            Curso("React II", "Mariel",3.5))))
+                      Curso("JavaScript II", "",4.9)),
+            cursosPublicados =
+        mutableListOf(Curso("React I", "Mariel",3.0),
+                      Curso("React II", "Mariel",3.5))))
     }
 
     fun agregar(usuario: Usuario) {

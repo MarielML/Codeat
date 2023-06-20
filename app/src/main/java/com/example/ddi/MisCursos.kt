@@ -75,7 +75,7 @@ class MisCursos : ComponentActivity() {
                     if(usuario.cursos.size == 0) {
                         TextCustom(text = "Aún no tienes cursos")
                     } else {
-                        MostrarCursos(datos = usuario.cursos)
+                        MostrarCursos(usuario.cursos, usuario)
                     }
                 }
                 Menu(usuario)
@@ -108,23 +108,23 @@ class MisCursos : ComponentActivity() {
     }
 
     @Composable
-    private fun MostrarCursos(datos: MutableList<Curso>) {
+    private fun MostrarCursos(datos: MutableList<Curso>, usuario: Usuario) {
         LazyColumn (
             modifier = Modifier.fillMaxWidth(),
         ) {
-            items(datos) { item -> ListItemRow(item) }
+            items(datos) { item -> ListItemRow(item, usuario) }
         }
     }
 
     @Composable
-    private fun ListItemRow(item: Curso) {
+    private fun ListItemRow(item: Curso, usuario: Usuario) {
         Row (
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically,
         ){
             TextCustom(text = item.puntaje.toString())
-            ButtonCustom(text = item.nombre, onClick = {  })
+            ButtonCustom(text = item.nombre, onClick = { curso(usuario.nickname, usuario.password, item.nombre) })
         }
     }
 
@@ -165,6 +165,16 @@ class MisCursos : ComponentActivity() {
                 Image(painterResource(id = R.drawable.baseline_person_24), contentDescription = "")
             }
         }
+    }
+
+    private fun curso(username: String, password: String, nombre: String) {
+        val intent = Intent(this, CursoAgregadoActivity::class.java).apply {
+            putExtra("username", username)
+            putExtra("password", password)
+            putExtra("nombre", nombre)
+        }
+        startActivity(intent)
+        onStop()
     }
 
     private fun descubrir(username: String, password: String) {

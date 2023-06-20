@@ -10,7 +10,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -26,9 +25,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Black
-import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.ddi.data.Curso
 import com.example.ddi.data.CursoRepositorio
@@ -36,25 +35,23 @@ import com.example.ddi.data.Usuario
 import com.example.ddi.data.UsuarioRepositorio
 import com.example.ddi.ui.theme.DDITheme
 
-class CrearActivity : ComponentActivity() {
-
-    private lateinit var nuevoCurso: Curso
-    var nombre: String = ""
-
+class CursoAgregadoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val bundle = intent.extras
         val username: String? = bundle?.getString("username")
         val password: String? = bundle?.getString("password")
         val usuario: Usuario = UsuarioRepositorio.iniciar(username!!, password!!)
+        val nombre: String? = bundle.getString("nombre")
+        val curso: Curso = CursoRepositorio.cursoElegido(nombre!!)
 
         setContent {
-            Content(usuario)
+            Content(usuario, curso)
         }
     }
 
     @Composable
-    private fun Content(usuario: Usuario) {
+    private fun Content(usuario: Usuario, curso: Curso) {
         DDITheme {
             Surface(
                 modifier = Modifier.fillMaxSize(),
@@ -64,30 +61,15 @@ class CrearActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize()
                 )
                 {
-                    TopBar()
+                    TopBar(curso)
                 }
                 Column(
                     Modifier
                         .fillMaxSize()
                         .padding(25.dp),
+
                     verticalArrangement = Arrangement.Center,
                 ) {
-                    Row() {
-                        TextCustom(text = "Nombre:")
-                        Spacer(modifier = Modifier.weight(1f))
-                        nombre = textFieldCustom(label = "", placeholder = "")
-                    }
-                    Row(verticalAlignment = Alignment.Bottom) {
-                        ButtonCustom(text = "Crear", onClick = {
-                            if(!CursoRepositorio.existe(nombre) && !usuario.publicado(nombre)) {
-                                nuevoCurso = Curso(nombre = nombre, creador = usuario.nickname)
-                                CursoRepositorio.agregar(nuevoCurso)
-                                usuario.publicarCurso(nuevoCurso)
-                                crearCurso(usuario.nickname, usuario.password)
-                                finish()
-                            }
-                        })
-                    }
                 }
                 Menu(usuario)
             }
@@ -95,7 +77,7 @@ class CrearActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun TopBar() {
+    private fun TopBar(curso: Curso) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -105,7 +87,7 @@ class CrearActivity : ComponentActivity() {
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            TextCustom(text = "Nuevo Curso")
+            TextCustom(text = curso.nombre, textAlign = TextAlign.Center)
         }
     }
 
@@ -133,7 +115,7 @@ class CrearActivity : ComponentActivity() {
                 Image(painterResource(id = R.drawable.baseline_search_24), contentDescription = "")
             }
             Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = Gray),
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
                 shape = RoundedCornerShape(0),
                 onClick = { crear(usuario.nickname, usuario.password) }
             ) {
@@ -147,14 +129,6 @@ class CrearActivity : ComponentActivity() {
                 Image(painterResource(id = R.drawable.baseline_person_24), contentDescription = "")
             }
         }
-    }
-
-    private fun crearCurso(username: String, password: String) {
-        val intent = Intent(this, CrearCursoActivity::class.java).apply {
-            putExtra("username", username)
-            putExtra("password", password)
-        }
-        startActivity(intent)
     }
 
     private fun misCursos(username: String, password: String) {
