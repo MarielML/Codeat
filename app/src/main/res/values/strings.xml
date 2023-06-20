@@ -5,4 +5,7 @@
     <string name="title_activity_descubrir">DescubrirActivity</string>
     <string name="title_activity_crear_curso">CrearCursoActivity</string>
     <string name="title_activity_perfil">PerfilActivity</string>
+    <string name="title_activity_curso">CursoActivity</string>
+    <string name="title_activity_crear">CrearActivity</string>
+    <string name="title_activity_main2">MainActivity2</string>
 </resources>

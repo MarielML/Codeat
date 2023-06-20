@@ -52,7 +52,7 @@ class RegistrarActivity : ComponentActivity() {
                     val email = textFieldCustom(label = "Email", placeholder = "email@email.com")
                     Spacer(modifier = Modifier.height(30.dp))
                     ButtonCustom(text = "Registrarse", onClick = {
-                        if(validateInput(nombre, contrasenia, confirmar, email)) {
+                        if(validar(nombre, contrasenia, confirmar, email)) {
                             if(contrasenia == confirmar) {
                                 nuevoUsuario = Usuario(nombre, contrasenia, email)
                                 UsuarioRepositorio.agregar(nuevoUsuario)
@@ -64,8 +64,8 @@ class RegistrarActivity : ComponentActivity() {
             }
         }
     }
-
-    private fun validateInput(nombre: String, contrasenia: String, confirmar: String, email: String): Boolean {
+    
+    private fun validar(nombre: String, contrasenia: String, confirmar: String, email: String): Boolean {
         return nombre != "" && contrasenia != "" && confirmar != "" && email != "" && email.contains("@")
     }
 }

@@ -64,7 +64,8 @@ fun ButtonCustom(
     onClick: () -> Unit,
     width: Dp = 180.dp,
     height: Dp = 64.dp,
-    color: Color = White
+    color: Color = White,
+    textAlign: TextAlign = TextAlign.Center
 ) {
     Button(
         onClick = onClick,
@@ -78,7 +79,8 @@ fun ButtonCustom(
         Text(
             text,
             color = Black,
-            fontSize = 24.sp
+            fontSize = 24.sp,
+            textAlign = textAlign
         )
     }
 }

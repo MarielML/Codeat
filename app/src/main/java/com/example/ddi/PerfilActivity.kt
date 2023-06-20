@@ -10,6 +10,8 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,6 +23,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -86,10 +89,18 @@ class PerfilActivity : ComponentActivity() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             TextCustom(text = "Perfil")
-            ButtonCustom(text = "Cerrar sesión", onClick = {
-                cerrarSesion()
-                finish()
-            })
+            Spacer(modifier = Modifier.weight(1f))
+            Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
+                shape = RoundedCornerShape(0),
+                border = BorderStroke(1.dp, Color.Black),
+                modifier = Modifier.fillMaxHeight(),
+                onClick = {
+                    cerrarSesion()
+                    finishAffinity()
+                }
+            ) {
+                Text(text = "Cerrar sesión", color = Color.Black)
+            }
         }
     }
 
@@ -138,6 +149,7 @@ class PerfilActivity : ComponentActivity() {
             putExtra("password", password)
         }
         startActivity(intent)
+        onStop()
     }
 
     private fun descubrir(username: String, password: String) {
@@ -146,6 +158,7 @@ class PerfilActivity : ComponentActivity() {
             putExtra("password", password)
         }
         startActivity(intent)
+        onStop()
     }
 
     private fun crear(username: String, password: String) {
@@ -154,6 +167,7 @@ class PerfilActivity : ComponentActivity() {
             putExtra("password", password)
         }
         startActivity(intent)
+        onStop()
     }
 
     private fun cerrarSesion() {
