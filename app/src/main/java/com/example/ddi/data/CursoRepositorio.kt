@@ -4,11 +4,13 @@ object CursoRepositorio {
     val cursos = mutableListOf<Curso>()
 
     init {
-        cursos.add(Curso("JavaScript I", "",4.8))
-        cursos.add(Curso("JavaScript II", "",4.9))
-        cursos.add(Curso("TypeScript I", "",4.9))
-        cursos.add(Curso("TypeScript II", "",4.7))
+        cursos.add(Curso("JavaScript I", "Anónimo",4.8))
+        cursos.add(Curso("JavaScript II", "Anónimo",4.9))
+        cursos.add(Curso("TypeScript I", "Anónimo",4.9))
+        cursos.add(Curso("TypeScript II", "Anónimo",4.7))
         cursos.add(Curso("Phyton I", "Pepe Argento",4.8))
+        cursos.add(Curso("React I", "Usuario",3.0))
+        cursos.add(Curso("React II", "Usuario",3.5))
     }
 
     fun agregar(curso: Curso) {
