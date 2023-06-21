@@ -73,7 +73,10 @@ class CrearCursoActivity : ComponentActivity() {
                 ) {
                     TextCustom(text = "Cursos Pulicados")
                     Spacer(modifier = Modifier.height(20.dp))
-                    MostrarCursos(usuario.cursosPublicados, usuario)
+                    MostrarCursosPublicados(usuario.cursosPublicados, usuario)
+                    TextCustom(text = "Cursos sin Pulicar")
+                    Spacer(modifier = Modifier.height(20.dp))
+                    MostrarCursosSinPublicar(usuario.cursosSinPublicar, usuario)
                 }
                 Menu(usuario)
             }
@@ -105,7 +108,7 @@ class CrearCursoActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun MostrarCursos(datos: MutableList<Curso>, usuario: Usuario) {
+    private fun MostrarCursosPublicados(datos: MutableList<Curso>, usuario: Usuario) {
         LazyColumn (
             modifier = Modifier.fillMaxWidth(),
         ) {
@@ -127,8 +130,41 @@ class CrearCursoActivity : ComponentActivity() {
         }
     }
 
+    @Composable
+    private fun MostrarCursosSinPublicar(datos: MutableList<Curso>, usuario: Usuario) {
+        LazyColumn (
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            items(datos) { item -> ListItemRowSinPublicar(item, usuario) }
+        }
+    }
+
+    @Composable
+    private fun ListItemRowSinPublicar(item: Curso, usuario: Usuario) {
+        Row (
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically,
+        ){
+            TextCustom(text = item.puntaje.toString())
+            ButtonCustom(text = item.nombre, onClick = {
+                cursoCreado(usuario.nickname, usuario.password, item.nombre)
+            })
+        }
+    }
+
     private fun curso(username: String, password: String, nombre: String) {
         val intent = Intent(this, CursoActivity::class.java).apply {
+            putExtra("username", username)
+            putExtra("password", password)
+            putExtra("nombre", nombre)
+        }
+        startActivity(intent)
+        onStop()
+    }
+
+    private fun cursoCreado(username: String, password: String, nombre: String) {
+        val intent = Intent(this, CursoCreadoActivity::class.java).apply {
             putExtra("username", username)
             putExtra("password", password)
             putExtra("nombre", nombre)

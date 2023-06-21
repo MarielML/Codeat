@@ -9,8 +9,9 @@ object UsuarioRepositorio {
         mutableListOf(Curso("JavaScript I", "Anónimo",4.8),
                       Curso("JavaScript II", "Anónimo",4.9)),
             cursosPublicados =
-        mutableListOf(Curso("React I", "Usuario",3.0),
-                      Curso("React II", "Usuario",3.5))))
+        mutableListOf(Curso("React I", "Usuario",3.0)),
+            cursosSinPublicar =
+        mutableListOf(Curso("React II", "Usuario",3.5))))
     }
 
     fun agregar(usuario: Usuario) {
