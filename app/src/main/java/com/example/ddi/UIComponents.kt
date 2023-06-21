@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,6 +20,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
@@ -48,6 +51,51 @@ fun textFieldCustom(
         value = text,
         onValueChange = { text = it },
         label = { Text(text = label) },
+        placeholder = {
+            Text(
+                text = placeholder,
+                fontWeight = FontWeight.Light
+            )
+        }
+    )
+    return text.text
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun textFieldPasswordCustom(
+    label: String,
+    placeholder: String
+): String {
+    var text by remember { mutableStateOf(TextFieldValue("")) }
+    OutlinedTextField(
+        value = text,
+        onValueChange = { text = it },
+        label = { Text(text = label) },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        visualTransformation = PasswordVisualTransformation(),
+        placeholder = {
+            Text(
+                text = placeholder,
+                fontWeight = FontWeight.Light
+            )
+        }
+    )
+    return text.text
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun textFieldEmailCustom(
+    label: String,
+    placeholder: String
+): String {
+    var text by remember { mutableStateOf(TextFieldValue("")) }
+    OutlinedTextField(
+        value = text,
+        onValueChange = { text = it },
+        label = { Text(text = label) },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
         placeholder = {
             Text(
                 text = placeholder,

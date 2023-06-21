@@ -49,7 +49,7 @@ class MainActivity : ComponentActivity() {
                     Spacer(modifier = Modifier.height(20.dp))
                     val nombre = textFieldCustom(label = "Usuario", placeholder = "Usuario...")
                     Spacer(modifier = Modifier.height(10.dp))
-                    val contrasenia = textFieldCustom(label = "Contraseña", placeholder = "Contraseña...")
+                    val contrasenia = textFieldPasswordCustom(label = "Contraseña", placeholder = "Contraseña...")
                     Spacer(modifier = Modifier.height(5.dp))
                     TextCustom(text = error, color = Color.Red, fontSize = 15.sp)
                     Spacer(modifier = Modifier.height(10.dp))

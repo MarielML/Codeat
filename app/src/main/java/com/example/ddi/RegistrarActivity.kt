@@ -45,11 +45,11 @@ class RegistrarActivity : ComponentActivity() {
                     Spacer(modifier = Modifier.height(20.dp))
                     val nombre = textFieldCustom(label = "Nombre de usuario", placeholder = "Nombre de usuario")
                     Spacer(modifier = Modifier.height(10.dp))
-                    val contrasenia = textFieldCustom(label = "Contraseña", placeholder = "Contraseña")
+                    val contrasenia = textFieldPasswordCustom(label = "Contraseña", placeholder = "Contraseña")
                     Spacer(modifier = Modifier.height(10.dp))
-                    val confirmar = textFieldCustom(label = "Confirmar contraseña", placeholder = "Confirmar contraseña")
+                    val confirmar = textFieldPasswordCustom(label = "Confirmar contraseña", placeholder = "Confirmar contraseña")
                     Spacer(modifier = Modifier.height(10.dp))
-                    val email = textFieldCustom(label = "Email", placeholder = "email@email.com")
+                    val email = textFieldEmailCustom(label = "Email", placeholder = "email@email.com")
                     Spacer(modifier = Modifier.height(30.dp))
                     ButtonCustom(text = "Registrarse", onClick = {
                         if(validar(nombre, contrasenia, confirmar, email)) {
