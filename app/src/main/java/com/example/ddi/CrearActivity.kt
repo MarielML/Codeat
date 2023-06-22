@@ -60,28 +60,7 @@ class CrearActivity : ComponentActivity() {
                 )
                 {
                     TopBar()
-                }
-                Column(
-                    Modifier
-                        .fillMaxSize()
-                        .padding(25.dp),
-                    verticalArrangement = Arrangement.Center,
-                ) {
-                    Row() {
-                        TextCustom(text = "Nombre:")
-                        Spacer(modifier = Modifier.weight(1f))
-                        nombre = textFieldCustom(label = "", placeholder = "")
-                    }
-                    Row(verticalAlignment = Alignment.Bottom) {
-                        ButtonCustom(text = "Crear", onClick = {
-                            if(!CursoRepositorio.existe(nombre) && !usuario.creado(nombre)) {
-                                nuevoCurso = Curso(nombre = nombre, creador = usuario.nickname)
-                                usuario.crearCurso(nuevoCurso)
-                                crearCurso(usuario.nickname, usuario.password)
-                                finish()
-                            }
-                        })
-                    }
+                    Contenido(usuario)
                 }
             }
         }
@@ -107,6 +86,32 @@ class CrearActivity : ComponentActivity() {
                         configuracion()
                     })
             )
+        }
+    }
+
+    @Composable
+    private fun Contenido(usuario: Usuario) {
+        Column(
+            Modifier
+                .fillMaxSize()
+                .padding(25.dp),
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Row() {
+                TextCustom(text = "Nombre:")
+                Spacer(modifier = Modifier.weight(1f))
+                nombre = textFieldCustom(label = "", placeholder = "")
+            }
+            Row(verticalAlignment = Alignment.Bottom) {
+                ButtonCustom(text = "Crear", onClick = {
+                    if(!CursoRepositorio.existe(nombre) && !usuario.creado(nombre)) {
+                        nuevoCurso = Curso(nombre = nombre, creador = usuario.nickname)
+                        usuario.crearCurso(nuevoCurso)
+                        crearCurso(usuario.nickname, usuario.password)
+                        finish()
+                    }
+                })
+            }
         }
     }
 

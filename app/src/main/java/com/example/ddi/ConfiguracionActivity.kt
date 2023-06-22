@@ -11,6 +11,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -65,7 +66,8 @@ class ConfiguracionActivity : ComponentActivity() {
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            TextCustom(text = "Nuevo Curso")
+            TextCustom(text = "Configuración")
+            Spacer(modifier = Modifier.weight(1f))
             Image(
                 painter = painterResource(id = R.drawable.baseline_close_24),
                 contentDescription = "",
@@ -81,20 +83,25 @@ class ConfiguracionActivity : ComponentActivity() {
     private fun Contenido() {
         Column(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceAround
+            verticalArrangement = Arrangement.SpaceAround,
+            horizontalAlignment = Alignment.CenterHorizontally
         )
         {
             ButtonCustom(text = modo, onClick = {
-                modo = if(modo == "Modo oscuro") {
-                    "Modo claro"
-                } else {
-                    "Modo oscuro"
-                }
+                modo()
             })
             ButtonCustom(text = "Cerrar sesión", onClick = {
                 cerrarSesion()
                 finishAffinity()
             })
+        }
+    }
+
+    private fun modo() {
+        modo = if(modo == "Modo claro") {
+            "Modo oscuro"
+        } else {
+            "Modo claro"
         }
     }
 

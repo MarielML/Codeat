@@ -65,25 +65,7 @@ class CursoActivity : ComponentActivity() {
                 )
                 {
                     TopBar(curso)
-                }
-                Column(
-                    Modifier
-                        .fillMaxSize()
-                        .padding(25.dp),
-
-                    verticalArrangement = Arrangement.Center,
-                ) {
-                    Creador(curso)
-                    Spacer(modifier = Modifier.height(20.dp))
-                    Row (
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceAround,
-                    ){
-                        ButtonCustom(text = "Agregar curso", onClick = {
-                            usuario.agregarCurso(curso)
-                            finish()
-                        })
-                    }
+                    Contenido(usuario, curso)
                 }
             }
         }
@@ -101,6 +83,7 @@ class CursoActivity : ComponentActivity() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             TextCustom(text = curso.nombre, textAlign = TextAlign.Center)
+            Spacer(modifier = Modifier.weight(1f))
             Image(
                 painter = painterResource(id = R.drawable.baseline_settings_24),
                 contentDescription = "",
@@ -109,6 +92,30 @@ class CursoActivity : ComponentActivity() {
                         configuracion()
                     })
             )
+        }
+    }
+
+    @Composable
+    private fun Contenido(usuario: Usuario, curso: Curso) {
+        Column(
+            Modifier
+                .fillMaxSize()
+                .padding(25.dp),
+
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Creador(curso)
+            Spacer(modifier = Modifier.height(20.dp))
+            Row (
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround,
+            ){
+                ButtonCustom(text = "Agregar curso", onClick = {
+                    usuario.agregarCurso(curso)
+                    misCursos(usuario.nickname, usuario.password)
+                    finish()
+                })
+            }
         }
     }
 
@@ -130,6 +137,15 @@ class CursoActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    private fun misCursos(username: String, password: String) {
+        val intent = Intent(this, MisCursos::class.java).apply {
+            putExtra("username", username)
+            putExtra("password", password)
+        }
+        startActivity(intent)
+        onStop()
     }
 
     private fun configuracion() {

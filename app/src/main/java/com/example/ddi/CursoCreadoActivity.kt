@@ -65,31 +65,7 @@ class CursoCreadoActivity : ComponentActivity() {
                 )
                 {
                     TopBar(curso)
-                }
-                Column(
-                    Modifier
-                        .fillMaxSize()
-                        .padding(25.dp),
-
-                    verticalArrangement = Arrangement.Center,
-                ) {
-                    Creador(curso)
-                    Spacer(modifier = Modifier.height(20.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceAround,
-                    ) {
-                        ButtonCustom(text = "Publicar curso", onClick = {
-                            if(!CursoRepositorio.existe(curso.nombre) && !usuario.publicado(curso.nombre)) {
-                                CursoRepositorio.agregar(curso)
-                                usuario.publicarCurso(curso)
-                                publicarCurso(usuario.nickname, usuario.password)
-                                finish()
-                            }
-                            usuario.agregarCurso(curso)
-                            finish()
-                        })
-                    }
+                    Contenido(usuario, curso)
                 }
             }
         }
@@ -107,6 +83,7 @@ class CursoCreadoActivity : ComponentActivity() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             TextCustom(text = curso.nombre, textAlign = TextAlign.Center)
+            Spacer(modifier = Modifier.weight(1f))
             Image(
                 painter = painterResource(id = R.drawable.baseline_settings_24),
                 contentDescription = "",
@@ -115,6 +92,35 @@ class CursoCreadoActivity : ComponentActivity() {
                         configuracion()
                     })
             )
+        }
+    }
+
+    @Composable
+    private fun Contenido(usuario: Usuario, curso: Curso) {
+        Column(
+            Modifier
+                .fillMaxSize()
+                .padding(25.dp),
+
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Creador(curso)
+            Spacer(modifier = Modifier.height(20.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround,
+            ) {
+                ButtonCustom(text = "Publicar curso", onClick = {
+                    if(!CursoRepositorio.existe(curso.nombre) && !usuario.publicado(curso.nombre)) {
+                        CursoRepositorio.agregar(curso)
+                        usuario.publicarCurso(curso)
+                        publicarCurso(usuario.nickname, usuario.password)
+                        finish()
+                    }
+                    usuario.agregarCurso(curso)
+                    finish()
+                })
+            }
         }
     }
 

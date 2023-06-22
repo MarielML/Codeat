@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -64,19 +65,7 @@ class CrearCursoActivity : ComponentActivity() {
                 )
                 {
                     TopBar(usuario)
-                }
-                Column(
-                    Modifier
-                        .fillMaxSize()
-                        .padding(25.dp),
-                    verticalArrangement = Arrangement.Center,
-                ) {
-                    TextCustom(text = "Cursos Pulicados")
-                    Spacer(modifier = Modifier.height(20.dp))
-                    MostrarCursosPublicados(usuario.cursosPublicados, usuario)
-                    TextCustom(text = "Cursos sin Pulicar")
-                    Spacer(modifier = Modifier.height(20.dp))
-                    MostrarCursosSinPublicar(usuario.cursosSinPublicar, usuario)
+                    Contenido(usuario)
                 }
                 Menu(usuario)
             }
@@ -104,13 +93,36 @@ class CrearCursoActivity : ComponentActivity() {
             ) {
                 Image(painter = painterResource(id = R.drawable.baseline_add_24), contentDescription = "")
             }
+            Image(
+                painter = painterResource(id = R.drawable.baseline_settings_24),
+                contentDescription = "",
+                modifier = Modifier
+                    .clickable(enabled = true, onClick = {
+                        configuracion()
+                    })
+            )
+        }
+    }
+
+    @Composable
+    private fun Contenido(usuario: Usuario) {
+        Column(
+            Modifier
+                .padding(25.dp)
+        ) {
+            TextCustom(text = "Cursos Pulicados")
+            Spacer(modifier = Modifier.height(20.dp))
+            MostrarCursosPublicados(usuario.cursosPublicados, usuario)
+            TextCustom(text = "Cursos sin Pulicar")
+            Spacer(modifier = Modifier.height(20.dp))
+            MostrarCursosSinPublicar(usuario.cursosSinPublicar, usuario)
         }
     }
 
     @Composable
     private fun MostrarCursosPublicados(datos: MutableList<Curso>, usuario: Usuario) {
         LazyColumn (
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().wrapContentHeight()
         ) {
             items(datos) { item -> ListItemRow(item, usuario) }
         }
@@ -244,6 +256,12 @@ class CrearCursoActivity : ComponentActivity() {
             putExtra("username", username)
             putExtra("password", password)
         }
+        startActivity(intent)
+        onStop()
+    }
+
+    private fun configuracion() {
+        val intent = Intent(this, ConfiguracionActivity::class.java)
         startActivity(intent)
         onStop()
     }
