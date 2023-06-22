@@ -22,34 +22,23 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color.Companion.Black
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.ddi.data.Curso
-import com.example.ddi.data.CursoRepositorio
-import com.example.ddi.data.Usuario
-import com.example.ddi.data.UsuarioRepositorio
 import com.example.ddi.ui.theme.DDITheme
 
-class CrearActivity : ComponentActivity() {
-
-    private lateinit var nuevoCurso: Curso
-    var nombre: String = ""
+class ConfiguracionActivity : ComponentActivity() {
+    var modo = "Modo oscuro"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val bundle = intent.extras
-        val username: String? = bundle?.getString("username")
-        val password: String? = bundle?.getString("password")
-        val usuario: Usuario = UsuarioRepositorio.iniciar(username!!, password!!)
-
         setContent {
-            Content(usuario)
+            Content()
         }
     }
 
     @Composable
-    private fun Content(usuario: Usuario) {
+    private fun Content() {
         DDITheme {
             Surface(
                 modifier = Modifier.fillMaxSize(),
@@ -60,7 +49,7 @@ class CrearActivity : ComponentActivity() {
                 )
                 {
                     TopBar()
-                    Contenido(usuario)
+                    Contenido()
                 }
             }
         }
@@ -73,59 +62,52 @@ class CrearActivity : ComponentActivity() {
                 .fillMaxWidth()
                 .height(60.dp)
                 .wrapContentHeight()
-                .border(BorderStroke(1.dp, Black))
+                .border(BorderStroke(1.dp, Color.Black))
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            TextCustom(text = "Nuevo Curso")
+            TextCustom(text = "Configuración")
+            Spacer(modifier = Modifier.weight(1f))
             Image(
-                painter = painterResource(id = R.drawable.baseline_settings_24),
+                painter = painterResource(id = R.drawable.baseline_close_24),
                 contentDescription = "",
                 modifier = Modifier
                     .clickable(enabled = true, onClick = {
-                        configuracion()
+                        finish()
                     })
             )
         }
     }
 
     @Composable
-    private fun Contenido(usuario: Usuario) {
+    private fun Contenido() {
         Column(
-            Modifier
-                .fillMaxSize()
-                .padding(25.dp),
-            verticalArrangement = Arrangement.Center,
-        ) {
-            Row() {
-                TextCustom(text = "Nombre:")
-                Spacer(modifier = Modifier.weight(1f))
-                nombre = textFieldCustom(label = "", placeholder = "")
-            }
-            Row(verticalAlignment = Alignment.Bottom) {
-                ButtonCustom(text = "Crear", onClick = {
-                    if(!CursoRepositorio.existe(nombre) && !usuario.creado(nombre)) {
-                        nuevoCurso = Curso(nombre = nombre, creador = usuario.nickname)
-                        usuario.crearCurso(nuevoCurso)
-                        crearCurso(usuario.nickname, usuario.password)
-                        finish()
-                    }
-                })
-            }
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceAround,
+            horizontalAlignment = Alignment.CenterHorizontally
+        )
+        {
+            ButtonCustom(text = modo, onClick = {
+                modo()
+            })
+            ButtonCustom(text = "Cerrar sesión", onClick = {
+                cerrarSesion()
+                finishAffinity()
+            })
         }
     }
 
-    private fun crearCurso(username: String, password: String) {
-        val intent = Intent(this, CrearCursoActivity::class.java).apply {
-            putExtra("username", username)
-            putExtra("password", password)
+    private fun modo() {
+        modo = if(modo == "Modo claro") {
+            "Modo oscuro"
+        } else {
+            "Modo claro"
         }
-        startActivity(intent)
     }
-    
-    private fun configuracion() {
-        val intent = Intent(this, ConfiguracionActivity::class.java)
+
+    private fun cerrarSesion() {
+        val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
-        onStop()
     }
 }
+

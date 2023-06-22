@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,7 +16,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -65,27 +65,8 @@ class CursoActivity : ComponentActivity() {
                 )
                 {
                     TopBar(curso)
+                    Contenido(usuario, curso)
                 }
-                Column(
-                    Modifier
-                        .fillMaxSize()
-                        .padding(25.dp),
-
-                    verticalArrangement = Arrangement.Center,
-                ) {
-                    Creador(curso)
-                    Spacer(modifier = Modifier.height(20.dp))
-                    Row (
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceAround,
-                    ){
-                        ButtonCustom(text = "Agregar curso", onClick = {
-                            usuario.agregarCurso(curso)
-                            finish()
-                        })
-                    }
-                }
-                Menu(usuario)
             }
         }
     }
@@ -102,6 +83,39 @@ class CursoActivity : ComponentActivity() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             TextCustom(text = curso.nombre, textAlign = TextAlign.Center)
+            Spacer(modifier = Modifier.weight(1f))
+            Image(
+                painter = painterResource(id = R.drawable.baseline_settings_24),
+                contentDescription = "",
+                modifier = Modifier
+                    .clickable(enabled = true, onClick = {
+                        configuracion()
+                    })
+            )
+        }
+    }
+
+    @Composable
+    private fun Contenido(usuario: Usuario, curso: Curso) {
+        Column(
+            Modifier
+                .fillMaxSize()
+                .padding(25.dp),
+
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Creador(curso)
+            Spacer(modifier = Modifier.height(20.dp))
+            Row (
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround,
+            ){
+                ButtonCustom(text = "Agregar curso", onClick = {
+                    usuario.agregarCurso(curso)
+                    misCursos(usuario.nickname, usuario.password)
+                    finish()
+                })
+            }
         }
     }
 
@@ -125,46 +139,6 @@ class CursoActivity : ComponentActivity() {
         }
     }
 
-    @Composable
-    private fun Menu(usuario: Usuario) {
-        Row(
-            modifier = Modifier
-                .size(30.dp)
-                .border(BorderStroke(1.dp, Black)),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.Bottom
-        ) {
-            Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
-                shape = RoundedCornerShape(0),
-                onClick = { misCursos(usuario.nickname, usuario.password) }
-            ) {
-                Image(painterResource(id = R.drawable.baseline_folder_24), contentDescription = "")
-            }
-            Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
-                shape = RoundedCornerShape(0),
-                onClick = { descubrir(usuario.nickname, usuario.password) }
-            ) {
-                Image(painterResource(id = R.drawable.baseline_search_24), contentDescription = "")
-            }
-            Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
-                shape = RoundedCornerShape(0),
-                onClick = { crear(usuario.nickname, usuario.password) }
-            ) {
-                Image(painterResource(id = R.drawable.baseline_add_24), contentDescription = "")
-            }
-            Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
-                shape = RoundedCornerShape(0),
-                onClick = { perfil(usuario.nickname, usuario.password) }
-            ) {
-                Image(painterResource(id = R.drawable.baseline_person_24), contentDescription = "")
-            }
-        }
-    }
-
     private fun misCursos(username: String, password: String) {
         val intent = Intent(this, MisCursos::class.java).apply {
             putExtra("username", username)
@@ -174,29 +148,8 @@ class CursoActivity : ComponentActivity() {
         onStop()
     }
 
-    private fun descubrir(username: String, password: String) {
-        val intent = Intent(this, DescubrirActivity::class.java).apply {
-            putExtra("username", username)
-            putExtra("password", password)
-        }
-        startActivity(intent)
-        onStop()
-    }
-
-    private fun crear(username: String, password: String) {
-        val intent = Intent(this, CrearCursoActivity::class.java).apply {
-            putExtra("username", username)
-            putExtra("password", password)
-        }
-        startActivity(intent)
-        onStop()
-    }
-
-    private fun perfil(username: String, password: String) {
-        val intent = Intent(this, PerfilActivity::class.java).apply {
-            putExtra("username", username)
-            putExtra("password", password)
-        }
+    private fun configuracion() {
+        val intent = Intent(this, ConfiguracionActivity::class.java)
         startActivity(intent)
         onStop()
     }

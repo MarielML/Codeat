@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DDI</string>
+    <string name="app_name">Codeat</string>
     <string name="title_activity_registrar">RegistrarActivity</string>
     <string name="title_activity_mis_cursos">MisCursos</string>
     <string name="title_activity_descubrir">DescubrirActivity</string>
@@ -9,4 +9,5 @@
     <string name="title_activity_crear">CrearActivity</string>
     <string name="title_activity_main2">MainActivity2</string>
     <string name="title_activity_curso_creado">CursoCreadoActivity</string>
+    <string name="title_activity_configuracion">ConfiguracionActivity</string>
 </resources>

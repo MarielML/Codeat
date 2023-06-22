@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -66,15 +67,9 @@ class DescubrirActivity : ComponentActivity() {
                 )
                 {
                     TopBar()
+                    Contenido(usuario)
                 }
-                Column(
-                    Modifier
-                        .fillMaxSize()
-                        .padding(25.dp),
-                    verticalArrangement = Arrangement.Center,
-                ) {
-                    MostrarCursos(CursoRepositorio.cursos, usuario)
-                }
+                Spacer(modifier = Modifier.height(5000.dp))
                 Menu(usuario)
             }
         }
@@ -101,6 +96,24 @@ class DescubrirActivity : ComponentActivity() {
             ) {
                 Text("Filtros", color = Black)
             }
+            Image(
+                painter = painterResource(id = R.drawable.baseline_settings_24),
+                contentDescription = "",
+                modifier = Modifier
+                    .clickable(enabled = true, onClick = {
+                        configuracion()
+                    })
+            )
+        }
+    }
+
+    @Composable
+    private fun Contenido(usuario: Usuario) {
+        Column(
+            Modifier
+                .padding(25.dp)
+        ) {
+            MostrarCursos(CursoRepositorio.cursos, usuario)
         }
     }
 
@@ -199,6 +212,12 @@ class DescubrirActivity : ComponentActivity() {
             putExtra("username", username)
             putExtra("password", password)
         }
+        startActivity(intent)
+        onStop()
+    }
+
+    private fun configuracion() {
+        val intent = Intent(this, ConfiguracionActivity::class.java)
         startActivity(intent)
         onStop()
     }
