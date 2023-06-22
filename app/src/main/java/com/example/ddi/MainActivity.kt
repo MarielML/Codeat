@@ -60,7 +60,7 @@ class MainActivity : ComponentActivity() {
                             } else {
                                 error = ""
                                 usuario = UsuarioRepositorio.iniciar(nombre, contrasenia)
-                                misCursos(nombre, contrasenia)
+                                descubrir(nombre, contrasenia)
                                 finish()
                             }
                         } else {
@@ -81,8 +81,8 @@ class MainActivity : ComponentActivity() {
         startActivity(intent)
     }
 
-    private fun misCursos(username: String, password: String) {
-        val intent = Intent(this, MisCursos::class.java).apply {
+    private fun descubrir(username: String, password: String) {
+        val intent = Intent(this, DescubrirActivity::class.java).apply {
             putExtra("username", username)
             putExtra("password", password)
         }
