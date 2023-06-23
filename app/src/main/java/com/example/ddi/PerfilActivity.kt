@@ -9,6 +9,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,7 +18,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -31,9 +35,10 @@ import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.ddi.data.Usuario
 import com.example.ddi.data.UsuarioRepositorio
-import com.example.ddi.ui.theme.DDITheme
+import com.example.ddi.ui.theme.CodeatTheme
 
 class PerfilActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,7 +56,7 @@ class PerfilActivity : ComponentActivity() {
 
     @Composable
     private fun Content(usuario: Usuario) {
-        DDITheme {
+        CodeatTheme {
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background
@@ -61,7 +66,7 @@ class PerfilActivity : ComponentActivity() {
                 )
                 {
                     TopBar()
-                    Contenido()
+                    Contenido(usuario)
                 }
                 Menu(usuario)
             }
@@ -93,17 +98,65 @@ class PerfilActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun Contenido() {
-        Column(
+    private fun Contenido(usuario: Usuario) {
+        Column (
             Modifier
-                .fillMaxSize()
-                .padding(25.dp),
-
-            verticalArrangement = Arrangement.Center,
+                .padding(25.dp)
         ) {
-
+            Row {
+                Box(
+                    modifier = Modifier
+                        .height(140.dp)
+                ) {
+                    Column() {
+                        TextCustom(text = "Seguidores")
+                        Spacer(modifier = Modifier.height(5.dp))
+                        MostrarSeguidores(usuario.seguidores)
+                    }
+                }
+                Spacer(modifier = Modifier.width(20.dp))
+                Box(
+                    modifier = Modifier
+                        .height(140.dp)
+                ) {
+                    Column() {
+                        TextCustom(text = "Seguidos")
+                        Spacer(modifier = Modifier.height(5.dp))
+                        MostrarSeguidos(usuario.seguidos)
+                    }
+                }
+            }
         }
     }
+
+    @Composable
+    private fun MostrarSeguidores(datos: MutableList<Usuario>) {
+        LazyColumn {
+            items(datos) { item -> ListItemRowSeguidores(item) }
+        }
+    }
+
+    @Composable
+    private fun ListItemRowSeguidores(item: Usuario) {
+        Row {
+            TextCustom(text = item.nickname, fontSize = 20.sp)
+        }
+    }
+
+    @Composable
+    private fun MostrarSeguidos(datos: MutableList<Usuario>) {
+        LazyColumn {
+            items(datos) { item -> ListItemRowSeguidos(item) }
+        }
+    }
+
+    @Composable
+    private fun ListItemRowSeguidos(item: Usuario) {
+        Row {
+            TextCustom(text = item.nickname, fontSize = 20.sp)
+        }
+    }
+
 
     @Composable
     private fun Menu(usuario: Usuario) {

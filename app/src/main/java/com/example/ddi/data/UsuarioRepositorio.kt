@@ -1,17 +1,17 @@
 package com.example.ddi.data
 
 object UsuarioRepositorio {
-    val usuarios = mutableListOf<Usuario>()
+    private val usuarios = mutableListOf<Usuario>()
 
     init {
         usuarios.add(Usuario("A", "a", "a@email",
             cursos =
-        mutableListOf(Curso("JavaScript I", "Anónimo",4.8),
-                      Curso("JavaScript II", "Anónimo",4.9)),
+        mutableListOf(Curso("JavaScript I", Usuario(nickname = "Anónimo"),4.8),
+                      Curso("JavaScript II", Usuario(nickname = "Anónimo"),4.9)),
             cursosPublicados =
-        mutableListOf(Curso("React I", "A",3.0)),
+        mutableListOf(Curso("React I", Usuario(nickname = "A"),3.0)),
             cursosSinPublicar =
-        mutableListOf(Curso("React II", "A",3.5))))
+        mutableListOf(Curso("React II", Usuario(nickname = "A"),3.5))))
     }
 
     fun agregar(usuario: Usuario) {
@@ -24,7 +24,7 @@ object UsuarioRepositorio {
         return (usuarios.any { usuario: Usuario -> usuario.nickname == nickname && usuario.password == password })
     }
 
-    fun existeNombreOEmail(nickname: String, email: String): Boolean {
+    private fun existeNombreOEmail(nickname: String, email: String): Boolean {
         return (usuarios.any { usuario: Usuario -> usuario.nickname == nickname || usuario.email == email })
     }
 
@@ -36,5 +36,15 @@ object UsuarioRepositorio {
             }
         }
         return usuarioIniciado
+    }
+
+    fun creador(nickname: String): Usuario {
+        var creador = Usuario()
+        for (elemento in usuarios) {
+            if (elemento.nickname == nickname) {
+                creador = elemento
+            }
+        }
+        return creador
     }
 }

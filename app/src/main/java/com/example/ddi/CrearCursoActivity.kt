@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.dp
 import com.example.ddi.data.Curso
 import com.example.ddi.data.Usuario
 import com.example.ddi.data.UsuarioRepositorio
-import com.example.ddi.ui.theme.DDITheme
+import com.example.ddi.ui.theme.CodeatTheme
 
 class CrearCursoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +56,7 @@ class CrearCursoActivity : ComponentActivity() {
 
     @Composable
     private fun Content(usuario: Usuario) {
-        DDITheme {
+        CodeatTheme {
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background
@@ -120,7 +120,6 @@ class CrearCursoActivity : ComponentActivity() {
             ) {
                 MostrarCursosPublicados(usuario.cursosPublicados, usuario)
             }
-
             TextCustom(text = "Cursos sin Pulicar")
             Spacer(modifier = Modifier.height(20.dp))
             Box(
