@@ -104,7 +104,7 @@ class CursoActivity : ComponentActivity() {
 
             verticalArrangement = Arrangement.Center,
         ) {
-            Creador(curso)
+            Creador(usuario, curso)
             Spacer(modifier = Modifier.height(20.dp))
             Row (
                 modifier = Modifier.fillMaxWidth(),
@@ -120,7 +120,7 @@ class CursoActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun Creador(curso: Curso) {
+    private fun Creador(usuario: Usuario, curso: Curso) {
         Row (
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround,
@@ -128,12 +128,14 @@ class CursoActivity : ComponentActivity() {
             Image(painterResource(id = R.drawable.baseline_person_100), contentDescription = "", Modifier.width(50.dp))
             Column() {
                 TextCustom(text = "${curso.creador} (${curso.puntaje})")
-                Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
-                    shape = RoundedCornerShape(0),
-                    border = BorderStroke(1.dp, Black),
-                    onClick = {  }
-                ) {
-                    Text("Seguir", color = Black)
+                if(usuario.nickname != curso.creador) {
+                    Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
+                        shape = RoundedCornerShape(0),
+                        border = BorderStroke(1.dp, Black),
+                        onClick = { usuario.agregarSeguidor(curso.creador) }
+                    ) {
+                        Text("Seguir", color = Black)
+                    }
                 }
             }
         }
