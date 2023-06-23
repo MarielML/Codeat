@@ -29,7 +29,7 @@ import com.example.ddi.data.Curso
 import com.example.ddi.data.CursoRepositorio
 import com.example.ddi.data.Usuario
 import com.example.ddi.data.UsuarioRepositorio
-import com.example.ddi.ui.theme.DDITheme
+import com.example.ddi.ui.theme.CodeatTheme
 
 class CrearActivity : ComponentActivity() {
 
@@ -50,7 +50,7 @@ class CrearActivity : ComponentActivity() {
 
     @Composable
     private fun Content(usuario: Usuario) {
-        DDITheme {
+        CodeatTheme {
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background
@@ -105,7 +105,7 @@ class CrearActivity : ComponentActivity() {
             Row(verticalAlignment = Alignment.Bottom) {
                 ButtonCustom(text = "Crear", onClick = {
                     if(!CursoRepositorio.existe(nombre) && !usuario.creado(nombre)) {
-                        nuevoCurso = Curso(nombre = nombre, creador = usuario.nickname)
+                        nuevoCurso = Curso(nombre = nombre, creador = usuario)
                         usuario.crearCurso(nuevoCurso)
                         crearCurso(usuario.nickname, usuario.password)
                         finish()

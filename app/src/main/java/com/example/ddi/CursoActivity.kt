@@ -36,7 +36,7 @@ import com.example.ddi.data.Curso
 import com.example.ddi.data.CursoRepositorio
 import com.example.ddi.data.Usuario
 import com.example.ddi.data.UsuarioRepositorio
-import com.example.ddi.ui.theme.DDITheme
+import com.example.ddi.ui.theme.CodeatTheme
 
 class CursoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +55,7 @@ class CursoActivity : ComponentActivity() {
 
     @Composable
     private fun Content(usuario: Usuario, curso: Curso) {
-        DDITheme {
+        CodeatTheme {
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background
@@ -127,14 +127,21 @@ class CursoActivity : ComponentActivity() {
         ){
             Image(painterResource(id = R.drawable.baseline_person_100), contentDescription = "", Modifier.width(50.dp))
             Column() {
-                TextCustom(text = "${curso.creador} (${curso.puntaje})")
-                if(usuario.nickname != curso.creador) {
+                TextCustom(text = "${curso.creador.nickname} (${curso.puntaje})")
+                if(usuario.nickname != curso.creador.nickname) {
                     Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
                         shape = RoundedCornerShape(0),
                         border = BorderStroke(1.dp, Black),
-                        onClick = { usuario.agregarSeguidor(curso.creador) }
+                        onClick = {
+                            usuario.agregarSeguido(curso.creador)
+                            UsuarioRepositorio.creador(curso.creador.nickname).agregarSeguidor(usuario)
+                        }
                     ) {
-                        Text("Seguir", color = Black)
+                        if (!usuario.existeSeguido(curso.creador.nickname)) {
+                            Text("Seguir", color = Black)
+                        } else {
+                            Text("Siguiendo", color = Black)
+                        }
                     }
                 }
             }

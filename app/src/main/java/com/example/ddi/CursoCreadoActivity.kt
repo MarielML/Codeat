@@ -31,7 +31,7 @@ import com.example.ddi.data.Curso
 import com.example.ddi.data.CursoRepositorio
 import com.example.ddi.data.Usuario
 import com.example.ddi.data.UsuarioRepositorio
-import com.example.ddi.ui.theme.DDITheme
+import com.example.ddi.ui.theme.CodeatTheme
 
 class CursoCreadoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +50,7 @@ class CursoCreadoActivity : ComponentActivity() {
 
     @Composable
     private fun Content(usuario: Usuario, curso: Curso) {
-        DDITheme {
+        CodeatTheme {
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background
@@ -131,7 +131,7 @@ class CursoCreadoActivity : ComponentActivity() {
                 Modifier.width(50.dp)
             )
             Column() {
-                TextCustom(text = "${curso.creador} (${curso.puntaje})")
+                TextCustom(text = "${curso.creador.nickname} (${curso.puntaje})")
             }
         }
     }

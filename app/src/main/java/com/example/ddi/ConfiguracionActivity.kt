@@ -25,7 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.ddi.ui.theme.DDITheme
+import com.example.ddi.ui.theme.CodeatTheme
 
 class ConfiguracionActivity : ComponentActivity() {
     var modo = "Modo oscuro"
@@ -39,7 +39,7 @@ class ConfiguracionActivity : ComponentActivity() {
 
     @Composable
     private fun Content() {
-        DDITheme {
+        CodeatTheme {
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background

@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ddi.data.Usuario
 import com.example.ddi.data.UsuarioRepositorio
-import com.example.ddi.ui.theme.DDITheme
+import com.example.ddi.ui.theme.CodeatTheme
 
 class MainActivity : ComponentActivity() {
     private lateinit var usuario: Usuario
@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     private fun Content() {
-        DDITheme {
+        CodeatTheme {
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background
