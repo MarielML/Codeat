@@ -88,20 +88,12 @@ class ConfiguracionActivity : ComponentActivity() {
         )
         {
             ButtonCustom(text = modo, onClick = {
-                modo()
+
             })
             ButtonCustom(text = "Cerrar sesión", onClick = {
                 cerrarSesion()
                 finishAffinity()
             })
-        }
-    }
-
-    private fun modo() {
-        modo = if(modo == "Modo claro") {
-            "Modo oscuro"
-        } else {
-            "Modo claro"
         }
     }
 

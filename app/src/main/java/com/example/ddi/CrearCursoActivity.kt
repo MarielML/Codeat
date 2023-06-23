@@ -9,6 +9,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -112,10 +113,23 @@ class CrearCursoActivity : ComponentActivity() {
         ) {
             TextCustom(text = "Cursos Pulicados")
             Spacer(modifier = Modifier.height(20.dp))
-            MostrarCursosPublicados(usuario.cursosPublicados, usuario)
+            Box(
+                modifier = Modifier
+                    .height(150.dp)
+                    .padding(horizontal = 10.dp, vertical = 5.dp),
+            ) {
+                MostrarCursosPublicados(usuario.cursosPublicados, usuario)
+            }
+
             TextCustom(text = "Cursos sin Pulicar")
             Spacer(modifier = Modifier.height(20.dp))
-            MostrarCursosSinPublicar(usuario.cursosSinPublicar, usuario)
+            Box(
+                modifier = Modifier
+                    .height(150.dp)
+                    .padding(horizontal = 10.dp, vertical = 5.dp),
+            ) {
+                MostrarCursosSinPublicar(usuario.cursosSinPublicar, usuario)
+            }
         }
     }
 

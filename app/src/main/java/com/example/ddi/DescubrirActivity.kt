@@ -9,6 +9,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -69,7 +70,6 @@ class DescubrirActivity : ComponentActivity() {
                     TopBar()
                     Contenido(usuario)
                 }
-                Spacer(modifier = Modifier.height(5000.dp))
                 Menu(usuario)
             }
         }
@@ -109,11 +109,17 @@ class DescubrirActivity : ComponentActivity() {
 
     @Composable
     private fun Contenido(usuario: Usuario) {
-        Column(
-            Modifier
-                .padding(25.dp)
+        Box(
+            modifier = Modifier
+                .height(480.dp)
+                .padding(horizontal = 10.dp, vertical = 5.dp),
         ) {
-            MostrarCursos(CursoRepositorio.cursos, usuario)
+            Column(
+                Modifier
+                    .padding(25.dp)
+            ) {
+                MostrarCursos(CursoRepositorio.cursos, usuario)
+            }
         }
     }
 

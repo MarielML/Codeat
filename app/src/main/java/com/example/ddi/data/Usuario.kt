@@ -7,6 +7,8 @@ class Usuario (
     val cursos: MutableList<Curso> = mutableListOf(),
     val cursosPublicados: MutableList<Curso> = mutableListOf(),
     val cursosSinPublicar: MutableList<Curso> = mutableListOf(),
+    val seguidores: MutableList<String> = mutableListOf(),
+    val seguidos: MutableList<String> = mutableListOf()
 ) {
     fun agregarCurso(curso: Curso) {
         if (!existe(curso.nombre)) {
@@ -47,5 +49,25 @@ class Usuario (
             }
         }
         return cursoElegido
+    }
+
+    fun agregarSeguidor(seguidor: String) {
+        if (!existeSeguidor(seguidor)) {
+            seguidores.add(seguidor)
+        }
+    }
+
+    fun existeSeguidor(nickname: String): Boolean {
+        return (seguidores.any { seguidor: String -> seguidor == nickname})
+    }
+
+    fun agregarSeguido(seguido: String) {
+        if (!existeSeguido(seguido)) {
+            seguidos.add(seguido)
+        }
+    }
+
+    fun existeSeguido(nickname: String): Boolean {
+        return (seguidos.any { seguido: String -> seguido == nickname})
     }
 }
