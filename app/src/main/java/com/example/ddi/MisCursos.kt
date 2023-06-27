@@ -143,7 +143,7 @@ class MisCursos : ComponentActivity() {
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically,
         ){
-            TextCustom(text = item.puntaje.toString())
+            TextCustom(text = "0%")
             ButtonCustom(text = item.nombre, onClick = { curso(usuario.nickname, usuario.password, item.nombre) })
         }
     }
