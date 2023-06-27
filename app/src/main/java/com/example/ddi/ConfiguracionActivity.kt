@@ -19,16 +19,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.ddi.ui.theme.CodeatTheme
 
 class ConfiguracionActivity : ComponentActivity() {
-    var modo = "Modo oscuro"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +66,7 @@ class ConfiguracionActivity : ComponentActivity() {
                 .fillMaxWidth()
                 .height(60.dp)
                 .wrapContentHeight()
-                .border(BorderStroke(1.dp, Color.Black))
+                .border(BorderStroke(1.dp, Black))
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -83,17 +87,33 @@ class ConfiguracionActivity : ComponentActivity() {
     private fun Contenido() {
         Column(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceAround,
+            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         )
         {
-            ButtonCustom(text = modo, onClick = {
-
-            })
+            Modo()
+            Spacer(modifier = Modifier.height(50.dp))
             ButtonCustom(text = "Cerrar sesión", onClick = {
                 cerrarSesion()
                 finishAffinity()
             })
+        }
+    }
+
+    @Composable
+    fun Modo() {
+        val checkedState = remember { mutableStateOf(false) }
+        Column(
+            modifier = Modifier
+                .padding(top = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            TextCustom(text = "Modo oscuro", fontSize = 24.sp)
+            Switch(
+                checked = checkedState.value,
+                onCheckedChange = { checkedState.value = it },
+                colors = SwitchDefaults.colors(Black)
+            )
         }
     }
 
