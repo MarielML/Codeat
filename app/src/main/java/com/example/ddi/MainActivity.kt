@@ -4,6 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.keyframes
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,8 +20,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ddi.data.Usuario
@@ -23,11 +34,12 @@ import com.example.ddi.ui.theme.CodeatTheme
 
 class MainActivity : ComponentActivity() {
     private lateinit var usuario: Usuario
-    var error = ""
+    private var error = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            //Logo()
             Content()
         }
     }
@@ -92,4 +104,30 @@ class MainActivity : ComponentActivity() {
     private fun validar(nombre: String, contrasenia: String): Boolean {
         return nombre != "" && contrasenia != ""
     }
+
+    /*@Composable
+    fun Logo() {
+        val infiniteTransition = rememberInfiniteTransition()
+
+        val alpha by infiniteTransition.animateFloat(
+            initialValue = 1F,
+            targetValue = 0F,
+            animationSpec = infiniteRepeatable(
+                animation = keyframes {
+                    5000.0.toFloat() / 2 at 0
+                    5000.0.toFloat() / 2 at 1
+                },
+                repeatMode = RepeatMode.Restart
+            )
+        )
+        Column(
+            modifier = Modifier.background(Color.Red).fillMaxSize().alpha(alpha),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.baseline_settings_24),
+                contentDescription = ""
+            )
+        }
+    }*/
 }
