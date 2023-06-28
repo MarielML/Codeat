@@ -27,34 +27,31 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
-import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.ddi.data.Curso
-import com.example.ddi.data.CursoRepositorio
 import com.example.ddi.data.Usuario
 import com.example.ddi.data.UsuarioRepositorio
 import com.example.ddi.ui.theme.CodeatTheme
 
-class CursoActivity : ComponentActivity() {
+class UsuarioActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val bundle = intent.extras
         val username: String? = bundle?.getString("username")
         val password: String? = bundle?.getString("password")
         val usuario: Usuario = UsuarioRepositorio.iniciar(username!!, password!!)
-        val nombre: String? = bundle.getString("nombre")
-        val curso: Curso = CursoRepositorio.cursoElegido(nombre!!)
+        val creador: String? = bundle.getString("creador")
 
         setContent {
-            Content(usuario, curso)
+            Content(usuario, creador!!)
         }
     }
 
     @Composable
-    private fun Content(usuario: Usuario, curso: Curso) {
+    private fun Content(usuario: Usuario, creador: String) {
         CodeatTheme {
             Surface(
                 modifier = Modifier.fillMaxSize(),
@@ -64,15 +61,15 @@ class CursoActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize()
                 )
                 {
-                    TopBar(curso)
-                    Contenido(usuario, curso)
+                    TopBar(creador)
+                    Contenido(usuario, creador)
                 }
             }
         }
     }
 
     @Composable
-    private fun TopBar(curso: Curso) {
+    private fun TopBar(creador: String) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -82,7 +79,7 @@ class CursoActivity : ComponentActivity() {
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            TextCustom(text = curso.nombre, textAlign = TextAlign.Center)
+            TextCustom(text = creador, textAlign = TextAlign.Center)
             Spacer(modifier = Modifier.weight(1f))
             Image(
                 painter = painterResource(id = R.drawable.baseline_settings_24),
@@ -96,51 +93,24 @@ class CursoActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun Contenido(usuario: Usuario, curso: Curso) {
-        Column(
-            Modifier
-                .fillMaxSize()
-                .padding(25.dp),
-
-            verticalArrangement = Arrangement.Center,
-        ) {
-            Creador(usuario, curso)
-            Spacer(modifier = Modifier.height(20.dp))
-            Row (
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceAround,
-            ){
-                ButtonCustom(text = "Agregar curso", onClick = {
-                    usuario.agregarCurso(curso)
-                    misCursos(usuario.nickname, usuario.password)
-                    finish()
-                })
-            }
-        }
-    }
-
-    @Composable
-    private fun Creador(usuario: Usuario, curso: Curso) {
+    private fun Contenido(usuario: Usuario, creador: String) {
         Row (
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround,
         ){
             Image(painterResource(id = R.drawable.baseline_person_100), contentDescription = "", Modifier.width(50.dp))
-            Column() {
-                TextCustom(text = "${curso.creador.nickname} (${curso.puntaje})", modifier = Modifier
-                    .clickable(enabled = true, onClick = {
-                        usuario(usuario.nickname, usuario.password, curso.creador.nickname)
-                    }))
-                if(usuario.nickname != curso.creador.nickname) {
-                    Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
+            Column {
+                TextCustom(text = creador)
+                if(usuario.nickname != creador) {
+                    Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White),
                         shape = RoundedCornerShape(0),
                         border = BorderStroke(1.dp, Black),
                         onClick = {
-                            usuario.agregarSeguido(curso.creador)
-                            UsuarioRepositorio.creador(curso.creador.nickname).agregarSeguidor(usuario)
+                            usuario.agregarSeguido(UsuarioRepositorio.creador(creador))
+                            UsuarioRepositorio.creador(creador).agregarSeguidor(usuario)
                         }
                     ) {
-                        if (!usuario.existeSeguido(curso.creador.nickname)) {
+                        if (!usuario.existeSeguido(creador)) {
                             Text("Seguir", color = Black)
                         } else {
                             Text("Siguiendo", color = Black)
@@ -151,27 +121,8 @@ class CursoActivity : ComponentActivity() {
         }
     }
 
-    private fun misCursos(username: String, password: String) {
-        val intent = Intent(this, MisCursos::class.java).apply {
-            putExtra("username", username)
-            putExtra("password", password)
-        }
-        startActivity(intent)
-        onStop()
-    }
-
     private fun configuracion() {
         val intent = Intent(this, ConfiguracionActivity::class.java)
-        startActivity(intent)
-        onStop()
-    }
-
-    private fun usuario(username: String, password: String, creador: String) {
-        val intent = Intent(this, UsuarioActivity::class.java).apply {
-            putExtra("username", username)
-            putExtra("password", password)
-            putExtra("creador", creador)
-        }
         startActivity(intent)
         onStop()
     }

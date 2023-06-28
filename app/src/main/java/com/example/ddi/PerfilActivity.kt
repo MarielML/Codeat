@@ -103,6 +103,17 @@ class PerfilActivity : ComponentActivity() {
             Modifier
                 .padding(25.dp)
         ) {
+            Row (
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround,
+            ) {
+                Image(
+                    painterResource(id = R.drawable.baseline_person_100),
+                    contentDescription = "",
+                    Modifier.width(50.dp)
+                )
+                TextCustom(text = usuario.nickname)
+            }
             Row {
                 Box(
                     modifier = Modifier
