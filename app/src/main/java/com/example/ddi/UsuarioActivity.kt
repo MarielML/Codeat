@@ -9,6 +9,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,6 +19,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -32,6 +35,7 @@ import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.ddi.data.Curso
 import com.example.ddi.data.Usuario
 import com.example.ddi.data.UsuarioRepositorio
 import com.example.ddi.ui.theme.CodeatTheme
@@ -94,31 +98,78 @@ class UsuarioActivity : ComponentActivity() {
 
     @Composable
     private fun Contenido(usuario: Usuario, creador: String) {
-        Row (
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround,
-        ){
-            Image(painterResource(id = R.drawable.baseline_person_100), contentDescription = "", Modifier.width(50.dp))
-            Column {
-                TextCustom(text = creador)
-                if(usuario.nickname != creador) {
-                    Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White),
-                        shape = RoundedCornerShape(0),
-                        border = BorderStroke(1.dp, Black),
-                        onClick = {
-                            usuario.agregarSeguido(UsuarioRepositorio.creador(creador))
-                            UsuarioRepositorio.creador(creador).agregarSeguidor(usuario)
-                        }
-                    ) {
-                        if (!usuario.existeSeguido(creador)) {
-                            Text("Seguir", color = Black)
-                        } else {
-                            Text("Siguiendo", color = Black)
+        Column(
+            Modifier
+                .padding(25.dp)
+        ) {
+            Row (
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround,
+            ){
+                Image(painterResource(id = R.drawable.baseline_person_100), contentDescription = "", Modifier.width(50.dp))
+                Column {
+                    TextCustom(text = creador)
+                    if(usuario.nickname != creador) {
+                        Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White),
+                            shape = RoundedCornerShape(0),
+                            border = BorderStroke(1.dp, Black),
+                            onClick = {
+                                usuario.agregarSeguido(UsuarioRepositorio.creador(creador))
+                                UsuarioRepositorio.creador(creador).agregarSeguidor(usuario)
+                            }
+                        ) {
+                            if (!usuario.existeSeguido(creador)) {
+                                Text("Seguir", color = Black)
+                            } else {
+                                Text("Siguiendo", color = Black)
+                            }
                         }
                     }
                 }
             }
+            TextCustom(text = "Cursos Pulicados")
+            Spacer(modifier = Modifier.height(20.dp))
+            Box(
+                modifier = Modifier
+                    .height(300.dp)
+                    .padding(horizontal = 10.dp, vertical = 5.dp),
+            ) {
+                MostrarCursosPublicados(UsuarioRepositorio.creador(creador).cursosPublicados, usuario)
+            }
         }
+    }
+
+    @Composable
+    private fun MostrarCursosPublicados(datos: MutableList<Curso>, usuario: Usuario) {
+        LazyColumn (
+            modifier = Modifier.fillMaxWidth().wrapContentHeight()
+        ) {
+            items(datos) { item -> ListItemRow(item, usuario) }
+        }
+    }
+
+    @Composable
+    private fun ListItemRow(item: Curso, usuario: Usuario) {
+        Row (
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically,
+        ){
+            TextCustom(text = item.puntaje.toString())
+            ButtonCustom(text = item.nombre, onClick = {
+                curso(usuario.nickname, usuario.password, item.nombre)
+            })
+        }
+    }
+
+    private fun curso(username: String, password: String, nombre: String) {
+        val intent = Intent(this, CursoActivity::class.java).apply {
+            putExtra("username", username)
+            putExtra("password", password)
+            putExtra("nombre", nombre)
+        }
+        startActivity(intent)
+        onStop()
     }
 
     private fun configuracion() {

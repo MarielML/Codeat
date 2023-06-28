@@ -129,7 +129,11 @@ class CursoActivity : ComponentActivity() {
             Column() {
                 TextCustom(text = "${curso.creador.nickname} (${curso.puntaje})", modifier = Modifier
                     .clickable(enabled = true, onClick = {
-                        usuario(usuario.nickname, usuario.password, curso.creador.nickname)
+                        if(usuario.nickname != curso.creador.nickname) {
+                            usuario(usuario.nickname, usuario.password, curso.creador.nickname)
+                        } else {
+                            perfil(usuario.nickname, usuario.password)
+                        }
                     }))
                 if(usuario.nickname != curso.creador.nickname) {
                     Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
@@ -153,6 +157,15 @@ class CursoActivity : ComponentActivity() {
 
     private fun misCursos(username: String, password: String) {
         val intent = Intent(this, MisCursos::class.java).apply {
+            putExtra("username", username)
+            putExtra("password", password)
+        }
+        startActivity(intent)
+        onStop()
+    }
+
+    private fun perfil(username: String, password: String) {
+        val intent = Intent(this, PerfilActivity::class.java).apply {
             putExtra("username", username)
             putExtra("password", password)
         }
