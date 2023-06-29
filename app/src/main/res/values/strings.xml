@@ -11,4 +11,6 @@
     <string name="title_activity_curso_creado">CursoCreadoActivity</string>
     <string name="title_activity_configuracion">ConfiguracionActivity</string>
     <string name="title_activity_usuario">UsuarioActivity</string>
+    <string name="title_activity_todos_los_cursos">TodosLosCursosActivity</string>
+    <string name="title_activity_clases">ClasesActivity</string>
 </resources>

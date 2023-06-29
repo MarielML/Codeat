@@ -35,6 +35,7 @@ import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.ddi.data.Curso
 import com.example.ddi.data.Usuario
 import com.example.ddi.data.UsuarioRepositorio
@@ -127,6 +128,30 @@ class UsuarioActivity : ComponentActivity() {
                     }
                 }
             }
+            Row {
+                Box(
+                    modifier = Modifier
+                        .height(140.dp)
+                ) {
+                    Column() {
+                        TextCustom(text = "Seguidos: ${UsuarioRepositorio.creador(creador).seguidos.size}", fontSize = 24.sp)
+                        Spacer(modifier = Modifier.height(5.dp))
+                        MostrarSeguidos(UsuarioRepositorio.creador(creador).seguidos)
+                    }
+                }
+                Spacer(modifier = Modifier.width(20.dp))
+                Box(
+                    modifier = Modifier
+                        .height(140.dp)
+                ) {
+                    Column() {
+                        TextCustom(text = "Seguidores: ${UsuarioRepositorio.creador(creador).seguidores.size}", fontSize = 24.sp)
+                        Spacer(modifier = Modifier.height(5.dp))
+                        MostrarSeguidores(UsuarioRepositorio.creador(creador).seguidores)
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.width(10.dp))
             TextCustom(text = "Cursos Pulicados")
             Spacer(modifier = Modifier.height(20.dp))
             Box(
@@ -136,6 +161,34 @@ class UsuarioActivity : ComponentActivity() {
             ) {
                 MostrarCursosPublicados(UsuarioRepositorio.creador(creador).cursosPublicados, usuario)
             }
+        }
+    }
+
+    @Composable
+    private fun MostrarSeguidores(datos: MutableList<Usuario>) {
+        LazyColumn {
+            items(datos) { item -> ListItemRowSeguidores(item) }
+        }
+    }
+
+    @Composable
+    private fun ListItemRowSeguidores(item: Usuario) {
+        Row {
+            TextCustom(text = item.nickname, fontSize = 20.sp)
+        }
+    }
+
+    @Composable
+    private fun MostrarSeguidos(datos: MutableList<Usuario>) {
+        LazyColumn {
+            items(datos) { item -> ListItemRowSeguidos(item) }
+        }
+    }
+
+    @Composable
+    private fun ListItemRowSeguidos(item: Usuario) {
+        Row {
+            TextCustom(text = item.nickname, fontSize = 20.sp)
         }
     }
 

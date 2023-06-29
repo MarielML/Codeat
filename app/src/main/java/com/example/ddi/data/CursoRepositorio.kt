@@ -2,6 +2,8 @@ package com.example.ddi.data
 
 object CursoRepositorio {
     val cursos = mutableListOf<Curso>()
+    val tendencia = mutableListOf<Curso>()
+    val populares = mutableListOf<Curso>()
 
     init {
         cursos.add(Curso("JavaScript I", Usuario(nickname = "Anónimo"),4.8))
@@ -10,6 +12,11 @@ object CursoRepositorio {
         cursos.add(Curso("TypeScript II", Usuario(nickname = "Anónimo"),4.7))
         cursos.add(Curso("Phyton I", Usuario(nickname = "Pepe Argento"),4.8))
         cursos.add(Curso("React I", Usuario(nickname = "A"),3.0))
+        populares.add(Curso("JavaScript I", Usuario(nickname = "Anónimo"),4.8))
+        populares.add(Curso("JavaScript II", Usuario(nickname = "Anónimo"),4.9))
+        populares.add(Curso("TypeScript I", Usuario(nickname = "Anónimo"),4.9))
+        tendencia.add(Curso("TypeScript II", Usuario(nickname = "Anónimo"),4.7))
+        tendencia.add(Curso("Phyton I", Usuario(nickname = "Pepe Argento"),4.8))
     }
 
     fun agregar(curso: Curso) {
@@ -30,5 +37,17 @@ object CursoRepositorio {
             }
         }
         return cursoElegido
+    }
+
+    fun ordenarCursos(): List<Curso> {
+        return cursos.sortedByDescending { it.puntaje }
+    }
+
+    fun ordenarTendencia(): List<Curso> {
+        return tendencia.sortedByDescending { it.puntaje }
+    }
+
+    fun ordenarPopulares(): List<Curso> {
+        return populares.sortedByDescending { it.puntaje }
     }
 }

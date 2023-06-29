@@ -120,9 +120,9 @@ class PerfilActivity : ComponentActivity() {
                         .height(140.dp)
                 ) {
                     Column() {
-                        TextCustom(text = "Seguidores")
+                        TextCustom(text = "Seguidos: ${usuario.seguidos.size}", fontSize = 24.sp)
                         Spacer(modifier = Modifier.height(5.dp))
-                        MostrarSeguidores(usuario.seguidores)
+                        MostrarSeguidos(usuario.seguidos)
                     }
                 }
                 Spacer(modifier = Modifier.width(20.dp))
@@ -131,9 +131,9 @@ class PerfilActivity : ComponentActivity() {
                         .height(140.dp)
                 ) {
                     Column() {
-                        TextCustom(text = "Seguidos")
+                        TextCustom(text = "Seguidores: ${usuario.seguidores.size}", fontSize = 24.sp)
                         Spacer(modifier = Modifier.height(5.dp))
-                        MostrarSeguidos(usuario.seguidos)
+                        MostrarSeguidores(usuario.seguidores)
                     }
                 }
             }

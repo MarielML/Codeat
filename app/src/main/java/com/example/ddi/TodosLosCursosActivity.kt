@@ -31,9 +31,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color.Companion.Black
-import androidx.compose.ui.graphics.Color.Companion.Gray
-import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.ddi.data.Curso
@@ -41,9 +39,8 @@ import com.example.ddi.data.CursoRepositorio
 import com.example.ddi.data.Usuario
 import com.example.ddi.data.UsuarioRepositorio
 import com.example.ddi.ui.theme.CodeatTheme
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
-class DescubrirActivity : ComponentActivity() {
+class TodosLosCursosActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -83,19 +80,20 @@ class DescubrirActivity : ComponentActivity() {
                 .fillMaxWidth()
                 .height(60.dp)
                 .wrapContentHeight()
-                .border(BorderStroke(1.dp, Black))
+                .border(BorderStroke(1.dp, Color.Black))
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            TextCustom(text = "Descubrir")
+            Image(painterResource(id = R.drawable.baseline_search_24), contentDescription = "")
+            textFieldCustom(label = "", placeholder = "Buscar")
             Spacer(modifier = Modifier.weight(1f))
-            Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
+            Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White),
                 shape = RoundedCornerShape(0),
-                border = BorderStroke(1.dp, Black),
+                border = BorderStroke(1.dp, Color.Black),
                 modifier = Modifier.fillMaxHeight(),
                 onClick = {  }
             ) {
-                Text("Filtros", color = Black)
+                Text("Filtros", color = Color.Black)
             }
             Image(
                 painter = painterResource(id = R.drawable.baseline_settings_24),
@@ -110,32 +108,16 @@ class DescubrirActivity : ComponentActivity() {
 
     @Composable
     private fun Contenido(usuario: Usuario) {
-        Column(
-            Modifier
-                .padding(25.dp)
+        Box(
+            modifier = Modifier
+                .height(480.dp)
+                .padding(horizontal = 10.dp, vertical = 5.dp),
         ) {
-            TextCustom(text = "Más Populares")
-            Spacer(modifier = Modifier.height(20.dp))
-            Box(
-                modifier = Modifier
-                    .height(130.dp)
-                    .padding(horizontal = 10.dp, vertical = 5.dp),
+            Column(
+                Modifier
+                    .padding(25.dp)
             ) {
-                MostrarCursos(CursoRepositorio.ordenarPopulares() as MutableList<Curso>, usuario)
-            }
-            TextCustom(text = "Tendencia")
-            Spacer(modifier = Modifier.height(20.dp))
-            Box(
-                modifier = Modifier
-                    .height(130.dp)
-                    .padding(horizontal = 10.dp, vertical = 5.dp),
-            ) {
-                MostrarCursos(CursoRepositorio.ordenarTendencia() as MutableList<Curso>, usuario)
-            }
-            Row (
-                horizontalArrangement = Arrangement.Center
-            ) {
-                ButtonCustom(text = "Ver todos", onClick = { todosLosCursos(usuario.nickname, usuario.password) })
+                MostrarCursos(CursoRepositorio.ordenarCursos() as MutableList<Curso>, usuario)
             }
         }
     }
@@ -167,48 +149,39 @@ class DescubrirActivity : ComponentActivity() {
     private fun Menu(usuario: Usuario) {
         Row(modifier = Modifier
             .size(30.dp)
-            .border(BorderStroke(1.dp, Black)),
+            .border(BorderStroke(1.dp, Color.Black)),
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.Bottom
         ) {
             Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White),
                 shape = RoundedCornerShape(0),
                 onClick = { misCursos(usuario.nickname, usuario.password) }
             ) {
                 Image(painterResource(id = R.drawable.baseline_folder_24), contentDescription = "")
             }
             Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = Gray),
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.Gray),
                 shape = RoundedCornerShape(0),
                 onClick = { }
             ) {
                 Image(painterResource(id = R.drawable.baseline_search_24), contentDescription = "")
             }
             Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White),
                 shape = RoundedCornerShape(0),
                 onClick = { crear(usuario.nickname, usuario.password) }
             ) {
                 Image(painterResource(id = R.drawable.baseline_add_24), contentDescription = "")
             }
             Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White),
                 shape = RoundedCornerShape(0),
                 onClick = { perfil(usuario.nickname, usuario.password) }
             ) {
                 Image(painterResource(id = R.drawable.baseline_person_24), contentDescription = "")
             }
         }
-    }
-
-    private fun todosLosCursos(username: String, password: String) {
-        val intent = Intent(this, TodosLosCursosActivity::class.java).apply {
-            putExtra("username", username)
-            putExtra("password", password)
-        }
-        startActivity(intent)
-        onStop()
     }
 
     private fun curso(username: String, password: String, nombre: String) {

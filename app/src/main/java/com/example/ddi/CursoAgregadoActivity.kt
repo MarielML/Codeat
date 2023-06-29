@@ -28,18 +28,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.ddi.data.Curso
 import com.example.ddi.data.CursoRepositorio
-import com.example.ddi.data.Usuario
-import com.example.ddi.data.UsuarioRepositorio
 import com.example.ddi.ui.theme.CodeatTheme
 
 class CursoAgregadoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val bundle = intent.extras
-        val username: String? = bundle?.getString("username")
-        val password: String? = bundle?.getString("password")
-        val usuario: Usuario = UsuarioRepositorio.iniciar(username!!, password!!)
-        val nombre: String? = bundle.getString("nombre")
+        val nombre: String? = bundle?.getString("nombre")
         val curso: Curso = CursoRepositorio.cursoElegido(nombre!!)
 
         setContent {
@@ -59,7 +54,7 @@ class CursoAgregadoActivity : ComponentActivity() {
                 )
                 {
                     TopBar(curso)
-                    Contenido()
+                    Contenido(curso)
                 }
             }
         }
@@ -90,18 +85,32 @@ class CursoAgregadoActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun Contenido() {
+    private fun Contenido(curso: Curso) {
         Column(
             Modifier
                 .fillMaxSize()
                 .padding(25.dp),
-            verticalArrangement = Arrangement.Center,
         ) {
+            TextCustom(text = curso.descripción)
+            TextCustom(text = "Horas: ${curso.horas}")
+            TextCustom(text = "Creador: ${curso.creador.nickname}")
+            TextCustom(text = "Puntaje: ${curso.puntaje}")
+            Row (
+                horizontalArrangement = Arrangement.Center
+            ) {
+                ButtonCustom(text = "Iniciar", onClick = { iniciar() })
+            }
         }
     }
 
     private fun configuracion() {
         val intent = Intent(this, ConfiguracionActivity::class.java)
+        startActivity(intent)
+        onStop()
+    }
+
+    private fun iniciar() {
+        val intent = Intent(this, ClasesActivity::class.java)
         startActivity(intent)
         onStop()
     }
