@@ -35,6 +35,7 @@ import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.ddi.data.Curso
 import com.example.ddi.data.Usuario
 import com.example.ddi.data.UsuarioRepositorio
@@ -109,24 +110,64 @@ class UsuarioActivity : ComponentActivity() {
                 Image(painterResource(id = R.drawable.baseline_person_100), contentDescription = "", Modifier.width(50.dp))
                 Column {
                     TextCustom(text = creador)
-                    if(usuario.nickname != creador) {
-                        Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White),
-                            shape = RoundedCornerShape(0),
-                            border = BorderStroke(1.dp, Black),
-                            onClick = {
-                                usuario.agregarSeguido(UsuarioRepositorio.creador(creador))
-                                UsuarioRepositorio.creador(creador).agregarSeguidor(usuario)
-                            }
-                        ) {
-                            if (!usuario.existeSeguido(creador)) {
-                                Text("Seguir", color = Black)
-                            } else {
-                                Text("Siguiendo", color = Black)
+                    Row {
+                        if(usuario.nickname != creador) {
+                            Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White),
+                                shape = RoundedCornerShape(0),
+                                border = BorderStroke(1.dp, Black),
+                                onClick = {
+                                    usuario.agregarSeguido(UsuarioRepositorio.creador(creador))
+                                    UsuarioRepositorio.creador(creador).agregarSeguidor(usuario)
+                                }
+                            ) {
+                                if (!usuario.existeSeguido(creador)) {
+                                    Text("Seguir", color = Black)
+                                } else {
+                                    Text("Siguiendo", color = Black)
+                                }
                             }
                         }
                     }
                 }
             }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                Row {
+                    Image(painterResource(id = R.drawable.baseline_favorite_24), contentDescription = "", Modifier.width(50.dp))
+                    TextCustom(text = UsuarioRepositorio.creador(creador).meGusta.toString())
+                }
+                Spacer(modifier = Modifier.width(5.dp))
+                Row {
+                    Image(painterResource(id = R.drawable.baseline_comment_24), contentDescription = "", Modifier.width(50.dp))
+                    TextCustom(text = UsuarioRepositorio.creador(creador).comentarios.toString())
+                }
+            }
+            Row {
+                Box(
+                    modifier = Modifier
+                        .height(140.dp)
+                ) {
+                    Column {
+                        TextCustom(text = "Seguidos: ${UsuarioRepositorio.creador(creador).seguidos.size}", fontSize = 24.sp)
+                        Spacer(modifier = Modifier.height(5.dp))
+                        MostrarSeguidos(UsuarioRepositorio.creador(creador).seguidos)
+                    }
+                }
+                Spacer(modifier = Modifier.width(20.dp))
+                Box(
+                    modifier = Modifier
+                        .height(140.dp)
+                ) {
+                    Column {
+                        TextCustom(text = "Seguidores: ${UsuarioRepositorio.creador(creador).seguidores.size}", fontSize = 24.sp)
+                        Spacer(modifier = Modifier.height(5.dp))
+                        MostrarSeguidores(UsuarioRepositorio.creador(creador).seguidores)
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.width(10.dp))
             TextCustom(text = "Cursos Pulicados")
             Spacer(modifier = Modifier.height(20.dp))
             Box(
@@ -140,9 +181,39 @@ class UsuarioActivity : ComponentActivity() {
     }
 
     @Composable
+    private fun MostrarSeguidores(datos: MutableList<Usuario>) {
+        LazyColumn {
+            items(datos) { item -> ListItemRowSeguidores(item) }
+        }
+    }
+
+    @Composable
+    private fun ListItemRowSeguidores(item: Usuario) {
+        Row {
+            TextCustom(text = item.nickname, fontSize = 20.sp)
+        }
+    }
+
+    @Composable
+    private fun MostrarSeguidos(datos: MutableList<Usuario>) {
+        LazyColumn {
+            items(datos) { item -> ListItemRowSeguidos(item) }
+        }
+    }
+
+    @Composable
+    private fun ListItemRowSeguidos(item: Usuario) {
+        Row {
+            TextCustom(text = item.nickname, fontSize = 20.sp)
+        }
+    }
+
+    @Composable
     private fun MostrarCursosPublicados(datos: MutableList<Curso>, usuario: Usuario) {
         LazyColumn (
-            modifier = Modifier.fillMaxWidth().wrapContentHeight()
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
         ) {
             items(datos) { item -> ListItemRow(item, usuario) }
         }

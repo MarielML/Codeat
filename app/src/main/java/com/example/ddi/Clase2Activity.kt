@@ -4,9 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,34 +14,27 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.ddi.data.Curso
-import com.example.ddi.data.CursoRepositorio
 import com.example.ddi.ui.theme.CodeatTheme
 
-class CursoAgregadoActivity : ComponentActivity() {
+class Clase2Activity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val bundle = intent.extras
-        val nombre: String? = bundle?.getString("nombre")
-        val curso: Curso = CursoRepositorio.cursoElegido(nombre!!)
-
         setContent {
-            Content(curso)
+            Content()
         }
     }
 
     @Composable
-    private fun Content(curso: Curso) {
+    private fun Content() {
         CodeatTheme {
             Surface(
                 modifier = Modifier.fillMaxSize(),
@@ -53,74 +44,79 @@ class CursoAgregadoActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize()
                 )
                 {
-                    TopBar(curso)
-                    Contenido(curso)
+                    TopBar()
+                    Contenido()
                 }
-                Iniciar(curso)
+                Siguiente()
             }
         }
     }
 
     @Composable
-    private fun TopBar(curso: Curso) {
+    private fun TopBar() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(60.dp)
                 .wrapContentHeight()
-                .border(BorderStroke(1.dp, Black))
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            TextCustom(text = curso.nombre, textAlign = TextAlign.Center)
-            Spacer(modifier = Modifier.weight(1f))
             Image(
-                painter = painterResource(id = R.drawable.baseline_settings_24),
+                painter = painterResource(id = R.drawable.baseline_close_24),
                 contentDescription = "",
                 modifier = Modifier
                     .clickable(enabled = true, onClick = {
-                        configuracion()
+                        finish()
                     })
             )
         }
     }
 
     @Composable
-    private fun Contenido(curso: Curso) {
+    private fun Contenido() {
         Column(
             Modifier
                 .fillMaxSize()
                 .padding(25.dp),
         ) {
-            TextCustom(text = curso.descripción)
-            TextCustom(text = "Horas: ${curso.horas}")
-            TextCustom(text = "Creador: ${curso.creador.nickname}")
-            TextCustom(text = "Puntaje: ${curso.puntaje}")
+            Clase()
         }
     }
 
     @Composable
-    private fun Iniciar(curso: Curso) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.Bottom,
-            modifier = Modifier.padding(10.dp)
+    private fun Clase() {
+        Column(
+            Modifier
+                .fillMaxSize()
+                .padding(25.dp),
         ) {
-            ButtonCustom(text = "Iniciar", onClick = { iniciar(curso.nombre) })
+
         }
     }
 
-    private fun configuracion() {
-        val intent = Intent(this, ConfiguracionActivity::class.java)
-        startActivity(intent)
-        onStop()
+    @Composable
+    private fun Siguiente() {
+        Row(modifier = Modifier
+            .size(30.dp),
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.Bottom
+        ) {
+            Spacer(modifier = Modifier.weight(1f))
+            Image(
+                painter = painterResource(id = R.drawable.baseline_play_arrow_50),
+                contentDescription = "",
+                modifier = Modifier
+                    .clickable(enabled = true, onClick = {
+                        clase3()
+                    })
+            )
+        }
     }
 
-    private fun iniciar(nombre: String) {
-        val intent = Intent(this, ClasesActivity::class.java).apply {
-            putExtra("nombre", nombre)
-        }
+    private fun clase3() {
+        val intent = Intent(this, Clase3Activity::class.java)
         startActivity(intent)
-        onStop()
+        finish()
     }
 }

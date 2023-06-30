@@ -16,40 +16,38 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color.Companion.Black
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.ddi.data.Curso
 import com.example.ddi.data.CursoRepositorio
-import com.example.ddi.data.Usuario
-import com.example.ddi.data.UsuarioRepositorio
 import com.example.ddi.ui.theme.CodeatTheme
 
-class CursoCreadoActivity : ComponentActivity() {
+class ClasesActivity : ComponentActivity() {
+    private val clases: MutableList<String> = mutableListOf("Clase 1", "Clase 2", "Clase 3", "Clase 4", "Clase 5")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val bundle = intent.extras
-        val username: String? = bundle?.getString("username")
-        val password: String? = bundle?.getString("password")
-        val usuario: Usuario = UsuarioRepositorio.iniciar(username!!, password!!)
-        val nombre: String? = bundle.getString("nombre")
-        val curso: Curso = usuario.cursoElegido(nombre!!)
+        val nombre: String? = bundle?.getString("nombre")
+        val curso: Curso = CursoRepositorio.cursoElegido(nombre!!)
 
         setContent {
-            Content(usuario, curso)
+            Content(curso)
         }
     }
 
     @Composable
-    private fun Content(usuario: Usuario, curso: Curso) {
+    private fun Content(curso: Curso) {
         CodeatTheme {
             Surface(
                 modifier = Modifier.fillMaxSize(),
@@ -60,7 +58,7 @@ class CursoCreadoActivity : ComponentActivity() {
                 )
                 {
                     TopBar(curso)
-                    Contenido(usuario, curso)
+                    Contenido()
                 }
             }
         }
@@ -73,7 +71,7 @@ class CursoCreadoActivity : ComponentActivity() {
                 .fillMaxWidth()
                 .height(60.dp)
                 .wrapContentHeight()
-                .border(BorderStroke(1.dp, Black))
+                .border(BorderStroke(1.dp, Color.Black))
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -91,56 +89,41 @@ class CursoCreadoActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun Contenido(usuario: Usuario, curso: Curso) {
+    private fun Contenido() {
         Column(
             Modifier
                 .fillMaxSize()
                 .padding(25.dp),
-
-            verticalArrangement = Arrangement.Center,
         ) {
-            Creador(curso)
-            Spacer(modifier = Modifier.height(20.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceAround,
-            ) {
-                ButtonCustom(text = "Publicar curso", onClick = {
-                    if(!CursoRepositorio.existe(curso.nombre) && !usuario.publicado(curso.nombre)) {
-                        CursoRepositorio.agregar(curso)
-                        usuario.publicarCurso(curso)
-                        publicarCurso(usuario.nickname, usuario.password)
-                        finish()
-                    }
-                    usuario.agregarCurso(curso)
-                    finish()
-                })
-            }
+            MostrarClases(datos = clases)
         }
     }
 
     @Composable
-    private fun Creador(curso: Curso) {
-        Row(
+    private fun MostrarClases(datos: MutableList<String>) {
+        LazyColumn (
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround,
         ) {
-            Image(
-                painterResource(id = R.drawable.baseline_person_100),
-                contentDescription = "",
-                Modifier.width(50.dp)
-            )
-            Column {
-                TextCustom(text = "${curso.creador.nickname} (${curso.puntaje})")
-            }
+            items(datos) { item -> ListItemRow(item) }
         }
     }
 
-    private fun publicarCurso(username: String, password: String) {
-        val intent = Intent(this, CrearCursoActivity::class.java).apply {
-            putExtra("username", username)
-            putExtra("password", password)
+    @Composable
+    private fun ListItemRow(item: String) {
+        Row (
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically,
+        ){
+            TextCustom(text = "0%")
+            ButtonCustom(text = item, onClick = {
+                clase1()
+            })
         }
+    }
+
+    private fun clase1() {
+        val intent = Intent(this, Clase1Activity::class.java)
         startActivity(intent)
         onStop()
     }

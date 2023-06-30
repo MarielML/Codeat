@@ -4,6 +4,8 @@ class Usuario (
     var nickname: String= "",
     var password:String = "",
     var email: String = "",
+    var meGusta: Int = 0,
+    var comentarios: Int = 0,
     val cursos: MutableList<Curso> = mutableListOf(),
     val cursosPublicados: MutableList<Curso> = mutableListOf(),
     val cursosSinPublicar: MutableList<Curso> = mutableListOf(),

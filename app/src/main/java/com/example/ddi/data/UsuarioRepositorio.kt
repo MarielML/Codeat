@@ -4,7 +4,7 @@ object UsuarioRepositorio {
     private val usuarios = mutableListOf<Usuario>()
 
     init {
-        usuarios.add(Usuario("A", "a", "a@email",
+        usuarios.add(Usuario("A", "a", "a@email", 5, 10,
             cursos =
         mutableListOf(Curso("JavaScript I", Usuario(nickname = "Anónimo"),4.8),
                       Curso("JavaScript II", Usuario(nickname = "Anónimo"),4.9)),
@@ -12,14 +12,14 @@ object UsuarioRepositorio {
         mutableListOf(Curso("React I", Usuario(nickname = "A"),3.0)),
             cursosSinPublicar =
         mutableListOf(Curso("React II", Usuario(nickname = "A"),3.5))))
-        usuarios.add(Usuario("Anónimo", "a", "",
+        usuarios.add(Usuario("Anónimo", "a", "", 20, 100,
             cursosPublicados = mutableListOf(CursoRepositorio.cursoElegido("JavaScript I"),
                 CursoRepositorio.cursoElegido("TypeScript I"),
                 CursoRepositorio.cursoElegido("TypeScript II")
             )
         ))
-        usuarios.add(Usuario("Pepe Argento", "a", "",
-            cursosPublicados = mutableListOf(CursoRepositorio.cursoElegido("Pepe Argento"))
+        usuarios.add(Usuario("Pepe Argento", "a", "", 15, 3,
+            cursosPublicados = mutableListOf(CursoRepositorio.cursoElegido("Phyton I"))
         ))
     }
 
