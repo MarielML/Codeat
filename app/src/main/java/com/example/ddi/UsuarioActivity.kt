@@ -110,22 +110,38 @@ class UsuarioActivity : ComponentActivity() {
                 Image(painterResource(id = R.drawable.baseline_person_100), contentDescription = "", Modifier.width(50.dp))
                 Column {
                     TextCustom(text = creador)
-                    if(usuario.nickname != creador) {
-                        Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White),
-                            shape = RoundedCornerShape(0),
-                            border = BorderStroke(1.dp, Black),
-                            onClick = {
-                                usuario.agregarSeguido(UsuarioRepositorio.creador(creador))
-                                UsuarioRepositorio.creador(creador).agregarSeguidor(usuario)
-                            }
-                        ) {
-                            if (!usuario.existeSeguido(creador)) {
-                                Text("Seguir", color = Black)
-                            } else {
-                                Text("Siguiendo", color = Black)
+                    Row {
+                        if(usuario.nickname != creador) {
+                            Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White),
+                                shape = RoundedCornerShape(0),
+                                border = BorderStroke(1.dp, Black),
+                                onClick = {
+                                    usuario.agregarSeguido(UsuarioRepositorio.creador(creador))
+                                    UsuarioRepositorio.creador(creador).agregarSeguidor(usuario)
+                                }
+                            ) {
+                                if (!usuario.existeSeguido(creador)) {
+                                    Text("Seguir", color = Black)
+                                } else {
+                                    Text("Siguiendo", color = Black)
+                                }
                             }
                         }
                     }
+                }
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                Row {
+                    Image(painterResource(id = R.drawable.baseline_favorite_24), contentDescription = "", Modifier.width(50.dp))
+                    TextCustom(text = UsuarioRepositorio.creador(creador).meGusta.toString())
+                }
+                Spacer(modifier = Modifier.width(5.dp))
+                Row {
+                    Image(painterResource(id = R.drawable.baseline_comment_24), contentDescription = "", Modifier.width(50.dp))
+                    TextCustom(text = UsuarioRepositorio.creador(creador).comentarios.toString())
                 }
             }
             Row {
@@ -133,7 +149,7 @@ class UsuarioActivity : ComponentActivity() {
                     modifier = Modifier
                         .height(140.dp)
                 ) {
-                    Column() {
+                    Column {
                         TextCustom(text = "Seguidos: ${UsuarioRepositorio.creador(creador).seguidos.size}", fontSize = 24.sp)
                         Spacer(modifier = Modifier.height(5.dp))
                         MostrarSeguidos(UsuarioRepositorio.creador(creador).seguidos)
@@ -144,7 +160,7 @@ class UsuarioActivity : ComponentActivity() {
                     modifier = Modifier
                         .height(140.dp)
                 ) {
-                    Column() {
+                    Column {
                         TextCustom(text = "Seguidores: ${UsuarioRepositorio.creador(creador).seguidores.size}", fontSize = 24.sp)
                         Spacer(modifier = Modifier.height(5.dp))
                         MostrarSeguidores(UsuarioRepositorio.creador(creador).seguidores)
@@ -195,7 +211,9 @@ class UsuarioActivity : ComponentActivity() {
     @Composable
     private fun MostrarCursosPublicados(datos: MutableList<Curso>, usuario: Usuario) {
         LazyColumn (
-            modifier = Modifier.fillMaxWidth().wrapContentHeight()
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
         ) {
             items(datos) { item -> ListItemRow(item, usuario) }
         }

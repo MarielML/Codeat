@@ -56,6 +56,7 @@ class CursoAgregadoActivity : ComponentActivity() {
                     TopBar(curso)
                     Contenido(curso)
                 }
+                Iniciar(curso)
             }
         }
     }
@@ -95,11 +96,17 @@ class CursoAgregadoActivity : ComponentActivity() {
             TextCustom(text = "Horas: ${curso.horas}")
             TextCustom(text = "Creador: ${curso.creador.nickname}")
             TextCustom(text = "Puntaje: ${curso.puntaje}")
-            Row (
-                horizontalArrangement = Arrangement.Center
-            ) {
-                ButtonCustom(text = "Iniciar", onClick = { iniciar() })
-            }
+        }
+    }
+
+    @Composable
+    private fun Iniciar(curso: Curso) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.Bottom,
+            modifier = Modifier.padding(10.dp)
+        ) {
+            ButtonCustom(text = "Iniciar", onClick = { iniciar(curso.nombre) })
         }
     }
 
@@ -109,8 +116,10 @@ class CursoAgregadoActivity : ComponentActivity() {
         onStop()
     }
 
-    private fun iniciar() {
-        val intent = Intent(this, ClasesActivity::class.java)
+    private fun iniciar(nombre: String) {
+        val intent = Intent(this, ClasesActivity::class.java).apply {
+            putExtra("nombre", nombre)
+        }
         startActivity(intent)
         onStop()
     }

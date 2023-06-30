@@ -105,7 +105,7 @@ class PerfilActivity : ComponentActivity() {
         ) {
             Row (
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceAround,
+                horizontalArrangement = Arrangement.SpaceAround
             ) {
                 Image(
                     painterResource(id = R.drawable.baseline_person_100),
@@ -114,12 +114,26 @@ class PerfilActivity : ComponentActivity() {
                 )
                 TextCustom(text = usuario.nickname)
             }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                Row {
+                    Image(painterResource(id = R.drawable.baseline_favorite_24), contentDescription = "", Modifier.width(50.dp))
+                    TextCustom(text = usuario.meGusta.toString())
+                }
+                Spacer(modifier = Modifier.width(5.dp))
+                Row {
+                    Image(painterResource(id = R.drawable.baseline_comment_24), contentDescription = "", Modifier.width(50.dp))
+                    TextCustom(text = usuario.comentarios.toString())
+                }
+            }
             Row {
                 Box(
                     modifier = Modifier
                         .height(140.dp)
                 ) {
-                    Column() {
+                    Column {
                         TextCustom(text = "Seguidos: ${usuario.seguidos.size}", fontSize = 24.sp)
                         Spacer(modifier = Modifier.height(5.dp))
                         MostrarSeguidos(usuario.seguidos)
@@ -130,7 +144,7 @@ class PerfilActivity : ComponentActivity() {
                     modifier = Modifier
                         .height(140.dp)
                 ) {
-                    Column() {
+                    Column {
                         TextCustom(text = "Seguidores: ${usuario.seguidores.size}", fontSize = 24.sp)
                         Spacer(modifier = Modifier.height(5.dp))
                         MostrarSeguidores(usuario.seguidores)

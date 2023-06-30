@@ -41,7 +41,6 @@ import com.example.ddi.data.CursoRepositorio
 import com.example.ddi.data.Usuario
 import com.example.ddi.data.UsuarioRepositorio
 import com.example.ddi.ui.theme.CodeatTheme
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 class DescubrirActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -132,8 +131,9 @@ class DescubrirActivity : ComponentActivity() {
             ) {
                 MostrarCursos(CursoRepositorio.ordenarTendencia() as MutableList<Curso>, usuario)
             }
-            Row (
-                horizontalArrangement = Arrangement.Center
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 ButtonCustom(text = "Ver todos", onClick = { todosLosCursos(usuario.nickname, usuario.password) })
             }
