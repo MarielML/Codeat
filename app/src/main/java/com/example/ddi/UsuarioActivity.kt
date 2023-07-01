@@ -118,6 +118,7 @@ class UsuarioActivity : ComponentActivity() {
                                 onClick = {
                                     usuario.agregarSeguido(UsuarioRepositorio.creador(creador))
                                     UsuarioRepositorio.creador(creador).agregarSeguidor(usuario)
+                                    usuario(usuario.nickname, usuario.password, creador)
                                 }
                             ) {
                                 if (!usuario.existeSeguido(creador)) {
@@ -247,5 +248,15 @@ class UsuarioActivity : ComponentActivity() {
         val intent = Intent(this, ConfiguracionActivity::class.java)
         startActivity(intent)
         onStop()
+    }
+
+    private fun usuario(username: String, password: String, creador: String) {
+        val intent = Intent(this, UsuarioActivity::class.java).apply {
+            putExtra("username", username)
+            putExtra("password", password)
+            putExtra("creador", creador)
+        }
+        startActivity(intent)
+        finish()
     }
 }
