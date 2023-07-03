@@ -28,12 +28,13 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.ddi.ui.theme.violetaClaro
 
 @Composable
 fun TextCustom(
     modifier: Modifier = Modifier,
     text: String,
-    color: Color = Black,
+    color: Color = White,
     fontSize: TextUnit = 30.sp,
     textAlign: TextAlign = TextAlign.Left
 ) {
@@ -50,11 +51,12 @@ fun textFieldCustom(
     OutlinedTextField(
         value = text,
         onValueChange = { text = it },
-        label = { Text(text = label) },
+        label = { Text(text = label, color = White) },
         placeholder = {
             Text(
                 text = placeholder,
-                fontWeight = FontWeight.Light
+                fontWeight = FontWeight.Light,
+                color = White
             )
         }
     )
@@ -71,13 +73,14 @@ fun textFieldPasswordCustom(
     OutlinedTextField(
         value = text,
         onValueChange = { text = it },
-        label = { Text(text = label) },
+        label = { Text(text = label, color = White) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         visualTransformation = PasswordVisualTransformation(),
         placeholder = {
             Text(
                 text = placeholder,
-                fontWeight = FontWeight.Light
+                fontWeight = FontWeight.Light,
+                color = White
             )
         }
     )
@@ -94,12 +97,13 @@ fun textFieldEmailCustom(
     OutlinedTextField(
         value = text,
         onValueChange = { text = it },
-        label = { Text(text = label) },
+        label = { Text(text = label, color = White) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
         placeholder = {
             Text(
                 text = placeholder,
-                fontWeight = FontWeight.Light
+                fontWeight = FontWeight.Light,
+                color = White
             )
         }
     )
@@ -112,22 +116,20 @@ fun ButtonCustom(
     onClick: () -> Unit,
     width: Dp = 180.dp,
     height: Dp = 64.dp,
-    color: Color = White,
-    border: BorderStroke = BorderStroke(1.dp, Black),
+    color: Color = violetaClaro,
     textAlign: TextAlign = TextAlign.Center
 ) {
     Button(
         onClick = onClick,
         colors = ButtonDefaults.elevatedButtonColors(containerColor = color),
         shape = RoundedCornerShape(10),
-        border = border,
         modifier = Modifier
             .width(width)
             .height(height)
     ) {
         Text(
             text,
-            color = Black,
+            color = White,
             fontSize = 24.sp,
             textAlign = textAlign
         )
