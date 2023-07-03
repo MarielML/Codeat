@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,8 +23,12 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -228,20 +233,17 @@ class UsuarioActivity : ComponentActivity() {
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Button(
+                FloatingActionButton (
                     onClick = {
                         usuario.agregarCurso(item)
                         misCursos(usuario.nickname, usuario.password)
                         finish()
                     },
-                    colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
-                    shape = androidx.compose.foundation.shape.CircleShape,
-                    border = BorderStroke(1.dp, Black)
+                    modifier = Modifier.background(violetaOscuro)
+                        .border(1.dp, White),
+                    contentColor = White
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.baseline_add_24),
-                        contentDescription = ""
-                    )
+                    Icon(Icons.Filled.Add,"")
                 }
                 ButtonCustom(text = item.nombre, onClick = {
                     curso(usuario.nickname, usuario.password, item.nombre)

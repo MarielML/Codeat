@@ -31,7 +31,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Black
-import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -39,6 +38,7 @@ import com.example.ddi.data.Curso
 import com.example.ddi.data.Usuario
 import com.example.ddi.data.UsuarioRepositorio
 import com.example.ddi.ui.theme.CodeatTheme
+import com.example.ddi.ui.theme.violetaClaro
 import com.example.ddi.ui.theme.violetaOscuro
 
 class MisCursos : ComponentActivity() {
@@ -82,7 +82,7 @@ class MisCursos : ComponentActivity() {
                 .fillMaxWidth()
                 .height(60.dp)
                 .wrapContentHeight()
-                .border(BorderStroke(1.dp, Black))
+                .border(BorderStroke(1.dp, White))
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -146,39 +146,40 @@ class MisCursos : ComponentActivity() {
             TextCustom(text = "0%")
             ButtonCustom(text = item.nombre, onClick = { curso(usuario.nickname, usuario.password, item.nombre) })
         }
+        Spacer(modifier = Modifier.height(5.dp))
     }
 
     @Composable
     private fun Menu(usuario: Usuario) {
         Row(modifier = Modifier
-            .size(30.dp)
-            .border(BorderStroke(1.dp, Black)),
+            .size(30.dp),
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.Bottom
         ) {
             Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = Gray),
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaClaro),
                 shape = RoundedCornerShape(0),
+                border = BorderStroke(1.dp, color = White),
                 onClick = {  }
             ) {
                 Image(painterResource(id = R.drawable.baseline_folder_24), contentDescription = "")
             }
             Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaClaro),
                 shape = RoundedCornerShape(0),
                 onClick = { descubrir(usuario.nickname, usuario.password) }
             ) {
                 Image(painterResource(id = R.drawable.baseline_search_24), contentDescription = "")
             }
             Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaClaro),
                 shape = RoundedCornerShape(0),
                 onClick = { crear(usuario.nickname, usuario.password) }
             ) {
                 Image(painterResource(id = R.drawable.baseline_add_24), contentDescription = "")
             }
             Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaClaro),
                 shape = RoundedCornerShape(0),
                 onClick = { perfil(usuario.nickname, usuario.password) }
             ) {

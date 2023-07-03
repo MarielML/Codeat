@@ -78,7 +78,7 @@ class CursoActivity : ComponentActivity() {
                 .fillMaxWidth()
                 .height(60.dp)
                 .wrapContentHeight()
-                .border(BorderStroke(1.dp, Black))
+                .border(BorderStroke(1.dp, White))
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
