@@ -92,10 +92,9 @@ class CursoAgregadoActivity : ComponentActivity() {
                 .fillMaxSize()
                 .padding(25.dp),
         ) {
-            TextCustom(text = curso.descripción)
+            TextCustom(text = curso.descripcion)
             TextCustom(text = "Horas: ${curso.horas}")
             TextCustom(text = "Creador: ${curso.creador.nickname}")
-            TextCustom(text = "Puntaje: ${curso.puntaje}")
         }
     }
 

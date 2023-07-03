@@ -30,8 +30,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -112,12 +112,13 @@ class UsuarioActivity : ComponentActivity() {
                     TextCustom(text = creador)
                     Row {
                         if(usuario.nickname != creador) {
-                            Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White),
+                            Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
                                 shape = RoundedCornerShape(0),
                                 border = BorderStroke(1.dp, Black),
                                 onClick = {
                                     usuario.agregarSeguido(UsuarioRepositorio.creador(creador))
                                     UsuarioRepositorio.creador(creador).agregarSeguidor(usuario)
+                                    usuario(usuario.nickname, usuario.password, creador)
                                 }
                             ) {
                                 if (!usuario.existeSeguido(creador)) {
@@ -221,16 +222,54 @@ class UsuarioActivity : ComponentActivity() {
 
     @Composable
     private fun ListItemRow(item: Curso, usuario: Usuario) {
-        Row (
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically,
-        ){
-            TextCustom(text = item.puntaje.toString())
-            ButtonCustom(text = item.nombre, onClick = {
-                curso(usuario.nickname, usuario.password, item.nombre)
-            })
+        Column {
+            Row (
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Button(
+                    onClick = {
+                        usuario.agregarCurso(item)
+                        misCursos(usuario.nickname, usuario.password)
+                        finish()
+                    },
+                    colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
+                    shape = androidx.compose.foundation.shape.CircleShape,
+                    border = BorderStroke(1.dp, Black)
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.baseline_add_24),
+                        contentDescription = ""
+                    )
+                }
+                ButtonCustom(text = item.nombre, onClick = {
+                    curso(usuario.nickname, usuario.password, item.nombre)
+                })
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                Row {
+                    Image(painterResource(id = R.drawable.baseline_favorite_24), contentDescription = "", Modifier.width(50.dp))
+                    TextCustom(text = item.favorito.toString())
+                }
+                Row {
+                    Image(painterResource(id = R.drawable.baseline_comment_24), contentDescription = "", Modifier.width(50.dp))
+                    TextCustom(text = item.usuarios.toString())
+                }
+            }
         }
+    }
+
+    private fun misCursos(username: String, password: String) {
+        val intent = Intent(this, MisCursos::class.java).apply {
+            putExtra("username", username)
+            putExtra("password", password)
+        }
+        startActivity(intent)
+        onStop()
     }
 
     private fun curso(username: String, password: String, nombre: String) {
@@ -247,5 +286,15 @@ class UsuarioActivity : ComponentActivity() {
         val intent = Intent(this, ConfiguracionActivity::class.java)
         startActivity(intent)
         onStop()
+    }
+
+    private fun usuario(username: String, password: String, creador: String) {
+        val intent = Intent(this, UsuarioActivity::class.java).apply {
+            putExtra("username", username)
+            putExtra("password", password)
+            putExtra("creador", creador)
+        }
+        startActivity(intent)
+        finish()
     }
 }

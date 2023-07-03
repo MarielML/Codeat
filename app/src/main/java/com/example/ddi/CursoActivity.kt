@@ -127,7 +127,7 @@ class CursoActivity : ComponentActivity() {
         ){
             Image(painterResource(id = R.drawable.baseline_person_100), contentDescription = "", Modifier.width(50.dp))
             Column {
-                TextCustom(text = "${curso.creador.nickname} (${curso.puntaje})", modifier = Modifier
+                TextCustom(text = curso.creador.nickname, modifier = Modifier
                     .clickable(enabled = true, onClick = {
                         if(usuario.nickname != curso.creador.nickname) {
                             usuario(usuario.nickname, usuario.password, curso.creador.nickname)
@@ -142,6 +142,7 @@ class CursoActivity : ComponentActivity() {
                         onClick = {
                             usuario.agregarSeguido(curso.creador)
                             UsuarioRepositorio.creador(curso.creador.nickname).agregarSeguidor(usuario)
+                            curso(usuario.nickname, usuario.password, curso.nombre)
                         }
                     ) {
                         if (!usuario.existeSeguido(curso.creador.nickname)) {
@@ -179,6 +180,16 @@ class CursoActivity : ComponentActivity() {
         onStop()
     }
 
+    private fun curso(username: String, password: String, nombre: String) {
+        val intent = Intent(this, CursoActivity::class.java).apply {
+            putExtra("username", username)
+            putExtra("password", password)
+            putExtra("nombre", nombre)
+        }
+        startActivity(intent)
+        finish()
+    }
+
     private fun usuario(username: String, password: String, creador: String) {
         val intent = Intent(this, UsuarioActivity::class.java).apply {
             putExtra("username", username)
@@ -186,6 +197,6 @@ class CursoActivity : ComponentActivity() {
             putExtra("creador", creador)
         }
         startActivity(intent)
-        onStop()
+        finish()
     }
 }

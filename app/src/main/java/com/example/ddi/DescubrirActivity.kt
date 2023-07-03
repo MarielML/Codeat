@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -67,7 +68,7 @@ class DescubrirActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize()
                 )
                 {
-                    TopBar()
+                    TopBar(usuario)
                     Contenido(usuario)
                 }
                 Menu(usuario)
@@ -76,7 +77,7 @@ class DescubrirActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun TopBar() {
+    private fun TopBar(usuario: Usuario) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -86,7 +87,27 @@ class DescubrirActivity : ComponentActivity() {
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            TextCustom(text = "Descubrir")
+            Button(
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = Gray),
+                shape = RoundedCornerShape(0),
+                onClick = { }
+            ) {
+                Image(painterResource(id = R.drawable.baseline_folder_24), contentDescription = "")
+            }
+            Button(
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
+                shape = RoundedCornerShape(0),
+                onClick = { favoritos(usuario.nickname, usuario.password) }
+            ) {
+                Image(painterResource(id = R.drawable.baseline_search_24), contentDescription = "")
+            }
+            Button(
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
+                shape = RoundedCornerShape(0),
+                onClick = { masUsados(usuario.nickname, usuario.password) }
+            ) {
+                Image(painterResource(id = R.drawable.baseline_add_24), contentDescription = "")
+            }
             Spacer(modifier = Modifier.weight(1f))
             Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
                 shape = RoundedCornerShape(0),
@@ -113,20 +134,11 @@ class DescubrirActivity : ComponentActivity() {
             Modifier
                 .padding(25.dp)
         ) {
-            TextCustom(text = "Más Populares")
-            Spacer(modifier = Modifier.height(20.dp))
-            Box(
-                modifier = Modifier
-                    .height(130.dp)
-                    .padding(horizontal = 10.dp, vertical = 5.dp),
-            ) {
-                MostrarCursos(CursoRepositorio.ordenarPopulares() as MutableList<Curso>, usuario)
-            }
             TextCustom(text = "Tendencia")
             Spacer(modifier = Modifier.height(20.dp))
             Box(
                 modifier = Modifier
-                    .height(130.dp)
+                    .height(300.dp)
                     .padding(horizontal = 10.dp, vertical = 5.dp),
             ) {
                 MostrarCursos(CursoRepositorio.ordenarTendencia() as MutableList<Curso>, usuario)
@@ -151,15 +163,44 @@ class DescubrirActivity : ComponentActivity() {
 
     @Composable
     private fun ListItemRow(item: Curso, usuario: Usuario) {
-        Row (
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically,
-        ){
-            TextCustom(text = item.puntaje.toString())
-            ButtonCustom(text = item.nombre, onClick = {
-                curso(usuario.nickname, usuario.password, item.nombre)
-            })
+        Column {
+            Row (
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Button(
+                    onClick = {
+                        usuario.agregarCurso(item)
+                        misCursos(usuario.nickname, usuario.password)
+                        finish()
+                    },
+                    colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
+                    shape = androidx.compose.foundation.shape.CircleShape,
+                    border = BorderStroke(1.dp, Black)
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.baseline_add_24),
+                        contentDescription = ""
+                    )
+                }
+                ButtonCustom(text = item.nombre, onClick = {
+                    curso(usuario.nickname, usuario.password, item.nombre)
+                })
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                Row {
+                    Image(painterResource(id = R.drawable.baseline_favorite_24), contentDescription = "", Modifier.width(50.dp))
+                    TextCustom(text = item.favorito.toString())
+                }
+                Row {
+                    Image(painterResource(id = R.drawable.baseline_comment_24), contentDescription = "", Modifier.width(50.dp))
+                    TextCustom(text = item.usuarios.toString())
+                }
+            }
         }
     }
 
@@ -250,6 +291,24 @@ class DescubrirActivity : ComponentActivity() {
 
     private fun configuracion() {
         val intent = Intent(this, ConfiguracionActivity::class.java)
+        startActivity(intent)
+        onStop()
+    }
+
+    private fun favoritos(username: String, password: String) {
+        val intent = Intent(this, FavoritosActivity::class.java).apply {
+            putExtra("username", username)
+            putExtra("password", password)
+        }
+        startActivity(intent)
+        onStop()
+    }
+
+    private fun masUsados(username: String, password: String) {
+        val intent = Intent(this, MasUsadosActivity::class.java).apply {
+            putExtra("username", username)
+            putExtra("password", password)
+        }
         startActivity(intent)
         onStop()
     }

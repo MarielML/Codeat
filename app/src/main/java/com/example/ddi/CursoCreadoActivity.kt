@@ -131,7 +131,7 @@ class CursoCreadoActivity : ComponentActivity() {
                 Modifier.width(50.dp)
             )
             Column {
-                TextCustom(text = "${curso.creador.nickname} (${curso.puntaje})")
+                TextCustom(text = "${curso.creador.nickname} (${curso.favorito})")
             }
         }
     }

@@ -113,13 +113,14 @@ fun ButtonCustom(
     width: Dp = 180.dp,
     height: Dp = 64.dp,
     color: Color = White,
+    border: BorderStroke = BorderStroke(1.dp, Black),
     textAlign: TextAlign = TextAlign.Center
 ) {
     Button(
         onClick = onClick,
         colors = ButtonDefaults.elevatedButtonColors(containerColor = color),
         shape = RoundedCornerShape(10),
-        border = BorderStroke(1.dp, Black),
+        border = border,
         modifier = Modifier
             .width(width)
             .height(height)
