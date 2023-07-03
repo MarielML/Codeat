@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -137,7 +138,7 @@ class DescubrirActivity : ComponentActivity() {
             Spacer(modifier = Modifier.height(20.dp))
             Box(
                 modifier = Modifier
-                    .height(130.dp)
+                    .height(300.dp)
                     .padding(horizontal = 10.dp, vertical = 5.dp),
             ) {
                 MostrarCursos(CursoRepositorio.ordenarTendencia() as MutableList<Curso>, usuario)
@@ -162,15 +163,44 @@ class DescubrirActivity : ComponentActivity() {
 
     @Composable
     private fun ListItemRow(item: Curso, usuario: Usuario) {
-        Row (
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically,
-        ){
-            TextCustom(text = "")
-            ButtonCustom(text = item.nombre, onClick = {
-                curso(usuario.nickname, usuario.password, item.nombre)
-            })
+        Column {
+            Row (
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Button(
+                    onClick = {
+                        usuario.agregarCurso(item)
+                        misCursos(usuario.nickname, usuario.password)
+                        finish()
+                    },
+                    colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
+                    shape = androidx.compose.foundation.shape.CircleShape,
+                    border = BorderStroke(1.dp, Black)
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.baseline_add_24),
+                        contentDescription = ""
+                    )
+                }
+                ButtonCustom(text = item.nombre, onClick = {
+                    curso(usuario.nickname, usuario.password, item.nombre)
+                })
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                Row {
+                    Image(painterResource(id = R.drawable.baseline_favorite_24), contentDescription = "", Modifier.width(50.dp))
+                    TextCustom(text = item.favorito.toString())
+                }
+                Row {
+                    Image(painterResource(id = R.drawable.baseline_comment_24), contentDescription = "", Modifier.width(50.dp))
+                    TextCustom(text = item.usuarios.toString())
+                }
+            }
         }
     }
 

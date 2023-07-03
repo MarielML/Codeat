@@ -17,7 +17,7 @@ object CursoRepositorio {
         cursos.add(Curso("Jetpack Compose", Usuario(nickname = "Anónimo"), favorito = 122, usuarios = 543))
         cursos.add(Curso("Kotlin 1", Usuario(nickname = "Anónimo"),favorito = 97, usuarios = 421))
         cursos.add(Curso("Koin", Usuario(nickname = "Anónimo"), favorito = 78, usuarios = 210))
-        cursos.add(Curso("React I", Usuario(nickname = "A"),))
+        cursos.add(Curso("React II", Usuario(nickname = "A")))
         favoritos.add(Curso("JavaScript I", Usuario(nickname = "Anónimo"), favorito = 4599, usuarios = 5620))
         favoritos.add(Curso("Java I", Usuario(nickname = "Anónimo"), favorito = 4213, usuarios = 7620))
         favoritos.add(Curso("Phyton I", Usuario(nickname = "Pepe Argento"), favorito = 3123, usuarios = 4045))

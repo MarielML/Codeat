@@ -6,12 +6,12 @@ object UsuarioRepositorio {
     init {
         usuarios.add(Usuario("A", "a", "a@email", 5, 10,
             cursos =
-        mutableListOf(Curso("JavaScript I", Usuario(nickname = "Anónimo"),4.8),
-                      Curso("JavaScript II", Usuario(nickname = "Anónimo"),4.9)),
+            mutableListOf(Curso("JavaScript I", Usuario(nickname = "Anónimo"), favorito = 4599, usuarios = 5620),
+                Curso("JavaScript II", Usuario(nickname = "Anónimo"), favorito = 5, usuarios = 10)),
             cursosPublicados =
-        mutableListOf(Curso("React I", Usuario(nickname = "A"),3.0)),
+            mutableListOf(Curso("React I", Usuario(nickname = "A"), favorito = 5, usuarios = 10)),
             cursosSinPublicar =
-        mutableListOf(Curso("React II", Usuario(nickname = "A"),3.5))))
+            mutableListOf(Curso("React II", Usuario(nickname = "A")))))
         usuarios.add(Usuario("Anónimo", "a", "", 20, 100,
             cursosPublicados = mutableListOf(CursoRepositorio.cursoElegido("JavaScript I"),
                 CursoRepositorio.cursoElegido("TypeScript I"),
