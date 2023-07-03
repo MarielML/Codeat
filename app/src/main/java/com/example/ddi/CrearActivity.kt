@@ -97,7 +97,7 @@ class CrearActivity : ComponentActivity() {
                 .padding(25.dp),
             verticalArrangement = Arrangement.Center,
         ) {
-            Row() {
+            Row {
                 TextCustom(text = "Nombre:")
                 Spacer(modifier = Modifier.weight(1f))
                 nombre = textFieldCustom(label = "", placeholder = "")

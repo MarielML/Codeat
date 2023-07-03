@@ -127,7 +127,7 @@ class CursoActivity : ComponentActivity() {
         ){
             Image(painterResource(id = R.drawable.baseline_person_100), contentDescription = "", Modifier.width(50.dp))
             Column {
-                TextCustom(text = "${curso.creador.nickname} (${curso.puntaje})", modifier = Modifier
+                TextCustom(text = "${curso.creador.nickname} (${curso.favorito})", modifier = Modifier
                     .clickable(enabled = true, onClick = {
                         if(usuario.nickname != curso.creador.nickname) {
                             usuario(usuario.nickname, usuario.password, curso.creador.nickname)

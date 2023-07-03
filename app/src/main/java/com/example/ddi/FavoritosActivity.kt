@@ -19,29 +19,22 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Black
+import androidx.compose.ui.graphics.Color.Companion.Gray
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.ddi.data.Curso
 import com.example.ddi.data.CursoRepositorio
@@ -49,7 +42,7 @@ import com.example.ddi.data.Usuario
 import com.example.ddi.data.UsuarioRepositorio
 import com.example.ddi.ui.theme.CodeatTheme
 
-class TodosLosCursosActivity : ComponentActivity() {
+class FavoritosActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -74,7 +67,7 @@ class TodosLosCursosActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize()
                 )
                 {
-                    TopBar()
+                    TopBar(usuario)
                     Contenido(usuario)
                 }
                 Menu(usuario)
@@ -83,26 +76,45 @@ class TodosLosCursosActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun TopBar() {
+    private fun TopBar(usuario: Usuario) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(60.dp)
                 .wrapContentHeight()
-                .border(BorderStroke(1.dp, Color.Black))
+                .border(BorderStroke(1.dp, Black))
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Image(painterResource(id = R.drawable.baseline_search_24), contentDescription = "")
-            Buscador()
-            Spacer(modifier = Modifier.weight(1f))
-            Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White),
+            Button(
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
                 shape = RoundedCornerShape(0),
-                border = BorderStroke(1.dp, Color.Black),
+                onClick = { tendencia(usuario.nickname, usuario.password) }
+            ) {
+                Image(painterResource(id = R.drawable.baseline_folder_24), contentDescription = "")
+            }
+            Button(
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = Gray),
+                shape = RoundedCornerShape(0),
+                onClick = {  }
+            ) {
+                Image(painterResource(id = R.drawable.baseline_search_24), contentDescription = "")
+            }
+            Button(
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
+                shape = RoundedCornerShape(0),
+                onClick = { masUsados(usuario.nickname, usuario.password) }
+            ) {
+                Image(painterResource(id = R.drawable.baseline_add_24), contentDescription = "")
+            }
+            Spacer(modifier = Modifier.weight(1f))
+            Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
+                shape = RoundedCornerShape(0),
+                border = BorderStroke(1.dp, Black),
                 modifier = Modifier.fillMaxHeight(),
                 onClick = {  }
             ) {
-                Text("Filtros", color = Color.Black)
+                Text("Filtros", color = Black)
             }
             Image(
                 painter = painterResource(id = R.drawable.baseline_settings_24),
@@ -115,36 +127,35 @@ class TodosLosCursosActivity : ComponentActivity() {
         }
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    fun Buscador() {
-        var text by remember { mutableStateOf(TextFieldValue("")) }
-        OutlinedTextField(
-            value = text,
-            onValueChange = { text = it },
-            label = { Text(text = "") },
-            placeholder = {
-                Text(
-                    text = "Buscar",
-                    fontWeight = FontWeight.Light
-                )
-            },
-            modifier = Modifier.width(150.dp)
-        )
-    }
-
     @Composable
     private fun Contenido(usuario: Usuario) {
-        Box(
-            modifier = Modifier
-                .height(480.dp)
-                .padding(horizontal = 10.dp, vertical = 5.dp),
+        Column(
+            Modifier
+                .padding(25.dp)
         ) {
-            Column(
-                Modifier
-                    .padding(25.dp)
+            TextCustom(text = "Favoritos")
+            Spacer(modifier = Modifier.height(20.dp))
+            Box(
+                modifier = Modifier
+                    .height(130.dp)
+                    .padding(horizontal = 10.dp, vertical = 5.dp),
             ) {
-                MostrarCursos(CursoRepositorio.ordenarCursos() as MutableList<Curso>, usuario)
+                MostrarCursos(CursoRepositorio.ordenarFavoritos() as MutableList<Curso>, usuario)
+            }
+            TextCustom(text = "Tendencia")
+            Spacer(modifier = Modifier.height(20.dp))
+            Box(
+                modifier = Modifier
+                    .height(130.dp)
+                    .padding(horizontal = 10.dp, vertical = 5.dp),
+            ) {
+                MostrarCursos(CursoRepositorio.ordenarTendencia() as MutableList<Curso>, usuario)
+            }
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                ButtonCustom(text = "Ver todos", onClick = { todosLosCursos(usuario.nickname, usuario.password) })
             }
         }
     }
@@ -165,7 +176,7 @@ class TodosLosCursosActivity : ComponentActivity() {
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically,
         ){
-            TextCustom(text = item.favorito.toString())
+            TextCustom(text = "")
             ButtonCustom(text = item.nombre, onClick = {
                 curso(usuario.nickname, usuario.password, item.nombre)
             })
@@ -176,39 +187,48 @@ class TodosLosCursosActivity : ComponentActivity() {
     private fun Menu(usuario: Usuario) {
         Row(modifier = Modifier
             .size(30.dp)
-            .border(BorderStroke(1.dp, Color.Black)),
+            .border(BorderStroke(1.dp, Black)),
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.Bottom
         ) {
             Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White),
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
                 shape = RoundedCornerShape(0),
                 onClick = { misCursos(usuario.nickname, usuario.password) }
             ) {
                 Image(painterResource(id = R.drawable.baseline_folder_24), contentDescription = "")
             }
             Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.Gray),
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = Gray),
                 shape = RoundedCornerShape(0),
                 onClick = { }
             ) {
                 Image(painterResource(id = R.drawable.baseline_search_24), contentDescription = "")
             }
             Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White),
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
                 shape = RoundedCornerShape(0),
                 onClick = { crear(usuario.nickname, usuario.password) }
             ) {
                 Image(painterResource(id = R.drawable.baseline_add_24), contentDescription = "")
             }
             Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White),
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
                 shape = RoundedCornerShape(0),
                 onClick = { perfil(usuario.nickname, usuario.password) }
             ) {
                 Image(painterResource(id = R.drawable.baseline_person_24), contentDescription = "")
             }
         }
+    }
+
+    private fun todosLosCursos(username: String, password: String) {
+        val intent = Intent(this, TodosLosCursosActivity::class.java).apply {
+            putExtra("username", username)
+            putExtra("password", password)
+        }
+        startActivity(intent)
+        onStop()
     }
 
     private fun curso(username: String, password: String, nombre: String) {
@@ -250,6 +270,24 @@ class TodosLosCursosActivity : ComponentActivity() {
 
     private fun configuracion() {
         val intent = Intent(this, ConfiguracionActivity::class.java)
+        startActivity(intent)
+        onStop()
+    }
+
+    private fun tendencia(username: String, password: String) {
+        val intent = Intent(this, DescubrirActivity::class.java).apply {
+            putExtra("username", username)
+            putExtra("password", password)
+        }
+        startActivity(intent)
+        onStop()
+    }
+
+    private fun masUsados(username: String, password: String) {
+        val intent = Intent(this, MasUsadosActivity::class.java).apply {
+            putExtra("username", username)
+            putExtra("password", password)
+        }
         startActivity(intent)
         onStop()
     }

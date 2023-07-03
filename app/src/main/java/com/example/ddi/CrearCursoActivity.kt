@@ -148,7 +148,7 @@ class CrearCursoActivity : ComponentActivity() {
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically,
         ){
-            TextCustom(text = item.puntaje.toString())
+            TextCustom(text = item.favorito.toString())
             ButtonCustom(text = item.nombre, onClick = {
                 curso(usuario.nickname, usuario.password, item.nombre)
             })
@@ -171,7 +171,6 @@ class CrearCursoActivity : ComponentActivity() {
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically,
         ){
-            TextCustom(text = item.puntaje.toString())
             ButtonCustom(text = item.nombre, onClick = {
                 cursoCreado(usuario.nickname, usuario.password, item.nombre)
             })
