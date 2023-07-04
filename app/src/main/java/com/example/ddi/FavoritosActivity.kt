@@ -131,7 +131,7 @@ class FavoritosActivity : ComponentActivity() {
             Spacer(modifier = Modifier.height(20.dp))
             Box(
                 modifier = Modifier
-                    .height(300.dp)
+                    .height(350.dp)
                     .padding(horizontal = 10.dp, vertical = 5.dp),
             ) {
                 MostrarCursos(CursoRepositorio.ordenarFavoritos() as MutableList<Curso>, usuario)

@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -50,6 +51,7 @@ fun textFieldCustom(
         value = text,
         onValueChange = { text = it },
         label = { Text(text = label, color = White) },
+        textStyle = TextStyle(color = White),
         placeholder = {
             Text(
                 text = placeholder,
@@ -74,6 +76,7 @@ fun textFieldPasswordCustom(
         label = { Text(text = label, color = White) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         visualTransformation = PasswordVisualTransformation(),
+        textStyle = TextStyle(color = White),
         placeholder = {
             Text(
                 text = placeholder,
@@ -97,6 +100,7 @@ fun textFieldEmailCustom(
         onValueChange = { text = it },
         label = { Text(text = label, color = White) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+        textStyle = TextStyle(color = White),
         placeholder = {
             Text(
                 text = placeholder,
@@ -114,13 +118,14 @@ fun TextFieldCustomDescripcion(
     label: String,
     placeholder: String,
     width: Dp = 500.dp,
-    height: Dp= 200.dp
+    height: Dp= 180.dp
 ) {
     var text by remember { mutableStateOf(TextFieldValue("")) }
     OutlinedTextField(
         value = text,
         onValueChange = { text = it },
         label = { Text(text = label, color = White) },
+        textStyle = TextStyle(color = White),
         placeholder = {
             Text(
                 text = placeholder,
@@ -128,7 +133,8 @@ fun TextFieldCustomDescripcion(
                 color = White
             )
         },
-        modifier = Modifier.width(width)
+        modifier = Modifier
+            .width(width)
             .height(height)
     )
 }
@@ -141,15 +147,16 @@ fun ButtonCustom(
     height: Dp = 64.dp,
     color: Color = violetaClaro,
     fontSize: Int = 24,
-    textAlign: TextAlign = TextAlign.Center
+    textAlign: TextAlign = TextAlign.Center,
+    modifier: Modifier = Modifier
+        .width(width)
+        .height(height)
 ) {
     Button(
+        modifier = modifier,
         onClick = onClick,
         colors = ButtonDefaults.elevatedButtonColors(containerColor = color),
-        shape = RoundedCornerShape(10),
-        modifier = Modifier
-            .width(width)
-            .height(height)
+        shape = RoundedCornerShape(10)
     ) {
         Text(
             text,

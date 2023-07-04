@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -25,7 +26,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.ddi.data.Curso
@@ -101,16 +102,40 @@ class CrearActivity : ComponentActivity() {
             verticalArrangement = Arrangement.Center,
         ) {
             Row {
-                TextCustom(text = "Nombre:")
+                TextCustom(text = "Nombre: ")
                 nombre = textFieldCustom(label = "", placeholder = "")
             }
+            Spacer(modifier = Modifier.width(5.dp))
             Row {
-                TextCustom(text = "Tags:")
-                ButtonCustom(text = "Web", onClick = { }, width = 50.dp, height = 50.dp, fontSize = 16)
-                ButtonCustom(text = "Android", onClick = { }, width = 50.dp, height = 50.dp, fontSize = 16)
-                ButtonCustom(text = "iOS", onClick = { }, width = 50.dp, height = 50.dp, fontSize = 16)
-                ButtonCustom(text = "Java", onClick = { }, width = 50.dp, height = 50.dp, fontSize = 16)
-                ButtonCustom(text = "+", onClick = { }, width = 10.dp, height = 50.dp, fontSize = 16)
+                Spacer(modifier = Modifier.width(5.dp))
+                TextCustom(text = "Tags: ")
+                Spacer(modifier = Modifier.width(5.dp))
+                ButtonCustom(text = "Web", onClick = { }, fontSize = 16, color = violetaOscuro, modifier = Modifier
+                    .border(1.dp, White)
+                    .width(80.dp)
+                    .height(50.dp))
+                Spacer(modifier = Modifier.width(5.dp))
+                ButtonCustom(text = "Android", onClick = { }, fontSize = 16, color = violetaOscuro, modifier = Modifier
+                    .border(1.dp, White)
+                    .width(130.dp)
+                    .height(50.dp))
+            }
+            Spacer(modifier = Modifier.height(5.dp))
+            Row {
+                ButtonCustom(text = "iOS", onClick = { }, fontSize = 16, color = violetaOscuro, modifier = Modifier
+                    .border(1.dp, White)
+                    .width(100.dp)
+                    .height(50.dp))
+                Spacer(modifier = Modifier.width(5.dp))
+                ButtonCustom(text = "Java", onClick = { }, fontSize = 16, color = violetaOscuro, modifier = Modifier
+                    .border(1.dp, White)
+                    .width(100.dp)
+                    .height(50.dp))
+                Spacer(modifier = Modifier.width(5.dp))
+                ButtonCustom(text = "+", onClick = { }, fontSize = 16, color = violetaOscuro, modifier = Modifier
+                    .border(1.dp, White)
+                    .width(50.dp)
+                    .height(50.dp))
             }
             TextCustom(text = "Descripción:")
             TextFieldCustomDescripcion(label = "", placeholder = "")
@@ -129,10 +154,10 @@ class CrearActivity : ComponentActivity() {
                         }
                     },
                     modifier = Modifier
-                        .border(1.dp, Color.White, CircleShape),
+                        .border(1.dp, White, CircleShape),
                     shape = CircleShape,
                     containerColor = violetaOscuro,
-                    contentColor = Color.White,
+                    contentColor = White,
                 ) {
                     Icon(Icons.Filled.Add,"")
                 }
