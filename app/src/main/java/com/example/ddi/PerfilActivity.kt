@@ -6,7 +6,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -226,15 +225,6 @@ class PerfilActivity : ComponentActivity() {
 
     private fun descubrir(username: String, password: String) {
         val intent = Intent(this, DescubrirActivity::class.java).apply {
-            putExtra("username", username)
-            putExtra("password", password)
-        }
-        startActivity(intent)
-        onStop()
-    }
-
-    private fun crear(username: String, password: String) {
-        val intent = Intent(this, CrearCursoActivity::class.java).apply {
             putExtra("username", username)
             putExtra("password", password)
         }

@@ -32,11 +32,9 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -96,7 +94,7 @@ class DescubrirActivity : ComponentActivity() {
                 shape = RoundedCornerShape(0),
                 onClick = { }
             ) {
-                Image(painterResource(id = R.drawable.baseline_local_fire_department_24), contentDescription = "")
+                Image(painterResource(id = R.drawable.baseline_local_fire_department_24a), contentDescription = "")
             }
             Button(
                 colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaOscuro),
@@ -115,11 +113,11 @@ class DescubrirActivity : ComponentActivity() {
             Spacer(modifier = Modifier.weight(1f))
             Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaOscuro),
                 shape = RoundedCornerShape(0),
-                border = BorderStroke(1.dp, Black),
+                border = BorderStroke(1.dp, White),
                 modifier = Modifier.fillMaxHeight(),
-                onClick = {  }
+                onClick = { }
             ) {
-                Text("Filtros", color = White)
+                Image(painterResource(id = R.drawable.baseline_filter_alt_24), contentDescription = "")
             }
             Image(
                 painter = painterResource(id = R.drawable.baseline_settings_24),
@@ -225,7 +223,7 @@ class DescubrirActivity : ComponentActivity() {
                 border = BorderStroke(1.dp, color = White),
                 onClick = { }
             ) {
-                Image(painterResource(id = R.drawable.baseline_search_24), contentDescription = "")
+                Image(painterResource(id = R.drawable.baseline_search_24a), contentDescription = "")
             }
             Button(
                 colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaClaro),

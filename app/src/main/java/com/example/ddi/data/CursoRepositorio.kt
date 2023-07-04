@@ -1,10 +1,10 @@
 package com.example.ddi.data
 
 object CursoRepositorio {
-    val cursos = mutableListOf<Curso>()
-    val tendencia = mutableListOf<Curso>()
-    val favoritos = mutableListOf<Curso>()
-    val masUsados = mutableListOf<Curso>()
+    private val cursos = mutableListOf<Curso>()
+    private val tendencia = mutableListOf<Curso>()
+    private val favoritos = mutableListOf<Curso>()
+    private val masUsados = mutableListOf<Curso>()
 
     init {
         cursos.add(Curso("JavaScript I", Usuario(nickname = "Anónimo"), favorito = 4599, usuarios = 5620))

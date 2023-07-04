@@ -25,7 +25,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -102,16 +101,16 @@ class MisCursosCompletosActivity : ComponentActivity() {
                 shape = RoundedCornerShape(0),
                 onClick = { }
             ) {
-                Image(painterResource(id = R.drawable.baseline_add_task_24), contentDescription = "")
+                Image(painterResource(id = R.drawable.baseline_add_task_24a), contentDescription = "")
             }
             Spacer(modifier = Modifier.weight(1f))
             Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaOscuro),
                 shape = RoundedCornerShape(0),
-                border = BorderStroke(1.dp, Color.Black),
+                border = BorderStroke(1.dp, Color.White),
                 modifier = Modifier.fillMaxHeight(),
-                onClick = {  }
+                onClick = { }
             ) {
-                Text("Filtros", color = Color.White)
+                Image(painterResource(id = R.drawable.baseline_filter_alt_24), contentDescription = "")
             }
             Image(
                 painter = painterResource(id = R.drawable.baseline_settings_24),
@@ -180,7 +179,7 @@ class MisCursosCompletosActivity : ComponentActivity() {
                 border = BorderStroke(1.dp, color = Color.White),
                 onClick = {  }
             ) {
-                Image(painterResource(id = R.drawable.baseline_folder_24), contentDescription = "")
+                Image(painterResource(id = R.drawable.baseline_folder_24a), contentDescription = "")
             }
             Button(
                 colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaClaro),
