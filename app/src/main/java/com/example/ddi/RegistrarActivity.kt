@@ -3,15 +3,19 @@ package com.example.ddi
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.ddi.data.Usuario
 import com.example.ddi.data.UsuarioRepositorio
@@ -42,28 +46,41 @@ class RegistrarActivity : ComponentActivity() {
                     verticalArrangement = Arrangement.Center,
                 ) {
                     TextCustom(text = "Crear cuenta")
-                    Spacer(modifier = Modifier.height(20.dp))
+                    Spacer(modifier = Modifier.height(5.dp))
                     val nombre = textFieldCustom(label = "Nombre de usuario", placeholder = "Nombre de usuario")
-                    Spacer(modifier = Modifier.height(10.dp))
+                    Spacer(modifier = Modifier.height(5.dp))
                     val contrasenia = textFieldPasswordCustom(label = "Contraseña", placeholder = "Contraseña")
-                    Spacer(modifier = Modifier.height(10.dp))
+                    Spacer(modifier = Modifier.height(5.dp))
                     val confirmar = textFieldPasswordCustom(label = "Confirmar contraseña", placeholder = "Confirmar contraseña")
-                    Spacer(modifier = Modifier.height(10.dp))
+                    Spacer(modifier = Modifier.height(5.dp))
                     val email = textFieldEmailCustom(label = "Correo electrónico", placeholder = "Correo electrónico")
-                    Spacer(modifier = Modifier.height(30.dp))
-                    ButtonCustom(text = "Registrar", onClick = {
-                        if(validar(nombre, contrasenia, confirmar, email)) {
-                            if(contrasenia == confirmar) {
-                                nuevoUsuario = Usuario(nombre, contrasenia, email)
-                                UsuarioRepositorio.agregar(nuevoUsuario)
-                                finish()
+                    Row (
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(25.dp),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        ButtonCustom(text = "Registrar", color = violetaOscuro, modifier = Modifier
+                            .border(1.dp, Color.White), onClick = {
+                            if(validar(nombre, contrasenia, confirmar, email)) {
+                                if(contrasenia == confirmar) {
+                                    nuevoUsuario = Usuario(nombre, contrasenia, email)
+                                    UsuarioRepositorio.agregar(nuevoUsuario)
+                                    finish()
+                                }
                             }
-                        }
-                    })
-                    Spacer(modifier = Modifier.height(20.dp))
+                        })
+                    }
                     TextCustom(text = "¿Tienes cuenta?")
-                    Spacer(modifier = Modifier.height(10.dp))
-                    ButtonCustom(text = "Iniciar Sesión", onClick = { finish() })
+                    Row (
+                        Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        ButtonCustom(text = "Iniciar Sesión", color = violetaOscuro, modifier = Modifier
+                            .border(1.dp, Color.White), onClick = { finish() }, width = 200.dp)
+                    }
+
                 }
             }
         }
