@@ -49,9 +49,9 @@ class RegistrarActivity : ComponentActivity() {
                     Spacer(modifier = Modifier.height(10.dp))
                     val confirmar = textFieldPasswordCustom(label = "Confirmar contraseña", placeholder = "Confirmar contraseña")
                     Spacer(modifier = Modifier.height(10.dp))
-                    val email = textFieldEmailCustom(label = "Email", placeholder = "email@email.com")
+                    val email = textFieldEmailCustom(label = "Correo electrónico", placeholder = "Correo electrónico")
                     Spacer(modifier = Modifier.height(30.dp))
-                    ButtonCustom(text = "Registrarse", onClick = {
+                    ButtonCustom(text = "Registrar", onClick = {
                         if(validar(nombre, contrasenia, confirmar, email)) {
                             if(contrasenia == confirmar) {
                                 nuevoUsuario = Usuario(nombre, contrasenia, email)
@@ -60,6 +60,10 @@ class RegistrarActivity : ComponentActivity() {
                             }
                         }
                     })
+                    Spacer(modifier = Modifier.height(20.dp))
+                    TextCustom(text = "¿Tienes cuenta?")
+                    Spacer(modifier = Modifier.height(10.dp))
+                    ButtonCustom(text = "Iniciar Sesión", onClick = { finish() })
                 }
             }
         }

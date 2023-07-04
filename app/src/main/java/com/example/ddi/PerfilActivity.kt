@@ -207,13 +207,6 @@ class PerfilActivity : ComponentActivity() {
             Button(
                 colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaClaro),
                 shape = RoundedCornerShape(0),
-                onClick = { crear(usuario.nickname, usuario.password) }
-            ) {
-                Image(painterResource(id = R.drawable.baseline_add_24), contentDescription = "")
-            }
-            Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaClaro),
-                shape = RoundedCornerShape(0),
                 border = BorderStroke(1.dp, color = White),
                 onClick = { }
             ) {

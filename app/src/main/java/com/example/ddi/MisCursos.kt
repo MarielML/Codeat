@@ -6,7 +6,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -66,7 +65,7 @@ class MisCursos : ComponentActivity() {
                     modifier = Modifier.fillMaxSize()
                 )
                 {
-                    TopBar()
+                    TopBar(usuario)
                     Contenido(usuario)
                 }
                 Spacer(modifier = Modifier.height(10.dp))
@@ -76,25 +75,44 @@ class MisCursos : ComponentActivity() {
     }
 
     @Composable
-    private fun TopBar() {
+    private fun TopBar(usuario: Usuario) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(60.dp)
                 .wrapContentHeight()
-                .border(BorderStroke(1.dp, White))
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            TextCustom(text = "Mis Cursos")
+            Button(
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaOscuro),
+                shape = RoundedCornerShape(0),
+                onClick = { }
+            ) {
+                Image(painterResource(id = R.drawable.baseline_folder_24), contentDescription = "")
+            }
+            Button(
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaOscuro),
+                shape = RoundedCornerShape(0),
+                onClick = { favoritos(usuario.nickname, usuario.password) }
+            ) {
+                Image(painterResource(id = R.drawable.baseline_star_24), contentDescription = "")
+            }
+            Button(
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaOscuro),
+                shape = RoundedCornerShape(0),
+                onClick = { completos(usuario.nickname, usuario.password) }
+            ) {
+                Image(painterResource(id = R.drawable.baseline_add_task_24), contentDescription = "")
+            }
             Spacer(modifier = Modifier.weight(1f))
-            Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
+            Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaOscuro),
                 shape = RoundedCornerShape(0),
                 border = BorderStroke(1.dp, Black),
                 modifier = Modifier.fillMaxHeight(),
                 onClick = {  }
             ) {
-                Text("Filtros", color = Black)
+                Text("Filtros", color = White)
             }
             Image(
                 painter = painterResource(id = R.drawable.baseline_settings_24),
@@ -121,6 +139,7 @@ class MisCursos : ComponentActivity() {
                 if(usuario.cursos.size == 0) {
                     TextCustom(text = "Aún no tienes cursos")
                 } else {
+                    TextCustom(text = "Todos mis cursos")
                     MostrarCursos(usuario.cursos, usuario)
                 }
             }
@@ -174,13 +193,6 @@ class MisCursos : ComponentActivity() {
             Button(
                 colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaClaro),
                 shape = RoundedCornerShape(0),
-                onClick = { crear(usuario.nickname, usuario.password) }
-            ) {
-                Image(painterResource(id = R.drawable.baseline_add_24), contentDescription = "")
-            }
-            Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaClaro),
-                shape = RoundedCornerShape(0),
                 onClick = { perfil(usuario.nickname, usuario.password) }
             ) {
                 Image(painterResource(id = R.drawable.baseline_person_24), contentDescription = "")
@@ -207,15 +219,6 @@ class MisCursos : ComponentActivity() {
         onStop()
     }
 
-    private fun crear(username: String, password: String) {
-        val intent = Intent(this, CrearCursoActivity::class.java).apply {
-            putExtra("username", username)
-            putExtra("password", password)
-        }
-        startActivity(intent)
-        onStop()
-    }
-
     private fun perfil(username: String, password: String) {
         val intent = Intent(this, PerfilActivity::class.java).apply {
             putExtra("username", username)
@@ -227,6 +230,24 @@ class MisCursos : ComponentActivity() {
 
     private fun configuracion() {
         val intent = Intent(this, ConfiguracionActivity::class.java)
+        startActivity(intent)
+        onStop()
+    }
+
+    private fun favoritos(username: String, password: String) {
+        val intent = Intent(this, MisCursosFavoritosActivity::class.java).apply {
+            putExtra("username", username)
+            putExtra("password", password)
+        }
+        startActivity(intent)
+        onStop()
+    }
+
+    private fun completos(username: String, password: String) {
+        val intent = Intent(this, MisCursosCompletosActivity::class.java).apply {
+            putExtra("username", username)
+            putExtra("password", password)
+        }
         startActivity(intent)
         onStop()
     }

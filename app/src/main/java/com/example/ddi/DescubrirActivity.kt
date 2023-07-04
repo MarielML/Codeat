@@ -94,24 +94,23 @@ class DescubrirActivity : ComponentActivity() {
             Button(
                 colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaOscuro),
                 shape = RoundedCornerShape(0),
-                border = BorderStroke(1.dp, color = White),
                 onClick = { }
             ) {
-                Image(painterResource(id = R.drawable.baseline_folder_24), contentDescription = "")
+                Image(painterResource(id = R.drawable.baseline_local_fire_department_24), contentDescription = "")
             }
             Button(
                 colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaOscuro),
                 shape = RoundedCornerShape(0),
                 onClick = { favoritos(usuario.nickname, usuario.password) }
             ) {
-                Image(painterResource(id = R.drawable.baseline_search_24), contentDescription = "")
+                Image(painterResource(id = R.drawable.baseline_star_24), contentDescription = "")
             }
             Button(
                 colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaOscuro),
                 shape = RoundedCornerShape(0),
                 onClick = { masUsados(usuario.nickname, usuario.password) }
             ) {
-                Image(painterResource(id = R.drawable.baseline_add_24), contentDescription = "")
+                Image(painterResource(id = R.drawable.baseline_person_24), contentDescription = "")
             }
             Spacer(modifier = Modifier.weight(1f))
             Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaOscuro),
@@ -231,13 +230,6 @@ class DescubrirActivity : ComponentActivity() {
             Button(
                 colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaClaro),
                 shape = RoundedCornerShape(0),
-                onClick = { crear(usuario.nickname, usuario.password) }
-            ) {
-                Image(painterResource(id = R.drawable.baseline_add_24), contentDescription = "")
-            }
-            Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaClaro),
-                shape = RoundedCornerShape(0),
                 onClick = { perfil(usuario.nickname, usuario.password) }
             ) {
                 Image(painterResource(id = R.drawable.baseline_person_24), contentDescription = "")
@@ -266,15 +258,6 @@ class DescubrirActivity : ComponentActivity() {
 
     private fun misCursos(username: String, password: String) {
         val intent = Intent(this, MisCursos::class.java).apply {
-            putExtra("username", username)
-            putExtra("password", password)
-        }
-        startActivity(intent)
-        onStop()
-    }
-
-    private fun crear(username: String, password: String) {
-        val intent = Intent(this, CrearCursoActivity::class.java).apply {
             putExtra("username", username)
             putExtra("password", password)
         }

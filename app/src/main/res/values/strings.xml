@@ -21,4 +21,6 @@
     <string name="title_activity_tendencia">TendenciaActivity</string>
     <string name="title_activity_favoritos">FavoritosActivity</string>
     <string name="title_activity_mas_usados">MasUsadosActivity</string>
+    <string name="title_activity_mis_cursos_favoritos">MisCursosFavoritosActivity</string>
+    <string name="title_activity_mis_cursos_completos">MisCursosCompletosActivity</string>
 </resources>

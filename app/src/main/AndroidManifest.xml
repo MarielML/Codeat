@@ -13,6 +13,16 @@
         android:theme="@style/Theme.Codeat"
         tools:targetApi="31">
         <activity
+            android:name=".MisCursosCompletosActivity"
+            android:exported="false"
+            android:label="@string/title_activity_mis_cursos_completos"
+            android:theme="@style/Theme.Codeat" />
+        <activity
+            android:name=".MisCursosFavoritosActivity"
+            android:exported="false"
+            android:label="@string/title_activity_mis_cursos_favoritos"
+            android:theme="@style/Theme.Codeat" />
+        <activity
             android:name=".MasUsadosActivity"
             android:exported="false"
             android:label="@string/title_activity_mas_usados"

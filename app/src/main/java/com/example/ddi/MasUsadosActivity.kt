@@ -95,22 +95,21 @@ class MasUsadosActivity : ComponentActivity() {
                 shape = RoundedCornerShape(0),
                 onClick = { tendencia(usuario.nickname, usuario.password) }
             ) {
-                Image(painterResource(id = R.drawable.baseline_folder_24), contentDescription = "")
+                Image(painterResource(id = R.drawable.baseline_local_fire_department_24), contentDescription = "")
             }
             Button(
                 colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaOscuro),
                 shape = RoundedCornerShape(0),
                 onClick = { favoritos(usuario.nickname, usuario.password) }
             ) {
-                Image(painterResource(id = R.drawable.baseline_search_24), contentDescription = "")
+                Image(painterResource(id = R.drawable.baseline_star_24), contentDescription = "")
             }
             Button(
                 colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaOscuro),
                 shape = RoundedCornerShape(0),
-                border = BorderStroke(1.dp, color = White),
                 onClick = {  }
             ) {
-                Image(painterResource(id = R.drawable.baseline_add_24), contentDescription = "")
+                Image(painterResource(id = R.drawable.baseline_person_24), contentDescription = "")
             }
             Spacer(modifier = Modifier.weight(1f))
             Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaOscuro),

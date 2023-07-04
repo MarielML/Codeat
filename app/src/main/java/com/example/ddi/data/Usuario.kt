@@ -7,6 +7,8 @@ class Usuario (
     var meGusta: Int = 0,
     var comentarios: Int = 0,
     val cursos: MutableList<Curso> = mutableListOf(),
+    val cursosFavoritos: MutableList<Curso> = mutableListOf(),
+    val cursosCompletos: MutableList<Curso> = mutableListOf(),
     val cursosPublicados: MutableList<Curso> = mutableListOf(),
     val cursosSinPublicar: MutableList<Curso> = mutableListOf(),
     val seguidores: MutableList<Usuario> = mutableListOf(),

@@ -6,17 +6,20 @@ object UsuarioRepositorio {
     init {
         usuarios.add(Usuario("A", "a", "a@email", 5, 10,
             cursos =
-            mutableListOf(Curso("JavaScript I", Usuario(nickname = "Anónimo"), favorito = 4599, usuarios = 5620),
-                Curso("JavaScript II", Usuario(nickname = "Anónimo"), favorito = 5, usuarios = 10)),
-            cursosPublicados =
-            mutableListOf(Curso("React I", Usuario(nickname = "A"), favorito = 5, usuarios = 10)),
-            cursosSinPublicar =
-            mutableListOf(Curso("React II", Usuario(nickname = "A")))))
+            mutableListOf(CursoRepositorio.cursoElegido("JavaScript I"))))
         usuarios.add(Usuario("Anónimo", "a", "", 20, 100,
+            cursos =
+            mutableListOf(CursoRepositorio.cursoElegido("Jetpack Compose"),
+                CursoRepositorio.cursoElegido("Kotlin I"),
+                CursoRepositorio.cursoElegido("Python I")),
             cursosPublicados = mutableListOf(CursoRepositorio.cursoElegido("JavaScript I"),
                 CursoRepositorio.cursoElegido("TypeScript I"),
                 CursoRepositorio.cursoElegido("TypeScript II")
-            )
+            ),
+            cursosFavoritos =
+            mutableListOf(CursoRepositorio.cursoElegido("Jetpack Compose")),
+            cursosCompletos =
+            mutableListOf(CursoRepositorio.cursoElegido("Python I")),
         ))
         usuarios.add(Usuario("Pepe Argento", "a", "", 15, 3,
             cursosPublicados = mutableListOf(CursoRepositorio.cursoElegido("Phyton I"))
