@@ -6,7 +6,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +18,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -84,7 +84,6 @@ class CursoActivity : ComponentActivity() {
                 .fillMaxWidth()
                 .height(60.dp)
                 .wrapContentHeight()
-                .border(BorderStroke(1.dp, White))
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -97,15 +96,6 @@ class CursoActivity : ComponentActivity() {
                     })
             )
             TextCustom(text = curso.nombre, textAlign = TextAlign.Center)
-            Spacer(modifier = Modifier.weight(1f))
-            Image(
-                painter = painterResource(id = R.drawable.baseline_settings_24),
-                contentDescription = "",
-                modifier = Modifier
-                    .clickable(enabled = true, onClick = {
-                        configuracion()
-                    })
-            )
         }
     }
 
@@ -115,11 +105,10 @@ class CursoActivity : ComponentActivity() {
             Modifier
                 .fillMaxSize()
                 .padding(25.dp),
-
             verticalArrangement = Arrangement.Center,
         ) {
             Creador(usuario, curso)
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(10.dp))
             TextCustom(text = "Acerca del curso")
             TextCustom(text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut " +
                     "labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut" +
@@ -138,9 +127,11 @@ class CursoActivity : ComponentActivity() {
                         misCursos(usuario.nickname, usuario.password)
                         finish()
                     },
-                    modifier = Modifier.background(violetaOscuro)
-                        .border(1.dp, White),
-                    contentColor = White
+                    modifier = Modifier
+                        .border(1.dp, White, CircleShape),
+                    shape = CircleShape,
+                    containerColor = violetaOscuro,
+                    contentColor = White,
                 ) {
                     Icon(Icons.Filled.Add,"")
                 }
@@ -154,7 +145,7 @@ class CursoActivity : ComponentActivity() {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround,
         ){
-            Image(painterResource(id = R.drawable.baseline_person_100), contentDescription = "",
+            Image(painterResource(id = R.drawable.baseline_person_200), contentDescription = "",
                 Modifier
                     .width(50.dp)
                     .border(
@@ -204,12 +195,6 @@ class CursoActivity : ComponentActivity() {
             putExtra("username", username)
             putExtra("password", password)
         }
-        startActivity(intent)
-        onStop()
-    }
-
-    private fun configuracion() {
-        val intent = Intent(this, ConfiguracionActivity::class.java)
         startActivity(intent)
         onStop()
     }

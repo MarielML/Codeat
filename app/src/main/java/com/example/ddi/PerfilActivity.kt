@@ -22,9 +22,15 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,6 +39,7 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.ddi.data.Curso
 import com.example.ddi.data.Usuario
 import com.example.ddi.data.UsuarioRepositorio
 import com.example.ddi.ui.theme.CodeatTheme
@@ -79,11 +86,9 @@ class PerfilActivity : ComponentActivity() {
                 .fillMaxWidth()
                 .height(60.dp)
                 .wrapContentHeight()
-                .border(BorderStroke(1.dp, White))
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            TextCustom(text = "Perfil")
             Spacer(modifier = Modifier.weight(1f))
             Image(
                 painter = painterResource(id = R.drawable.baseline_settings_24),
@@ -107,80 +112,129 @@ class PerfilActivity : ComponentActivity() {
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 Image(
-                    painterResource(id = R.drawable.baseline_person_100),
+                    painterResource(id = R.drawable.baseline_person_200),
                     contentDescription = "",
-                    Modifier.width(50.dp)
+                    Modifier
+                        .width(50.dp)
+                        .border(BorderStroke(1.dp, White))
                 )
-                TextCustom(text = usuario.nickname)
+                Column {
+                    TextCustom(text = usuario.nickname)
+                    TextCustom(text = "${usuario.seguidores.size} seguidores", fontSize = 16.sp)
+                    TextCustom(text = "${usuario.seguidos.size} seguidos", fontSize = 16.sp)
+                }
             }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceAround
+            TextCustom(text = "Cursos Creados")
+            Box(
+                modifier = Modifier
+                    .height(100.dp)
+                    .padding(horizontal = 10.dp, vertical = 5.dp),
             ) {
-                Row {
-                    Image(painterResource(id = R.drawable.baseline_favorite_24), contentDescription = "", Modifier.width(50.dp))
-                    TextCustom(text = usuario.meGusta.toString())
-                }
-                Spacer(modifier = Modifier.width(5.dp))
-                Row {
-                    Image(painterResource(id = R.drawable.baseline_comment_24), contentDescription = "", Modifier.width(50.dp))
-                    TextCustom(text = usuario.comentarios.toString())
+                MostrarCursos(usuario.cursosCreados)
+            }
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                FloatingActionButton (
+                    onClick = {
+                        crear(usuario.nickname, usuario.password)
+                    },
+                    modifier = Modifier
+                        .border(1.dp, White, CircleShape),
+                    shape = CircleShape,
+                    containerColor = violetaOscuro,
+                    contentColor = White,
+                ) {
+                    Icon(Icons.Filled.Add,"")
                 }
             }
-            Row {
-                Box(
-                    modifier = Modifier
-                        .height(140.dp)
-                ) {
-                    Column {
-                        TextCustom(text = "Seguidos: ${usuario.seguidos.size}", fontSize = 24.sp)
-                        Spacer(modifier = Modifier.height(5.dp))
-                        MostrarSeguidos(usuario.seguidos)
-                    }
-                }
-                Spacer(modifier = Modifier.width(20.dp))
-                Box(
-                    modifier = Modifier
-                        .height(140.dp)
-                ) {
-                    Column {
-                        TextCustom(text = "Seguidores: ${usuario.seguidores.size}", fontSize = 24.sp)
-                        Spacer(modifier = Modifier.height(5.dp))
-                        MostrarSeguidores(usuario.seguidores)
-                    }
-                }
+            TextCustom(text = "Cursos Favoritos")
+            Box(
+                modifier = Modifier
+                    .height(100.dp)
+                    .padding(horizontal = 10.dp, vertical = 5.dp),
+            ) {
+                MostrarCursosF(usuario.cursosFavoritos, usuario)
             }
         }
     }
 
     @Composable
-    private fun MostrarSeguidores(datos: MutableList<Usuario>) {
-        LazyColumn {
-            items(datos) { item -> ListItemRowSeguidores(item) }
+    private fun MostrarCursos(datos: MutableList<Curso>) {
+        LazyColumn (
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            items(datos) { item -> ListItemRow(item) }
         }
     }
 
     @Composable
-    private fun ListItemRowSeguidores(item: Usuario) {
-        Row {
-            TextCustom(text = item.nickname, fontSize = 20.sp)
+    private fun ListItemRow(item: Curso) {
+        Column {
+            Row (
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                FloatingActionButton (
+                    onClick = {
+
+                    },
+                    modifier = Modifier
+                        .border(1.dp, White, CircleShape),
+                    shape = CircleShape,
+                    containerColor = violetaOscuro,
+                    contentColor = White,
+                ) {
+                    Icon(Icons.Filled.Edit,"")
+                }
+                ButtonCustom(text = item.nombre, onClick = {
+
+                })
+            }
+        }
+        Spacer(modifier = Modifier.height(5.dp))
+    }
+
+    @Composable
+    private fun MostrarCursosF(datos: MutableList<Curso>, usuario: Usuario) {
+        LazyColumn (
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            items(datos) { item -> ListItemRowF(item, usuario) }
         }
     }
 
     @Composable
-    private fun MostrarSeguidos(datos: MutableList<Usuario>) {
-        LazyColumn {
-            items(datos) { item -> ListItemRowSeguidos(item) }
+    private fun ListItemRowF(item: Curso, usuario: Usuario) {
+        Column {
+            Row (
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                FloatingActionButton (
+                    onClick = {
+                        usuario.agregarCurso(item)
+                        misCursos(usuario.nickname, usuario.password)
+                        finish()
+                    },
+                    modifier = Modifier
+                        .border(1.dp, White, CircleShape),
+                    shape = CircleShape,
+                    containerColor = violetaOscuro,
+                    contentColor = White,
+                ) {
+                    Icon(Icons.Filled.Add,"")
+                }
+                ButtonCustom(text = item.nombre, onClick = {
+                    curso(usuario.nickname, usuario.password, item.nombre)
+                })
+            }
         }
+        Spacer(modifier = Modifier.height(5.dp))
     }
-
-    @Composable
-    private fun ListItemRowSeguidos(item: Usuario) {
-        Row {
-            TextCustom(text = item.nickname, fontSize = 20.sp)
-        }
-    }
-
 
     @Composable
     private fun Menu(usuario: Usuario) {
@@ -206,12 +260,21 @@ class PerfilActivity : ComponentActivity() {
             Button(
                 colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaClaro),
                 shape = RoundedCornerShape(0),
-                border = BorderStroke(1.dp, color = White),
                 onClick = { }
             ) {
-                Image(painterResource(id = R.drawable.baseline_person_24), contentDescription = "")
+                Image(painterResource(id = R.drawable.baseline_person_24a), contentDescription = "")
             }
         }
+    }
+
+    private fun curso(username: String, password: String, nombre: String) {
+        val intent = Intent(this, CursoActivity::class.java).apply {
+            putExtra("username", username)
+            putExtra("password", password)
+            putExtra("nombre", nombre)
+        }
+        startActivity(intent)
+        onStop()
     }
 
     private fun misCursos(username: String, password: String) {
@@ -225,6 +288,15 @@ class PerfilActivity : ComponentActivity() {
 
     private fun descubrir(username: String, password: String) {
         val intent = Intent(this, DescubrirActivity::class.java).apply {
+            putExtra("username", username)
+            putExtra("password", password)
+        }
+        startActivity(intent)
+        onStop()
+    }
+
+    private fun crear(username: String, password: String) {
+        val intent = Intent(this, CrearActivity::class.java).apply {
             putExtra("username", username)
             putExtra("password", password)
         }

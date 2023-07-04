@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -46,7 +45,7 @@ import com.example.ddi.ui.theme.violetaClaro
 import com.example.ddi.ui.theme.violetaOscuro
 
 class CrearCursoActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
+    /*override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val bundle = intent.extras
@@ -89,21 +88,12 @@ class CrearCursoActivity : ComponentActivity() {
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            TextCustom(text = "Crear")
-            Spacer(modifier = Modifier.weight(1f))
-            Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
-                shape = RoundedCornerShape(0),
-                modifier = Modifier.fillMaxHeight(),
-                onClick = { crear(usuario.nickname, usuario.password) }
-            ) {
-                Image(painter = painterResource(id = R.drawable.baseline_add_24), contentDescription = "")
-            }
             Image(
-                painter = painterResource(id = R.drawable.baseline_settings_24),
+                painter = painterResource(id = R.drawable.baseline_close_24),
                 contentDescription = "",
                 modifier = Modifier
                     .clickable(enabled = true, onClick = {
-                        configuracion()
+                        finish()
                     })
             )
         }
@@ -122,7 +112,7 @@ class CrearCursoActivity : ComponentActivity() {
                     .height(150.dp)
                     .padding(horizontal = 10.dp, vertical = 5.dp),
             ) {
-                MostrarCursosPublicados(usuario.cursosPublicados, usuario)
+                MostrarCursosPublicados(usuario.cursosCreados, usuario)
             }
             TextCustom(text = "Cursos sin Pulicar")
             Spacer(modifier = Modifier.height(20.dp))
@@ -131,7 +121,7 @@ class CrearCursoActivity : ComponentActivity() {
                     .height(150.dp)
                     .padding(horizontal = 10.dp, vertical = 5.dp),
             ) {
-                MostrarCursosSinPublicar(usuario.cursosSinPublicar, usuario)
+                MostrarCursosSinPublicar(usuario.cursosCreados, usuario)
             }
         }
     }
@@ -271,7 +261,7 @@ class CrearCursoActivity : ComponentActivity() {
                 shape = RoundedCornerShape(0),
                 onClick = { perfil(usuario.nickname, usuario.password) }
             ) {
-                Image(painterResource(id = R.drawable.baseline_person_24), contentDescription = "")
+                Image(painterResource(id = R.drawable.baseline_person_100), contentDescription = "")
             }
         }
     }
@@ -301,11 +291,5 @@ class CrearCursoActivity : ComponentActivity() {
         }
         startActivity(intent)
         onStop()
-    }
-
-    private fun configuracion() {
-        val intent = Intent(this, ConfiguracionActivity::class.java)
-        startActivity(intent)
-        onStop()
-    }
+    }*/
 }

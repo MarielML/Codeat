@@ -8,7 +8,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -103,19 +102,12 @@ class TodosLosCursosActivity : ComponentActivity() {
             Spacer(modifier = Modifier.weight(1f))
             Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaOscuro),
                 shape = RoundedCornerShape(0),
+                border = BorderStroke(1.dp, White),
                 modifier = Modifier.fillMaxHeight(),
-                onClick = {  }
+                onClick = { }
             ) {
-                Text("Filtros", color = White)
+                Image(painterResource(id = R.drawable.baseline_filter_alt_24), contentDescription = "")
             }
-            Image(
-                painter = painterResource(id = R.drawable.baseline_settings_24),
-                contentDescription = "",
-                modifier = Modifier
-                    .clickable(enabled = true, onClick = {
-                        configuracion()
-                    })
-            )
         }
     }
 
@@ -223,14 +215,7 @@ class TodosLosCursosActivity : ComponentActivity() {
                 border = BorderStroke(1.dp, color = White),
                 onClick = { }
             ) {
-                Image(painterResource(id = R.drawable.baseline_search_24), contentDescription = "")
-            }
-            Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaClaro),
-                shape = RoundedCornerShape(0),
-                onClick = { crear(usuario.nickname, usuario.password) }
-            ) {
-                Image(painterResource(id = R.drawable.baseline_add_24), contentDescription = "")
+                Image(painterResource(id = R.drawable.baseline_search_24a), contentDescription = "")
             }
             Button(
                 colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaClaro),
@@ -261,26 +246,11 @@ class TodosLosCursosActivity : ComponentActivity() {
         onStop()
     }
 
-    private fun crear(username: String, password: String) {
-        val intent = Intent(this, CrearCursoActivity::class.java).apply {
-            putExtra("username", username)
-            putExtra("password", password)
-        }
-        startActivity(intent)
-        onStop()
-    }
-
     private fun perfil(username: String, password: String) {
         val intent = Intent(this, PerfilActivity::class.java).apply {
             putExtra("username", username)
             putExtra("password", password)
         }
-        startActivity(intent)
-        onStop()
-    }
-
-    private fun configuracion() {
-        val intent = Intent(this, ConfiguracionActivity::class.java)
         startActivity(intent)
         onStop()
     }

@@ -92,11 +92,11 @@ class UsuarioActivity : ComponentActivity() {
             TextCustom(text = creador, textAlign = TextAlign.Center)
             Spacer(modifier = Modifier.weight(1f))
             Image(
-                painter = painterResource(id = R.drawable.baseline_settings_24),
+                painter = painterResource(id = R.drawable.baseline_close_24),
                 contentDescription = "",
                 modifier = Modifier
                     .clickable(enabled = true, onClick = {
-                        configuracion()
+                        finish()
                     })
             )
         }
@@ -112,7 +112,7 @@ class UsuarioActivity : ComponentActivity() {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceAround,
             ){
-                Image(painterResource(id = R.drawable.baseline_person_100), contentDescription = "", Modifier.width(50.dp))
+                Image(painterResource(id = R.drawable.baseline_person_200), contentDescription = "", Modifier.width(50.dp))
                 Column {
                     TextCustom(text = creador)
                     Row {
@@ -181,7 +181,7 @@ class UsuarioActivity : ComponentActivity() {
                     .height(300.dp)
                     .padding(horizontal = 10.dp, vertical = 5.dp),
             ) {
-                MostrarCursosPublicados(UsuarioRepositorio.creador(creador).cursosPublicados, usuario)
+                MostrarCursosPublicados(UsuarioRepositorio.creador(creador).cursosCreados, usuario)
             }
         }
     }
@@ -280,12 +280,6 @@ class UsuarioActivity : ComponentActivity() {
             putExtra("password", password)
             putExtra("nombre", nombre)
         }
-        startActivity(intent)
-        onStop()
-    }
-
-    private fun configuracion() {
-        val intent = Intent(this, ConfiguracionActivity::class.java)
         startActivity(intent)
         onStop()
     }

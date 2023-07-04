@@ -12,17 +12,24 @@ object UsuarioRepositorio {
             mutableListOf(CursoRepositorio.cursoElegido("Jetpack Compose"),
                 CursoRepositorio.cursoElegido("Kotlin I"),
                 CursoRepositorio.cursoElegido("Python I")),
-            cursosPublicados = mutableListOf(CursoRepositorio.cursoElegido("JavaScript I"),
-                CursoRepositorio.cursoElegido("TypeScript I"),
-                CursoRepositorio.cursoElegido("TypeScript II")
-            ),
+            cursosCreados = mutableListOf(CursoRepositorio.cursoElegido("TypeScript I")),
             cursosFavoritos =
             mutableListOf(CursoRepositorio.cursoElegido("Jetpack Compose")),
             cursosCompletos =
             mutableListOf(CursoRepositorio.cursoElegido("Python I")),
         ))
         usuarios.add(Usuario("Pepe Argento", "a", "", 15, 3,
-            cursosPublicados = mutableListOf(CursoRepositorio.cursoElegido("Phyton I"))
+            cursosCreados = mutableListOf(CursoRepositorio.cursoElegido("Phyton I"))
+        ))
+        usuarios.add(Usuario("Anónimo2", "a", "", 15, 3,
+            cursosCreados = mutableListOf(CursoRepositorio.cursoElegido("JavaScript I"),
+                CursoRepositorio.cursoElegido("JavaScript I"),
+                CursoRepositorio.cursoElegido("JavaScript II"),
+                CursoRepositorio.cursoElegido("Java I"),
+                CursoRepositorio.cursoElegido("TypeScript II"),
+                CursoRepositorio.cursoElegido("Jetpack Compose"),
+                CursoRepositorio.cursoElegido("Kotlin I"),
+                CursoRepositorio.cursoElegido("Koin"))
         ))
     }
 

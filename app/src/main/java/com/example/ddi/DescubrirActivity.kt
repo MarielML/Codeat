@@ -4,11 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,6 +22,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -65,10 +64,11 @@ class DescubrirActivity : ComponentActivity() {
         CodeatTheme {
             Surface(
                 modifier = Modifier.fillMaxSize(),
-                color = violetaOscuro
+                color = violetaClaro
             ) {
                 Column(
                     modifier = Modifier.fillMaxSize()
+                        .background(violetaOscuro)
                 )
                 {
                     TopBar(usuario)
@@ -113,20 +113,11 @@ class DescubrirActivity : ComponentActivity() {
             Spacer(modifier = Modifier.weight(1f))
             Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaOscuro),
                 shape = RoundedCornerShape(0),
-                border = BorderStroke(1.dp, White),
                 modifier = Modifier.fillMaxHeight(),
                 onClick = { }
             ) {
                 Image(painterResource(id = R.drawable.baseline_filter_alt_24), contentDescription = "")
             }
-            Image(
-                painter = painterResource(id = R.drawable.baseline_settings_24),
-                contentDescription = "",
-                modifier = Modifier
-                    .clickable(enabled = true, onClick = {
-                        configuracion()
-                    })
-            )
         }
     }
 
@@ -177,9 +168,11 @@ class DescubrirActivity : ComponentActivity() {
                         misCursos(usuario.nickname, usuario.password)
                         finish()
                     },
-                    modifier = Modifier.background(violetaOscuro)
-                        .border(1.dp, White),
-                    contentColor = White
+                    modifier = Modifier
+                        .border(1.dp, White, CircleShape),
+                    shape = CircleShape,
+                    containerColor = violetaOscuro,
+                    contentColor = White,
                 ) {
                     Icon(Icons.Filled.Add,"")
                 }
@@ -220,7 +213,6 @@ class DescubrirActivity : ComponentActivity() {
             Button(
                 colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaClaro),
                 shape = RoundedCornerShape(0),
-                border = BorderStroke(1.dp, color = White),
                 onClick = { }
             ) {
                 Image(painterResource(id = R.drawable.baseline_search_24a), contentDescription = "")
@@ -268,12 +260,6 @@ class DescubrirActivity : ComponentActivity() {
             putExtra("username", username)
             putExtra("password", password)
         }
-        startActivity(intent)
-        onStop()
-    }
-
-    private fun configuracion() {
-        val intent = Intent(this, ConfiguracionActivity::class.java)
         startActivity(intent)
         onStop()
     }

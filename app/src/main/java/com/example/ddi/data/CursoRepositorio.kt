@@ -1,17 +1,17 @@
 package com.example.ddi.data
 
 object CursoRepositorio {
-    private val cursos = mutableListOf<Curso>()
+    val cursos = mutableListOf<Curso>()
     private val tendencia = mutableListOf<Curso>()
     private val favoritos = mutableListOf<Curso>()
     private val masUsados = mutableListOf<Curso>()
 
     init {
-        cursos.add(Curso("JavaScript I", Usuario(nickname = "Anónimo"), favorito = 4599, usuarios = 5620))
+        cursos.add(Curso("JavaScript I", Usuario(nickname = "Anónimo2"), favorito = 4599, usuarios = 5620))
         cursos.add(Curso("JavaScript II", Usuario(nickname = "Anónimo2"), favorito = 5, usuarios = 10))
         cursos.add(Curso("Java I", Usuario(nickname = "Anónimo2"), favorito = 4213, usuarios = 7620))
         cursos.add(Curso("TypeScript I", Usuario(nickname = "Anónimo"), favorito = 5, usuarios = 10))
-        cursos.add(Curso("TypeScript II", Usuario(nickname = "Anónimo"),favorito = 5, usuarios = 10))
+        cursos.add(Curso("TypeScript II", Usuario(nickname = "Anónimo2"),favorito = 5, usuarios = 10))
         cursos.add(Curso("Python I", Usuario(nickname = "Pepe Argento"), favorito = 3123, usuarios = 4045))
         cursos.add(Curso("React I", Usuario(nickname = "A"), favorito = 5, usuarios = 10))
         cursos.add(Curso("Jetpack Compose", Usuario(nickname = "Anónimo2"), favorito = 122, usuarios = 543))

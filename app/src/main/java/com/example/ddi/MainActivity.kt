@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
                     Spacer(modifier = Modifier.height(10.dp))
                     val contrasenia = textFieldPasswordCustom(label = "Contraseña", placeholder = "Contraseña...")
                     Spacer(modifier = Modifier.height(5.dp))
-                    ButtonCustom(text = "continuar", onClick = {
+                    ButtonCustom(text = "Continuar", onClick = {
                         if(validar(nombre, contrasenia)) {
                             if(UsuarioRepositorio.existe(nombre, contrasenia)) {
                                 usuario = UsuarioRepositorio.iniciar(nombre, contrasenia)

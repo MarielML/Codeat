@@ -1,6 +1,5 @@
 package com.example.ddi
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,7 +16,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -110,6 +108,31 @@ fun textFieldEmailCustom(
     return text.text
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TextFieldCustomDescripcion(
+    label: String,
+    placeholder: String,
+    width: Dp = 500.dp,
+    height: Dp= 200.dp
+) {
+    var text by remember { mutableStateOf(TextFieldValue("")) }
+    OutlinedTextField(
+        value = text,
+        onValueChange = { text = it },
+        label = { Text(text = label, color = White) },
+        placeholder = {
+            Text(
+                text = placeholder,
+                fontWeight = FontWeight.Light,
+                color = White
+            )
+        },
+        modifier = Modifier.width(width)
+            .height(height)
+    )
+}
+
 @Composable
 fun ButtonCustom(
     text: String,
@@ -117,6 +140,7 @@ fun ButtonCustom(
     width: Dp = 180.dp,
     height: Dp = 64.dp,
     color: Color = violetaClaro,
+    fontSize: Int = 24,
     textAlign: TextAlign = TextAlign.Center
 ) {
     Button(
@@ -130,7 +154,7 @@ fun ButtonCustom(
         Text(
             text,
             color = White,
-            fontSize = 24.sp,
+            fontSize = fontSize.sp,
             textAlign = textAlign
         )
     }
