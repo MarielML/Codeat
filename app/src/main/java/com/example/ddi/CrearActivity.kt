@@ -106,11 +106,11 @@ class CrearActivity : ComponentActivity() {
             }
             Row {
                 TextCustom(text = "Tags:")
-                ButtonCustom(text = "Web", onClick = { }, width = 50.dp, height = 20.dp, fontSize = 16)
-                ButtonCustom(text = "Android", onClick = { }, width = 50.dp, height = 20.dp, fontSize = 16)
-                ButtonCustom(text = "iOS", onClick = { }, width = 50.dp, height = 20.dp, fontSize = 16)
-                ButtonCustom(text = "Java", onClick = { }, width = 50.dp, height = 20.dp, fontSize = 16)
-                ButtonCustom(text = "+", onClick = { }, width = 10.dp, height = 20.dp, fontSize = 16)
+                ButtonCustom(text = "Web", onClick = { }, width = 50.dp, height = 50.dp, fontSize = 16)
+                ButtonCustom(text = "Android", onClick = { }, width = 50.dp, height = 50.dp, fontSize = 16)
+                ButtonCustom(text = "iOS", onClick = { }, width = 50.dp, height = 50.dp, fontSize = 16)
+                ButtonCustom(text = "Java", onClick = { }, width = 50.dp, height = 50.dp, fontSize = 16)
+                ButtonCustom(text = "+", onClick = { }, width = 10.dp, height = 50.dp, fontSize = 16)
             }
             TextCustom(text = "Descripción:")
             TextFieldCustomDescripcion(label = "", placeholder = "")

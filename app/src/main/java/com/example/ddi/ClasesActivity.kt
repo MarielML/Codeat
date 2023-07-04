@@ -4,6 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,10 +18,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.ddi.data.Curso
@@ -68,7 +74,16 @@ class ClasesActivity : ComponentActivity() {
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            Image(
+                painter = painterResource(id = R.drawable.baseline_close_24),
+                contentDescription = "",
+                modifier = Modifier
+                    .clickable(enabled = true, onClick = {
+                        finish()
+                    })
+            )
             TextCustom(text = curso.nombre, textAlign = TextAlign.Center)
+            Spacer(modifier = Modifier.weight(1f))
         }
     }
 
@@ -99,16 +114,18 @@ class ClasesActivity : ComponentActivity() {
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically,
         ){
-            TextCustom(text = "0%")
+            Image(painterResource(id = R.drawable.baseline_add_task_24), contentDescription = "", modifier = Modifier.border(1.dp, Color.White, CircleShape))
             ButtonCustom(text = item, onClick = {
-                clase1()
+                clase1(item)
             })
         }
         Spacer(modifier = Modifier.height(5.dp))
     }
 
-    private fun clase1() {
-        val intent = Intent(this, Clase1Activity::class.java)
+    private fun clase1(clase: String) {
+        val intent = Intent(this, Clase1Activity::class.java).apply {
+            putExtra("clase", clase)
+        }
         startActivity(intent)
         onStop()
     }

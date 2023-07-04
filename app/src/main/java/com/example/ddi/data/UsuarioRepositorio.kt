@@ -4,10 +4,10 @@ object UsuarioRepositorio {
     private val usuarios = mutableListOf<Usuario>()
 
     init {
-        usuarios.add(Usuario("A", "a", "a@email", 5, 10,
+        usuarios.add(Usuario("A", "a", "a@email", 5,
             cursos =
             mutableListOf(CursoRepositorio.cursoElegido("JavaScript I"))))
-        usuarios.add(Usuario("Anónimo", "a", "", 20, 100,
+        usuarios.add(Usuario("Anónimo", "a", "", 20,
             cursos =
             mutableListOf(CursoRepositorio.cursoElegido("Jetpack Compose"),
                 CursoRepositorio.cursoElegido("Kotlin I"),
@@ -18,10 +18,10 @@ object UsuarioRepositorio {
             cursosCompletos =
             mutableListOf(CursoRepositorio.cursoElegido("Python I")),
         ))
-        usuarios.add(Usuario("Pepe Argento", "a", "", 15, 3,
+        usuarios.add(Usuario("Pepe Argento", "a", "", 15,
             cursosCreados = mutableListOf(CursoRepositorio.cursoElegido("Phyton I"))
         ))
-        usuarios.add(Usuario("Anónimo2", "a", "", 15, 3,
+        usuarios.add(Usuario("Anónimo2", "a", "", 15,
             cursosCreados = mutableListOf(CursoRepositorio.cursoElegido("JavaScript I"),
                 CursoRepositorio.cursoElegido("JavaScript I"),
                 CursoRepositorio.cursoElegido("JavaScript II"),
@@ -37,6 +37,10 @@ object UsuarioRepositorio {
         if (!existeNombreOEmail(usuario.nickname, usuario.email)) {
             usuarios.add(usuario)
         }
+    }
+
+    fun favorito(usuario: Usuario, nombre: String): Boolean {
+        return (usuario.cursosFavoritos.any { curso: Curso -> curso.nombre == nombre})
     }
 
     fun existe(nickname: String, password: String): Boolean {

@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
@@ -42,6 +43,7 @@ import com.example.ddi.data.CursoRepositorio
 import com.example.ddi.data.Usuario
 import com.example.ddi.data.UsuarioRepositorio
 import com.example.ddi.ui.theme.CodeatTheme
+import com.example.ddi.ui.theme.violetaClaro
 import com.example.ddi.ui.theme.violetaOscuro
 
 class CursoActivity : ComponentActivity() {
@@ -73,6 +75,7 @@ class CursoActivity : ComponentActivity() {
                     TopBar(curso)
                     Contenido(usuario, curso)
                 }
+                Menu(usuario)
             }
         }
     }
@@ -114,9 +117,10 @@ class CursoActivity : ComponentActivity() {
                     "labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut" +
                     " aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum " +
                     "dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia" +
-                    " deserunt mollit anim id est laborum.", fontSize = 16.sp, modifier = Modifier.border(
+                    " deserunt mollit anim id est laborum.", fontSize = 12.sp, modifier = Modifier.border(
                 BorderStroke(1.dp, White)
             ))
+            Spacer(modifier = Modifier.height(5.dp))
             Row (
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceAround,
@@ -177,6 +181,37 @@ class CursoActivity : ComponentActivity() {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    @Composable
+    private fun Menu(usuario: Usuario) {
+        Row(modifier = Modifier
+            .size(30.dp),
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.Bottom
+        ) {
+            Button(
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaClaro),
+                shape = RoundedCornerShape(0),
+                onClick = { misCursos(usuario.nickname, usuario.password) }
+            ) {
+                Image(painterResource(id = R.drawable.baseline_folder_24), contentDescription = "")
+            }
+            Button(
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaClaro),
+                shape = RoundedCornerShape(0),
+                onClick = { }
+            ) {
+                Image(painterResource(id = R.drawable.baseline_search_24a), contentDescription = "")
+            }
+            Button(
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaClaro),
+                shape = RoundedCornerShape(0),
+                onClick = { perfil(usuario.nickname, usuario.password) }
+            ) {
+                Image(painterResource(id = R.drawable.baseline_person_24), contentDescription = "")
             }
         }
     }

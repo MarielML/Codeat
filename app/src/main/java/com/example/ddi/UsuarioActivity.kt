@@ -6,7 +6,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +21,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -85,12 +85,9 @@ class UsuarioActivity : ComponentActivity() {
                 .fillMaxWidth()
                 .height(60.dp)
                 .wrapContentHeight()
-                .border(BorderStroke(1.dp, Black))
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            TextCustom(text = creador, textAlign = TextAlign.Center)
-            Spacer(modifier = Modifier.weight(1f))
             Image(
                 painter = painterResource(id = R.drawable.baseline_close_24),
                 contentDescription = "",
@@ -99,6 +96,7 @@ class UsuarioActivity : ComponentActivity() {
                         finish()
                     })
             )
+            TextCustom(text = creador, textAlign = TextAlign.Center)
         }
     }
 
@@ -110,9 +108,15 @@ class UsuarioActivity : ComponentActivity() {
         ) {
             Row (
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceAround,
-            ){
-                Image(painterResource(id = R.drawable.baseline_person_200), contentDescription = "", Modifier.width(50.dp))
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                Image(
+                    painterResource(id = R.drawable.baseline_person_200),
+                    contentDescription = "",
+                    Modifier
+                        .width(50.dp)
+                        .border(BorderStroke(1.dp, White))
+                )
                 Column {
                     TextCustom(text = creador)
                     Row {
@@ -136,41 +140,14 @@ class UsuarioActivity : ComponentActivity() {
                     }
                 }
             }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Row {
-                    Image(painterResource(id = R.drawable.baseline_favorite_24), contentDescription = "", Modifier.width(50.dp))
-                    TextCustom(text = UsuarioRepositorio.creador(creador).meGusta.toString())
+            Row {
+                Column {
+                    TextCustom(text = "${UsuarioRepositorio.creador(creador).seguidores.size} seguidores", fontSize = 16.sp)
+                    TextCustom(text = "${UsuarioRepositorio.creador(creador).seguidos.size} seguidos", fontSize = 16.sp)
                 }
-                Spacer(modifier = Modifier.width(5.dp))
                 Row {
                     Image(painterResource(id = R.drawable.baseline_comment_24), contentDescription = "", Modifier.width(50.dp))
                     TextCustom(text = UsuarioRepositorio.creador(creador).comentarios.toString())
-                }
-            }
-            Row {
-                Box(
-                    modifier = Modifier
-                        .height(140.dp)
-                ) {
-                    Column {
-                        TextCustom(text = "Seguidos: ${UsuarioRepositorio.creador(creador).seguidos.size}", fontSize = 24.sp)
-                        Spacer(modifier = Modifier.height(5.dp))
-                        MostrarSeguidos(UsuarioRepositorio.creador(creador).seguidos)
-                    }
-                }
-                Spacer(modifier = Modifier.width(20.dp))
-                Box(
-                    modifier = Modifier
-                        .height(140.dp)
-                ) {
-                    Column {
-                        TextCustom(text = "Seguidores: ${UsuarioRepositorio.creador(creador).seguidores.size}", fontSize = 24.sp)
-                        Spacer(modifier = Modifier.height(5.dp))
-                        MostrarSeguidores(UsuarioRepositorio.creador(creador).seguidores)
-                    }
                 }
             }
             Spacer(modifier = Modifier.width(10.dp))
@@ -183,34 +160,6 @@ class UsuarioActivity : ComponentActivity() {
             ) {
                 MostrarCursosPublicados(UsuarioRepositorio.creador(creador).cursosCreados, usuario)
             }
-        }
-    }
-
-    @Composable
-    private fun MostrarSeguidores(datos: MutableList<Usuario>) {
-        LazyColumn {
-            items(datos) { item -> ListItemRowSeguidores(item) }
-        }
-    }
-
-    @Composable
-    private fun ListItemRowSeguidores(item: Usuario) {
-        Row {
-            TextCustom(text = item.nickname, fontSize = 20.sp)
-        }
-    }
-
-    @Composable
-    private fun MostrarSeguidos(datos: MutableList<Usuario>) {
-        LazyColumn {
-            items(datos) { item -> ListItemRowSeguidos(item) }
-        }
-    }
-
-    @Composable
-    private fun ListItemRowSeguidos(item: Usuario) {
-        Row {
-            TextCustom(text = item.nickname, fontSize = 20.sp)
         }
     }
 
@@ -239,9 +188,11 @@ class UsuarioActivity : ComponentActivity() {
                         misCursos(usuario.nickname, usuario.password)
                         finish()
                     },
-                    modifier = Modifier.background(violetaOscuro)
-                        .border(1.dp, White),
-                    contentColor = White
+                    modifier = Modifier
+                        .border(1.dp, White, CircleShape),
+                    shape = CircleShape,
+                    containerColor = violetaOscuro,
+                    contentColor = White,
                 ) {
                     Icon(Icons.Filled.Add,"")
                 }
@@ -249,20 +200,8 @@ class UsuarioActivity : ComponentActivity() {
                     curso(usuario.nickname, usuario.password, item.nombre)
                 })
             }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Row {
-                    Image(painterResource(id = R.drawable.baseline_favorite_24), contentDescription = "", Modifier.width(50.dp))
-                    TextCustom(text = item.favorito.toString())
-                }
-                Row {
-                    Image(painterResource(id = R.drawable.baseline_comment_24), contentDescription = "", Modifier.width(50.dp))
-                    TextCustom(text = item.usuarios.toString())
-                }
-            }
         }
+        Spacer(modifier = Modifier.height(5.dp))
     }
 
     private fun misCursos(username: String, password: String) {
