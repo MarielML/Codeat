@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,9 +23,12 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,6 +44,7 @@ import com.example.ddi.data.Curso
 import com.example.ddi.data.Usuario
 import com.example.ddi.data.UsuarioRepositorio
 import com.example.ddi.ui.theme.CodeatTheme
+import com.example.ddi.ui.theme.violetaOscuro
 
 class UsuarioActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +65,7 @@ class UsuarioActivity : ComponentActivity() {
         CodeatTheme {
             Surface(
                 modifier = Modifier.fillMaxSize(),
-                color = MaterialTheme.colorScheme.background
+                color = violetaOscuro
             ) {
                 Column(
                     modifier = Modifier.fillMaxSize()
@@ -87,11 +92,11 @@ class UsuarioActivity : ComponentActivity() {
             TextCustom(text = creador, textAlign = TextAlign.Center)
             Spacer(modifier = Modifier.weight(1f))
             Image(
-                painter = painterResource(id = R.drawable.baseline_settings_24),
+                painter = painterResource(id = R.drawable.baseline_close_24),
                 contentDescription = "",
                 modifier = Modifier
                     .clickable(enabled = true, onClick = {
-                        configuracion()
+                        finish()
                     })
             )
         }
@@ -107,7 +112,7 @@ class UsuarioActivity : ComponentActivity() {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceAround,
             ){
-                Image(painterResource(id = R.drawable.baseline_person_100), contentDescription = "", Modifier.width(50.dp))
+                Image(painterResource(id = R.drawable.baseline_person_200), contentDescription = "", Modifier.width(50.dp))
                 Column {
                     TextCustom(text = creador)
                     Row {
@@ -176,7 +181,7 @@ class UsuarioActivity : ComponentActivity() {
                     .height(300.dp)
                     .padding(horizontal = 10.dp, vertical = 5.dp),
             ) {
-                MostrarCursosPublicados(UsuarioRepositorio.creador(creador).cursosPublicados, usuario)
+                MostrarCursosPublicados(UsuarioRepositorio.creador(creador).cursosCreados, usuario)
             }
         }
     }
@@ -228,20 +233,17 @@ class UsuarioActivity : ComponentActivity() {
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Button(
+                FloatingActionButton (
                     onClick = {
                         usuario.agregarCurso(item)
                         misCursos(usuario.nickname, usuario.password)
                         finish()
                     },
-                    colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
-                    shape = androidx.compose.foundation.shape.CircleShape,
-                    border = BorderStroke(1.dp, Black)
+                    modifier = Modifier.background(violetaOscuro)
+                        .border(1.dp, White),
+                    contentColor = White
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.baseline_add_24),
-                        contentDescription = ""
-                    )
+                    Icon(Icons.Filled.Add,"")
                 }
                 ButtonCustom(text = item.nombre, onClick = {
                     curso(usuario.nickname, usuario.password, item.nombre)
@@ -278,12 +280,6 @@ class UsuarioActivity : ComponentActivity() {
             putExtra("password", password)
             putExtra("nombre", nombre)
         }
-        startActivity(intent)
-        onStop()
-    }
-
-    private fun configuracion() {
-        val intent = Intent(this, ConfiguracionActivity::class.java)
         startActivity(intent)
         onStop()
     }

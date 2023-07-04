@@ -4,10 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,18 +15,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.ddi.data.Curso
 import com.example.ddi.data.CursoRepositorio
 import com.example.ddi.ui.theme.CodeatTheme
+import com.example.ddi.ui.theme.violetaOscuro
 
 class ClasesActivity : ComponentActivity() {
     private val clases: MutableList<String> = mutableListOf("Clase 1", "Clase 2", "Clase 3", "Clase 4", "Clase 5")
@@ -51,7 +45,7 @@ class ClasesActivity : ComponentActivity() {
         CodeatTheme {
             Surface(
                 modifier = Modifier.fillMaxSize(),
-                color = MaterialTheme.colorScheme.background
+                color = violetaOscuro
             ) {
                 Column(
                     modifier = Modifier.fillMaxSize()
@@ -71,20 +65,10 @@ class ClasesActivity : ComponentActivity() {
                 .fillMaxWidth()
                 .height(60.dp)
                 .wrapContentHeight()
-                .border(BorderStroke(1.dp, Color.Black))
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             TextCustom(text = curso.nombre, textAlign = TextAlign.Center)
-            Spacer(modifier = Modifier.weight(1f))
-            Image(
-                painter = painterResource(id = R.drawable.baseline_settings_24),
-                contentDescription = "",
-                modifier = Modifier
-                    .clickable(enabled = true, onClick = {
-                        configuracion()
-                    })
-            )
         }
     }
 
@@ -120,16 +104,11 @@ class ClasesActivity : ComponentActivity() {
                 clase1()
             })
         }
+        Spacer(modifier = Modifier.height(5.dp))
     }
 
     private fun clase1() {
         val intent = Intent(this, Clase1Activity::class.java)
-        startActivity(intent)
-        onStop()
-    }
-
-    private fun configuracion() {
-        val intent = Intent(this, ConfiguracionActivity::class.java)
         startActivity(intent)
         onStop()
     }

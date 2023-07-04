@@ -7,8 +7,10 @@ class Usuario (
     var meGusta: Int = 0,
     var comentarios: Int = 0,
     val cursos: MutableList<Curso> = mutableListOf(),
-    val cursosPublicados: MutableList<Curso> = mutableListOf(),
-    val cursosSinPublicar: MutableList<Curso> = mutableListOf(),
+    val cursosFavoritos: MutableList<Curso> = mutableListOf(),
+    val cursosCompletos: MutableList<Curso> = mutableListOf(),
+    val cursosCreados: MutableList<Curso> = mutableListOf(),
+    //val cursosSinPublicar: MutableList<Curso> = mutableListOf(),
     val seguidores: MutableList<Usuario> = mutableListOf(),
     val seguidos: MutableList<Usuario> = mutableListOf()
 ) {
@@ -18,34 +20,31 @@ class Usuario (
         }
     }
 
-    fun existe(nombre: String): Boolean {
+    private fun existe(nombre: String): Boolean {
         return (cursos.any { curso: Curso -> curso.nombre == nombre})
     }
 
-    fun publicarCurso(curso: Curso) {
+    /*fun publicarCurso(curso: Curso) {
         if (!publicado(curso.nombre)) {
             cursosPublicados.add(curso)
             cursosSinPublicar.remove(curso)
         }
-    }
+    }*/
 
     fun crearCurso(curso: Curso) {
         if (!creado(curso.nombre)) {
-            cursosSinPublicar.add(curso)
+            cursosCreados.add(curso)
+            CursoRepositorio.cursos.add(curso)
         }
     }
 
-    fun publicado(nombre: String): Boolean {
-        return (cursosPublicados.any { curso: Curso -> curso.nombre == nombre})
-    }
-
     fun creado(nombre: String): Boolean {
-        return (cursosSinPublicar.any { curso: Curso -> curso.nombre == nombre})
+        return (CursoRepositorio.cursos.any { curso: Curso -> curso.nombre == nombre})
     }
 
     fun cursoElegido(nombre: String): Curso {
         var cursoElegido = Curso()
-        for (elemento in cursosSinPublicar) {
+        for (elemento in cursosCreados) {
             if (elemento.nombre == nombre) {
                 cursoElegido = elemento
             }
@@ -59,7 +58,7 @@ class Usuario (
         }
     }
 
-    fun existeSeguidor(nickname: String): Boolean {
+    private fun existeSeguidor(nickname: String): Boolean {
         return (seguidores.any { usuario: Usuario -> usuario.nickname == nickname })
     }
 

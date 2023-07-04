@@ -18,10 +18,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,11 +36,13 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.ddi.data.Curso
 import com.example.ddi.data.CursoRepositorio
 import com.example.ddi.data.Usuario
 import com.example.ddi.data.UsuarioRepositorio
 import com.example.ddi.ui.theme.CodeatTheme
+import com.example.ddi.ui.theme.violetaOscuro
 
 class CursoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +64,7 @@ class CursoActivity : ComponentActivity() {
         CodeatTheme {
             Surface(
                 modifier = Modifier.fillMaxSize(),
-                color = MaterialTheme.colorScheme.background
+                color = violetaOscuro
             ) {
                 Column(
                     modifier = Modifier.fillMaxSize()
@@ -78,20 +84,18 @@ class CursoActivity : ComponentActivity() {
                 .fillMaxWidth()
                 .height(60.dp)
                 .wrapContentHeight()
-                .border(BorderStroke(1.dp, Black))
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            TextCustom(text = curso.nombre, textAlign = TextAlign.Center)
-            Spacer(modifier = Modifier.weight(1f))
             Image(
-                painter = painterResource(id = R.drawable.baseline_settings_24),
+                painter = painterResource(id = R.drawable.baseline_close_24),
                 contentDescription = "",
                 modifier = Modifier
                     .clickable(enabled = true, onClick = {
-                        configuracion()
+                        finish()
                     })
             )
+            TextCustom(text = curso.nombre, textAlign = TextAlign.Center)
         }
     }
 
@@ -101,20 +105,36 @@ class CursoActivity : ComponentActivity() {
             Modifier
                 .fillMaxSize()
                 .padding(25.dp),
-
             verticalArrangement = Arrangement.Center,
         ) {
             Creador(usuario, curso)
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(10.dp))
+            TextCustom(text = "Acerca del curso")
+            TextCustom(text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut " +
+                    "labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut" +
+                    " aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum " +
+                    "dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia" +
+                    " deserunt mollit anim id est laborum.", fontSize = 16.sp, modifier = Modifier.border(
+                BorderStroke(1.dp, White)
+            ))
             Row (
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceAround,
             ){
-                ButtonCustom(text = "Agregar curso", onClick = {
-                    usuario.agregarCurso(curso)
-                    misCursos(usuario.nickname, usuario.password)
-                    finish()
-                })
+                FloatingActionButton (
+                    onClick = {
+                        usuario.agregarCurso(curso)
+                        misCursos(usuario.nickname, usuario.password)
+                        finish()
+                    },
+                    modifier = Modifier
+                        .border(1.dp, White, CircleShape),
+                    shape = CircleShape,
+                    containerColor = violetaOscuro,
+                    contentColor = White,
+                ) {
+                    Icon(Icons.Filled.Add,"")
+                }
             }
         }
     }
@@ -125,7 +145,12 @@ class CursoActivity : ComponentActivity() {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround,
         ){
-            Image(painterResource(id = R.drawable.baseline_person_100), contentDescription = "", Modifier.width(50.dp))
+            Image(painterResource(id = R.drawable.baseline_person_200), contentDescription = "",
+                Modifier
+                    .width(50.dp)
+                    .border(
+                        BorderStroke(1.dp, White)
+                    ))
             Column {
                 TextCustom(text = curso.creador.nickname, modifier = Modifier
                     .clickable(enabled = true, onClick = {
@@ -170,12 +195,6 @@ class CursoActivity : ComponentActivity() {
             putExtra("username", username)
             putExtra("password", password)
         }
-        startActivity(intent)
-        onStop()
-    }
-
-    private fun configuracion() {
-        val intent = Intent(this, ConfiguracionActivity::class.java)
         startActivity(intent)
         onStop()
     }

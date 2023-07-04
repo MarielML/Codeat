@@ -4,10 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,17 +21,18 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color.Companion.Black
-import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -42,6 +41,8 @@ import com.example.ddi.data.CursoRepositorio
 import com.example.ddi.data.Usuario
 import com.example.ddi.data.UsuarioRepositorio
 import com.example.ddi.ui.theme.CodeatTheme
+import com.example.ddi.ui.theme.violetaClaro
+import com.example.ddi.ui.theme.violetaOscuro
 
 class FavoritosActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,7 +63,7 @@ class FavoritosActivity : ComponentActivity() {
         CodeatTheme {
             Surface(
                 modifier = Modifier.fillMaxSize(),
-                color = MaterialTheme.colorScheme.background
+                color = violetaOscuro
             ) {
                 Column(
                     modifier = Modifier.fillMaxSize()
@@ -83,48 +84,38 @@ class FavoritosActivity : ComponentActivity() {
                 .fillMaxWidth()
                 .height(60.dp)
                 .wrapContentHeight()
-                .border(BorderStroke(1.dp, Black))
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaOscuro),
                 shape = RoundedCornerShape(0),
                 onClick = { tendencia(usuario.nickname, usuario.password) }
             ) {
-                Image(painterResource(id = R.drawable.baseline_folder_24), contentDescription = "")
+                Image(painterResource(id = R.drawable.baseline_local_fire_department_24), contentDescription = "")
             }
             Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = Gray),
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaOscuro),
                 shape = RoundedCornerShape(0),
                 onClick = {  }
             ) {
-                Image(painterResource(id = R.drawable.baseline_search_24), contentDescription = "")
+                Image(painterResource(id = R.drawable.baseline_star_24a), contentDescription = "")
             }
             Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaOscuro),
                 shape = RoundedCornerShape(0),
                 onClick = { masUsados(usuario.nickname, usuario.password) }
             ) {
-                Image(painterResource(id = R.drawable.baseline_add_24), contentDescription = "")
+                Image(painterResource(id = R.drawable.baseline_person_24), contentDescription = "")
             }
             Spacer(modifier = Modifier.weight(1f))
-            Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
+            Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaOscuro),
                 shape = RoundedCornerShape(0),
-                border = BorderStroke(1.dp, Black),
                 modifier = Modifier.fillMaxHeight(),
-                onClick = {  }
+                onClick = { }
             ) {
-                Text("Filtros", color = Black)
+                Image(painterResource(id = R.drawable.baseline_filter_alt_24), contentDescription = "")
             }
-            Image(
-                painter = painterResource(id = R.drawable.baseline_settings_24),
-                contentDescription = "",
-                modifier = Modifier
-                    .clickable(enabled = true, onClick = {
-                        configuracion()
-                    })
-            )
         }
     }
 
@@ -169,20 +160,19 @@ class FavoritosActivity : ComponentActivity() {
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Button(
+                FloatingActionButton (
                     onClick = {
                         usuario.agregarCurso(item)
                         misCursos(usuario.nickname, usuario.password)
                         finish()
                     },
-                    colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
-                    shape = androidx.compose.foundation.shape.CircleShape,
-                    border = BorderStroke(1.dp, Black)
+                    modifier = Modifier
+                        .border(1.dp, White, CircleShape),
+                    shape = CircleShape,
+                    containerColor = violetaOscuro,
+                    contentColor = White,
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.baseline_add_24),
-                        contentDescription = ""
-                    )
+                    Icon(Icons.Filled.Add,"")
                 }
                 ButtonCustom(text = item.nombre, onClick = {
                     curso(usuario.nickname, usuario.password, item.nombre)
@@ -207,34 +197,26 @@ class FavoritosActivity : ComponentActivity() {
     @Composable
     private fun Menu(usuario: Usuario) {
         Row(modifier = Modifier
-            .size(30.dp)
-            .border(BorderStroke(1.dp, Black)),
+            .size(30.dp),
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.Bottom
         ) {
             Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaClaro),
                 shape = RoundedCornerShape(0),
                 onClick = { misCursos(usuario.nickname, usuario.password) }
             ) {
                 Image(painterResource(id = R.drawable.baseline_folder_24), contentDescription = "")
             }
             Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = Gray),
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaClaro),
                 shape = RoundedCornerShape(0),
                 onClick = { }
             ) {
-                Image(painterResource(id = R.drawable.baseline_search_24), contentDescription = "")
+                Image(painterResource(id = R.drawable.baseline_search_24a), contentDescription = "")
             }
             Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
-                shape = RoundedCornerShape(0),
-                onClick = { crear(usuario.nickname, usuario.password) }
-            ) {
-                Image(painterResource(id = R.drawable.baseline_add_24), contentDescription = "")
-            }
-            Button(
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = White),
+                colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaClaro),
                 shape = RoundedCornerShape(0),
                 onClick = { perfil(usuario.nickname, usuario.password) }
             ) {
@@ -271,26 +253,11 @@ class FavoritosActivity : ComponentActivity() {
         onStop()
     }
 
-    private fun crear(username: String, password: String) {
-        val intent = Intent(this, CrearCursoActivity::class.java).apply {
-            putExtra("username", username)
-            putExtra("password", password)
-        }
-        startActivity(intent)
-        onStop()
-    }
-
     private fun perfil(username: String, password: String) {
         val intent = Intent(this, PerfilActivity::class.java).apply {
             putExtra("username", username)
             putExtra("password", password)
         }
-        startActivity(intent)
-        onStop()
-    }
-
-    private fun configuracion() {
-        val intent = Intent(this, ConfiguracionActivity::class.java)
         startActivity(intent)
         onStop()
     }
