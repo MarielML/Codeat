@@ -68,7 +68,7 @@ class RegistrarActivity : ComponentActivity() {
             }
         }
     }
-
+    
     private fun validar(nombre: String, contrasenia: String, confirmar: String, email: String): Boolean {
         return nombre != "" && contrasenia != "" && confirmar != "" && email != "" && email.contains("@")
     }
