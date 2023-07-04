@@ -1,5 +1,6 @@
 package com.example.ddi
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,20 +21,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.ddi.ui.theme.CodeatTheme
 import com.example.ddi.ui.theme.violetaOscuro
 
 class Clase5Activity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val bundle = intent.extras
+        val clase: String? = bundle?.getString("clase")
+
         setContent {
-            Content()
+            Content(clase!!)
         }
     }
 
     @Composable
-    private fun Content() {
+    private fun Content(clase: String) {
         CodeatTheme {
             Surface(
                 modifier = Modifier.fillMaxSize(),
@@ -43,16 +49,16 @@ class Clase5Activity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize()
                 )
                 {
-                    TopBar()
+                    TopBar(clase)
                     Contenido()
                 }
-                Siguiente()
+                Siguiente(clase)
             }
         }
     }
 
     @Composable
-    private fun TopBar() {
+    private fun TopBar(clase: String) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -69,6 +75,7 @@ class Clase5Activity : ComponentActivity() {
                         finish()
                     })
             )
+            TextCustom(text = "$clase (5/5)", textAlign = TextAlign.Center)
         }
     }
 
@@ -78,6 +85,8 @@ class Clase5Activity : ComponentActivity() {
             Modifier
                 .fillMaxSize()
                 .padding(25.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Clase()
         }
@@ -89,21 +98,35 @@ class Clase5Activity : ComponentActivity() {
             Modifier
                 .fillMaxSize()
                 .padding(25.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
+            TextCustom(text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut " +
+                    "labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut" +
+                    " aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum " +
+                    "dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia" +
+                    " deserunt mollit anim id est laborum.", fontSize = 16.sp)
         }
     }
 
     @Composable
-    private fun Siguiente() {
+    private fun Siguiente(clase: String) {
         Row(modifier = Modifier
             .size(30.dp),
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.Bottom
         ) {
+            Image(
+                painter = painterResource(id = R.drawable.baseline_navigate_before_24),
+                contentDescription = "",
+                modifier = Modifier
+                    .clickable(enabled = true, onClick = {
+                        clase4(clase)
+                    })
+            )
             Spacer(modifier = Modifier.weight(1f))
             Image(
-                painter = painterResource(id = R.drawable.baseline_play_arrow_50),
+                painter = painterResource(id = R.drawable.baseline_add_task_50),
                 contentDescription = "",
                 modifier = Modifier
                     .clickable(enabled = true, onClick = {
@@ -111,5 +134,13 @@ class Clase5Activity : ComponentActivity() {
                     })
             )
         }
+    }
+
+    private fun clase4(clase: String) {
+        val intent = Intent(this, Clase4Activity::class.java).apply {
+            putExtra("clase", clase)
+        }
+        startActivity(intent)
+        finish()
     }
 }

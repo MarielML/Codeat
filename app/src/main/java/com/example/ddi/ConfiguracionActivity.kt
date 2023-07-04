@@ -99,7 +99,7 @@ class ConfiguracionActivity : ComponentActivity() {
 
     @Composable
     fun Modo() {
-        val checkedState = remember { mutableStateOf(false) }
+        val checkedState = remember { mutableStateOf(true) }
         Column(
             modifier = Modifier
                 .padding(top = 20.dp),

@@ -4,7 +4,6 @@ object CursoRepositorio {
     val cursos = mutableListOf<Curso>()
     private val tendencia = mutableListOf<Curso>()
     private val favoritos = mutableListOf<Curso>()
-    private val masUsados = mutableListOf<Curso>()
 
     init {
         cursos.add(Curso("JavaScript I", Usuario(nickname = "Anónimo2"), favorito = 4599, usuarios = 5620))
@@ -21,18 +20,9 @@ object CursoRepositorio {
         favoritos.add(Curso("JavaScript I", Usuario(nickname = "Anónimo"), favorito = 4599, usuarios = 5620))
         favoritos.add(Curso("Java I", Usuario(nickname = "Anónimo2"), favorito = 4213, usuarios = 7620))
         favoritos.add(Curso("Python I", Usuario(nickname = "Pepe Argento"), favorito = 3123, usuarios = 4045))
-        masUsados.add(Curso("Java I", Usuario(nickname = "Anónimo2"), favorito = 4213, usuarios = 7620))
-        masUsados.add(Curso("JavaScript I", Usuario(nickname = "Anónimo"), favorito = 4599, usuarios = 5620))
-        masUsados.add(Curso("Python I", Usuario(nickname = "Pepe Argento"), favorito = 3123, usuarios = 4045))
         tendencia.add(Curso("Jetpack Compose", Usuario(nickname = "Anónimo2"), favorito = 122, usuarios = 543))
         tendencia.add(Curso("Kotlin I", Usuario(nickname = "Anónimo2"),favorito = 97, usuarios = 421))
         tendencia.add(Curso("Koin", Usuario(nickname = "Anónimo2"), favorito = 78, usuarios = 210))
-    }
-
-    fun agregar(curso: Curso) {
-        if (!existe(curso.nombre)) {
-            cursos.add(curso)
-        }
     }
 
     fun existe(nombre: String): Boolean {
@@ -49,10 +39,6 @@ object CursoRepositorio {
         return cursoElegido
     }
 
-    fun ordenarCursos(): List<Curso> {
-        return cursos.sortedByDescending { it.favorito }
-    }
-
     fun ordenarTendencia(): List<Curso> {
         return tendencia.sortedByDescending { it.favorito }
     }
@@ -62,6 +48,6 @@ object CursoRepositorio {
     }
 
     fun ordenarUsados(): List<Curso> {
-        return masUsados.sortedByDescending { it.usuarios }
+        return cursos.sortedByDescending { it.usuarios }
     }
 }

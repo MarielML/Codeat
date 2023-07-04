@@ -4,13 +4,11 @@ class Usuario (
     var nickname: String= "",
     var password:String = "",
     var email: String = "",
-    var meGusta: Int = 0,
     var comentarios: Int = 0,
     val cursos: MutableList<Curso> = mutableListOf(),
     val cursosFavoritos: MutableList<Curso> = mutableListOf(),
     val cursosCompletos: MutableList<Curso> = mutableListOf(),
     val cursosCreados: MutableList<Curso> = mutableListOf(),
-    //val cursosSinPublicar: MutableList<Curso> = mutableListOf(),
     val seguidores: MutableList<Usuario> = mutableListOf(),
     val seguidos: MutableList<Usuario> = mutableListOf()
 ) {
@@ -24,13 +22,6 @@ class Usuario (
         return (cursos.any { curso: Curso -> curso.nombre == nombre})
     }
 
-    /*fun publicarCurso(curso: Curso) {
-        if (!publicado(curso.nombre)) {
-            cursosPublicados.add(curso)
-            cursosSinPublicar.remove(curso)
-        }
-    }*/
-
     fun crearCurso(curso: Curso) {
         if (!creado(curso.nombre)) {
             cursosCreados.add(curso)
@@ -40,16 +31,6 @@ class Usuario (
 
     fun creado(nombre: String): Boolean {
         return (CursoRepositorio.cursos.any { curso: Curso -> curso.nombre == nombre})
-    }
-
-    fun cursoElegido(nombre: String): Curso {
-        var cursoElegido = Curso()
-        for (elemento in cursosCreados) {
-            if (elemento.nombre == nombre) {
-                cursoElegido = elemento
-            }
-        }
-        return cursoElegido
     }
 
     fun agregarSeguidor(seguidor: Usuario) {

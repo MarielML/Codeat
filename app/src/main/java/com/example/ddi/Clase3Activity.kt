@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.ddi.ui.theme.CodeatTheme
 import com.example.ddi.ui.theme.violetaOscuro
@@ -27,13 +29,16 @@ import com.example.ddi.ui.theme.violetaOscuro
 class Clase3Activity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val bundle = intent.extras
+        val clase: String? = bundle?.getString("clase")
+
         setContent {
-            Content()
+            Content(clase!!)
         }
     }
 
     @Composable
-    private fun Content() {
+    private fun Content(clase: String) {
         CodeatTheme {
             Surface(
                 modifier = Modifier.fillMaxSize(),
@@ -43,16 +48,16 @@ class Clase3Activity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize()
                 )
                 {
-                    TopBar()
+                    TopBar(clase)
                     Contenido()
                 }
-                Siguiente()
+                Siguiente(clase)
             }
         }
     }
 
     @Composable
-    private fun TopBar() {
+    private fun TopBar(clase: String) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -69,6 +74,7 @@ class Clase3Activity : ComponentActivity() {
                         finish()
                     })
             )
+            TextCustom(text = "$clase (3/5)", textAlign = TextAlign.Center)
         }
     }
 
@@ -78,6 +84,8 @@ class Clase3Activity : ComponentActivity() {
             Modifier
                 .fillMaxSize()
                 .padding(25.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Clase()
         }
@@ -89,31 +97,52 @@ class Clase3Activity : ComponentActivity() {
             Modifier
                 .fillMaxSize()
                 .padding(25.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
+            Image(painterResource(id = R.drawable.baseline_play_circle_outline_24), contentDescription = "")
         }
     }
 
     @Composable
-    private fun Siguiente() {
+    private fun Siguiente(clase: String) {
         Row(modifier = Modifier
             .size(30.dp),
+            horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.Bottom
         ) {
-            Spacer(modifier = Modifier.weight(1f))
             Image(
-                painter = painterResource(id = R.drawable.baseline_play_arrow_50),
+                painter = painterResource(id = R.drawable.baseline_navigate_before_24),
                 contentDescription = "",
                 modifier = Modifier
                     .clickable(enabled = true, onClick = {
-                        clase4()
+                        clase2(clase)
+                    })
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Image(
+                painter = painterResource(id = R.drawable.baseline_navigate_next_24),
+                contentDescription = "",
+                modifier = Modifier
+                    .clickable(enabled = true, onClick = {
+                        clase4(clase)
                     })
             )
         }
     }
 
-    private fun clase4() {
-        val intent = Intent(this, Clase4Activity::class.java)
+    private fun clase2(clase: String) {
+        val intent = Intent(this, Clase2Activity::class.java).apply {
+            putExtra("clase", clase)
+        }
+        startActivity(intent)
+        finish()
+    }
+
+    private fun clase4(clase: String) {
+        val intent = Intent(this, Clase4Activity::class.java).apply {
+            putExtra("clase", clase)
+        }
         startActivity(intent)
         finish()
     }

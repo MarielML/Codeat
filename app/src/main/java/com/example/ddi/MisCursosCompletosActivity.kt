@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,6 +27,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.ddi.data.Curso
@@ -104,6 +106,7 @@ class MisCursosCompletosActivity : ComponentActivity() {
             Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaOscuro),
                 shape = RoundedCornerShape(0),
                 modifier = Modifier.fillMaxHeight(),
+                border = BorderStroke(1.dp, White),
                 onClick = { }
             ) {
                 Image(painterResource(id = R.drawable.baseline_filter_alt_24), contentDescription = "")

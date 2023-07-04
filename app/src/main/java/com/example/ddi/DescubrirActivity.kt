@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -114,6 +115,7 @@ class DescubrirActivity : ComponentActivity() {
             Button(colors = ButtonDefaults.elevatedButtonColors(containerColor = violetaOscuro),
                 shape = RoundedCornerShape(0),
                 modifier = Modifier.fillMaxHeight(),
+                border = BorderStroke(1.dp, White),
                 onClick = { }
             ) {
                 Image(painterResource(id = R.drawable.baseline_filter_alt_24), contentDescription = "")
@@ -135,12 +137,6 @@ class DescubrirActivity : ComponentActivity() {
                     .padding(horizontal = 10.dp, vertical = 5.dp),
             ) {
                 MostrarCursos(CursoRepositorio.ordenarTendencia() as MutableList<Curso>, usuario)
-            }
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                ButtonCustom(text = "Ver todos", onClick = { todosLosCursos(usuario.nickname, usuario.password) })
             }
         }
     }
@@ -185,11 +181,11 @@ class DescubrirActivity : ComponentActivity() {
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 Row {
-                    Image(painterResource(id = R.drawable.baseline_favorite_24), contentDescription = "", Modifier.width(50.dp))
+                    Image(painterResource(id = R.drawable.baseline_star_24), contentDescription = "", Modifier.width(50.dp))
                     TextCustom(text = item.favorito.toString())
                 }
                 Row {
-                    Image(painterResource(id = R.drawable.baseline_comment_24), contentDescription = "", Modifier.width(50.dp))
+                    Image(painterResource(id = R.drawable.baseline_person_24), contentDescription = "", Modifier.width(50.dp))
                     TextCustom(text = item.usuarios.toString())
                 }
             }
@@ -225,15 +221,6 @@ class DescubrirActivity : ComponentActivity() {
                 Image(painterResource(id = R.drawable.baseline_person_24), contentDescription = "")
             }
         }
-    }
-
-    private fun todosLosCursos(username: String, password: String) {
-        val intent = Intent(this, TodosLosCursosActivity::class.java).apply {
-            putExtra("username", username)
-            putExtra("password", password)
-        }
-        startActivity(intent)
-        onStop()
     }
 
     private fun curso(username: String, password: String, nombre: String) {
